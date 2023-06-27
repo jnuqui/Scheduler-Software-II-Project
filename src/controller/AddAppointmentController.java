@@ -9,17 +9,17 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Controller
+public class AddAppointmentController
 {
+
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/schedulerDashboard.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 700);
+        Scene scene = new Scene(root, 600, 400);
         stage.setTitle("Scheduler Dashboard");
         stage.setScene(scene);
         stage.show();
     }
-
 }
