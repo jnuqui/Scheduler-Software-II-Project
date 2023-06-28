@@ -5,12 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class LoginController
 {
+    public static Label labelUsername;
+    public static TextField textfieldUsername;
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
@@ -21,6 +27,12 @@ public class LoginController
         stage.setScene(scene);
         stage.show();
     }
-    
+
+    public static void changeLanguage()
+    {
+        ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
+        //labelUsername.setText(rb.getString("Username"));
+        //textfieldUsername.setText("hey");
+    }
 
 }
