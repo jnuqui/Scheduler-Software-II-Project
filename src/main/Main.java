@@ -31,13 +31,16 @@ public class Main extends Application {
     public static void main(String[] args) throws SQLException {
 
         JDBC.openConnection();
-        Scanner keyboard = new Scanner(System.in);
+        Locale.setDefault(new Locale("fr","FR"));
+
+       /* Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter a language(es, de, or fr. Or en): ");
         String languageCode = keyboard.nextLine();
         if(languageCode.equals("fr"))
             LanguageConversion.changeToFrench();
         ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
-        System.out.println(rb.getString("Username"));
+        System.out.println(rb.getString("Username"));*/
+
         DatabaseAccess.select(3);
         launch(args);
         JDBC.closeConnection();
