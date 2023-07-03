@@ -58,5 +58,6 @@ public class LoginController implements Initializable {
         labelLocationDetect.setText(rb.getString(labelLocationDetect.getText()));
         labelUsername.setText(rb.getString(labelUsername.getText()));
         labelPassword.setText(rb.getString(labelPassword.getText()));
+        buttonLogin.setText(rb.getString(buttonLogin.getText()));
     }
 }

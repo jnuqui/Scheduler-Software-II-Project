@@ -42,6 +42,7 @@ public class Main extends Application {
         System.out.println(rb.getString("Username"));*/
 
         DatabaseAccess.select(3);
+        DatabaseAccess.selectAppointment();
         launch(args);
         JDBC.closeConnection();
     }

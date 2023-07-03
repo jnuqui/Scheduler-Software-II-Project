@@ -47,7 +47,18 @@ public abstract class DatabaseAccess {
             System.out.print(fruitId + " | ");
             System.out.print(fruitName + " | ");
             System.out.print(colorIdFK  + "\n");
+        }
+    }
 
+    //TEST - DELETE LATER
+    public static void selectAppointment() throws SQLException {
+        String sql = "SELECT * FROM APPOINTMENTS";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            int appointmentId = rs.getInt("Appointment_ID");
+            System.out.print(appointmentId);
         }
     }
 }

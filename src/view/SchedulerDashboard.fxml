@@ -7,12 +7,10 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SchedulerDashboardController">
    <children>
-      <TableView id="appointmentsTable" layoutX="117.0" layoutY="89.0" prefHeight="297.0" prefWidth="469.0">
+      <TableView fx:id="appointmentsTable" layoutX="117.0" layoutY="89.0" prefHeight="297.0" prefWidth="469.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-            <TableColumn prefWidth="75.0" text="Column X" />
-            <TableColumn prefWidth="75.0" text="Column X" />
+          <TableColumn fx:id="appointmentIdColumn" prefWidth="75.0" text="Appointment_ID" />
+          <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
         </columns>
       </TableView>
       <Button layoutX="29.0" layoutY="99.0" mnemonicParsing="false" onAction="#toCustomerGUI" text="Customers" />
