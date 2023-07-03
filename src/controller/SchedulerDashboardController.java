@@ -26,9 +26,30 @@ public class SchedulerDashboardController implements Initializable
     public TableColumn appointmentIdColumn;
     @FXML
     public TableColumn titleColumn;
+    @FXML
+    public TableColumn descriptionColumn;
+    @FXML
+    public TableColumn locationColumn;
+    @FXML
+    public TableColumn typeColumn;
+    @FXML
+    public TableColumn startColumn;
+    @FXML
+    public TableColumn endColumn;
+    @FXML
+    public TableColumn customerId;
+    @FXML
+    public TableColumn contactId;
+    public static boolean firstTime = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        /*if (!firstTime)
+        {
+            return;
+        }
+        firstTime = false;
+        */
         try {
             AppointmentDAO.getAppointments();
         } catch (SQLException throwables) {
@@ -36,10 +57,18 @@ public class SchedulerDashboardController implements Initializable
         }
 
 
+
         appointmentsTable.setItems(AppointmentDAO.populateAppointments());
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException

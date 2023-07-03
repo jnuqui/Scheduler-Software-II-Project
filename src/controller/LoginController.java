@@ -39,7 +39,7 @@ public class LoginController implements Initializable {
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, 850, 500);
         stage.setTitle("Scheduler Dashboard");
         stage.setScene(scene);
         stage.show();
