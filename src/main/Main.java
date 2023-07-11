@@ -1,6 +1,7 @@
 package main;
 
 import controller.LoginController;
+import dao.AppointmentDAO;
 import dao.DatabaseAccess;
 import helper.JDBC;
 import helper.LanguageConversion;
@@ -11,6 +12,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -41,8 +44,18 @@ public class Main extends Application {
         ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
         System.out.println(rb.getString("Username"));*/
 
-        DatabaseAccess.select(3);
-        DatabaseAccess.selectAppointment();
+        //DatabaseAccess.select(3);
+        //DatabaseAccess.selectAppointment();
+
+        //ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);
+        LocalDate myLD = LocalDate.of(2020, 10, 11);
+        LocalTime myLT = LocalTime.of(22, 0);
+        LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
+        ZoneId myZoneId = ZoneId.systemDefault();
+        ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
+        //System.out.println(myZDT);
+        System.out.println(AppointmentDAO.getTimestamp());
+
         launch(args);
         JDBC.closeConnection();
     }

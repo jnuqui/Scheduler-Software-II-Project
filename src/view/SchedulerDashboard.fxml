@@ -5,23 +5,24 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="402.0" prefWidth="878.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SchedulerDashboardController">
+<AnchorPane prefHeight="402.0" prefWidth="1019.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SchedulerDashboardController">
    <children>
-      <TableView fx:id="appointmentsTable" layoutX="117.0" layoutY="89.0" prefHeight="297.0" prefWidth="676.0">
+      <TableView fx:id="appointmentsTable" layoutX="117.0" layoutY="89.0" prefHeight="297.0" prefWidth="879.0">
         <columns>
-          <TableColumn fx:id="appointmentIdColumn" prefWidth="75.0" text="Appointment_ID" />
-          <TableColumn fx:id="titleColumn" prefWidth="75.0" text="Title" />
-            <TableColumn fx:id="descriptionColumn" prefWidth="75.0" text="Description" />
-            <TableColumn fx:id="locationColumn" prefWidth="75.0" text="Location" />
-            <TableColumn fx:id="typeColumn" prefWidth="75.0" text="Type" />
-            <TableColumn fx:id="startColumn" prefWidth="75.0" text="Start" />
-            <TableColumn fx:id="endColumn" prefWidth="75.0" text="End" />
-            <TableColumn fx:id="customerId" prefWidth="75.0" text="Customer_ID" />
-            <TableColumn fx:id="contactId" prefWidth="75.0" text="Contact_ID" />
+          <TableColumn fx:id="appointmentIdColumn" prefWidth="117.0" text="Appointment_ID" />
+          <TableColumn fx:id="titleColumn" prefWidth="81.0" text="Title" />
+            <TableColumn fx:id="descriptionColumn" prefWidth="112.0" text="Description" />
+            <TableColumn fx:id="locationColumn" prefWidth="76.0" text="Location" />
+            <TableColumn fx:id="typeColumn" prefWidth="42.0" text="Type" />
+            <TableColumn fx:id="startColumn" prefWidth="157.0" text="Start" />
+            <TableColumn fx:id="endColumn" minWidth="0.0" prefWidth="128.0" text="End" />
+            <TableColumn fx:id="customerId" prefWidth="92.0" text="Customer_ID" />
+            <TableColumn fx:id="contactId" prefWidth="73.0" text="Contact_ID" />
         </columns>
       </TableView>
       <Button layoutX="29.0" layoutY="99.0" mnemonicParsing="false" onAction="#toCustomerGUI" text="Customers" />
       <Button layoutX="29.0" layoutY="188.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add" />
       <Button layoutX="29.0" layoutY="225.0" mnemonicParsing="false" onAction="#toUpdateAppointment" text="Update" />
+      <Button fx:id="deleteAppointmentButton" layoutX="31.0" layoutY="266.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
    </children>
 </AnchorPane>

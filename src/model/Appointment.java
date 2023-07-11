@@ -1,5 +1,7 @@
 package model;
 
+import java.time.LocalDateTime;
+
 public class Appointment
 {
     int appointmentId;
@@ -7,12 +9,12 @@ public class Appointment
     String description;
     String location;
     String type;
-    String startTime;
-    String endTime;
+    LocalDateTime startTime;
+    LocalDateTime endTime;
     int customerId;
     int contactId;
 
-    public Appointment(int appointmentId, String title, String description, String location, String type, String startTime, String endTime, int customerId, int contactId)
+    public Appointment(int appointmentId, String title, String description, String location, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int contactId)
     {
         this.appointmentId = appointmentId;
         this.title = title;
@@ -61,20 +63,20 @@ public class Appointment
         this.type = type;
     }
 
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
+    public void setStartTime(LocalDateTime startTime) {
         this.startTime = startTime;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
     public int getCustomerId() {

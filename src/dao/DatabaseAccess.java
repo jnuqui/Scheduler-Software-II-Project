@@ -1,10 +1,14 @@
 package dao;
 
 import helper.JDBC;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import model.Contact;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 public abstract class DatabaseAccess {
 
@@ -50,6 +54,32 @@ public abstract class DatabaseAccess {
         }
     }
 
+    public static ObservableList <String> getContacts() throws SQLException {
+        String sql = "SELECT Contact_Name FROM CONTACTS";
+        ObservableList<String> contacts = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String contactName = rs.getString("Contact_Name");
+            contacts.add(contactName);
+        }
+        return contacts;
+    }
+/*
+    public static ObservableList <Contact> getContacts() throws SQLException {
+        String sql = "SELECT Contact_Name FROM CONTACTS";
+        ObservableList<String> contacts = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String contactName = rs.getString("Contact_Name");
+            contacts.add(contactName);
+        }
+        return contacts;
+    }*/
+
     //TEST - DELETE LATER
     public static void selectAppointment() throws SQLException {
         String sql = "SELECT * FROM APPOINTMENTS";
@@ -61,5 +91,7 @@ public abstract class DatabaseAccess {
             System.out.print(appointmentId);
         }
     }
+
+
 }
 

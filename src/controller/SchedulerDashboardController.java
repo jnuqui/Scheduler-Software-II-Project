@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -40,25 +41,19 @@ public class SchedulerDashboardController implements Initializable
     public TableColumn customerId;
     @FXML
     public TableColumn contactId;
-    public static boolean firstTime = true;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        /*if (!firstTime)
-        {
-            return;
-        }
-        firstTime = false;
-        */
+        populateTable();
+    }
+
+    public void populateTable()
+    {
         try {
-            AppointmentDAO.getAppointments();
+            appointmentsTable.setItems(AppointmentDAO.getAppointments());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-
-
-        appointmentsTable.setItems(AppointmentDAO.populateAppointments());
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -69,6 +64,7 @@ public class SchedulerDashboardController implements Initializable
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
@@ -101,5 +97,16 @@ public class SchedulerDashboardController implements Initializable
         stage.show();
     }
 
-
+    public void deleteAppointment() throws SQLException {
+        if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Error");
+            alert.setContentText("Hello Gabe");
+            return;
+        }
+        AppointmentDAO.deleteAppointment(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
+        populateTable();
+    }
 }
