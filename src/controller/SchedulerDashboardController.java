@@ -1,6 +1,8 @@
 package controller;
 
 import dao.AppointmentDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,15 +11,19 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Appointment;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SchedulerDashboardController implements Initializable
@@ -34,17 +40,29 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn typeColumn;
     @FXML
-    public TableColumn startColumn;
+    public TableColumn<Appointment, String> startColumn = new TableColumn<>("startTime");
     @FXML
-    public TableColumn endColumn;
+    public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");;
     @FXML
     public TableColumn customerId;
     @FXML
     public TableColumn contactId;
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        populateTable();
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        try {
+            allAppointments = AppointmentDAO.getAppointments();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        populateTablev2();
+
+
+
+        //populateTable();
     }
 
     public void populateTable()
@@ -65,6 +83,43 @@ public class SchedulerDashboardController implements Initializable
         customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
 
+    }
+
+    public void populateTablev2()
+    {
+        try {
+            appointmentsTable.setItems(AppointmentDAO.getAppointments());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        startColumn.setCellFactory(createCellFactory(formatter));
+        endColumn.setCellFactory(createCellFactory(formatter));
+    }
+
+    private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
+        return column -> new javafx.scene.control.TableCell<Appointment, T>() {
+            @Override
+            protected void updateItem(T item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(formatter.format((LocalDateTime) item));
+                }
+            }
+        };
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException

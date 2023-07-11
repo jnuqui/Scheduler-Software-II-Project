@@ -17,6 +17,7 @@ import java.time.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.TimeZone;
 
 public class Main extends Application {
 
@@ -53,8 +54,11 @@ public class Main extends Application {
         LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
         ZoneId myZoneId = ZoneId.systemDefault();
         ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
-        //System.out.println(myZDT);
+        System.out.println(myZDT);
         System.out.println(AppointmentDAO.getTimestamp());
+
+        //Setting the system to a different timezone
+        TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
 
         launch(args);
         JDBC.closeConnection();

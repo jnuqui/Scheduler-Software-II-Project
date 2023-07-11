@@ -75,6 +75,7 @@ public class Appointment
         return startTime;
     }
 
+
     public LocalDateTime getEndTime() {
         return endTime;
     }
