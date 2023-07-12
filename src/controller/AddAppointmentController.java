@@ -78,7 +78,17 @@ public class AddAppointmentController implements Initializable
     }
 
     public void insertTest() throws SQLException {
-        //AppointmentDAO.insertTest();
+        LocalDate startDate = LocalDate.now();
+        LocalTime startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute());
+        LocalDateTime startLDT = LocalDateTime.of(startDate, startTime);
+
+        LocalDate endDate = LocalDate.now();
+        LocalTime endTime = LocalTime.now().plusHours(1);
+        LocalDateTime endLDT = LocalDateTime.of(endDate, endTime);
+
+        Timestamp tsStart = Timestamp.valueOf(startLDT);
+        Timestamp tsEnd = Timestamp.valueOf(endLDT);
+        AppointmentDAO.insertTest(tsStart, tsEnd);
     }
 
     public void populateLocation()

@@ -18,9 +18,11 @@
           <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17/javafx-graphics-17-win.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17/javafx-base-17.jar!/" />
           <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17/javafx-base-17-win.jar!/" />
+          <root url="file://$PATH_TO_FX$" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
+        <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="javafx-sdk-17.0" level="project" />

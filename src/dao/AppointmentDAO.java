@@ -63,7 +63,7 @@ public class AppointmentDAO
 
 
 //INSERT INTO appointments VALUES(1, 'title', 'description', 'location', 'Planning Session', '2020-05-28 12:00:00', '2020-05-28 13:00:00', NOW(), 'script', NOW(), 'script', 1, 1, 3);
-    public static void insertTest(Timestamp timestamp) throws SQLException {
+    public static void insertTest(Timestamp timestamp, Timestamp endstamp) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, "awesome title");
@@ -71,7 +71,7 @@ public class AppointmentDAO
         ps.setString(3, "remote location");
         ps.setString(4, "very important");
         ps.setTimestamp(5, timestamp);
-        ps.setString(6, "2023-07-03 18:00:00");
+        ps.setTimestamp(6, endstamp);
         ps.setInt(7, 1);
         ps.setInt(8, 1);
         ps.setInt(9, 3);
