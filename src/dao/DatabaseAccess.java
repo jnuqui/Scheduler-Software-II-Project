@@ -54,6 +54,13 @@ public abstract class DatabaseAccess {
         }
     }
 
+    //Later to edit for UpdateDAO
+    public static void getAppointmentId(int appointmentId) throws SQLException {
+        String sql = "SELECT Appointment_ID FROM APPOINTMENTS WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+    }
+
     public static ObservableList <String> getContacts() throws SQLException {
         String sql = "SELECT Contact_Name FROM CONTACTS";
         ObservableList<String> contacts = FXCollections.observableArrayList();
@@ -65,6 +72,19 @@ public abstract class DatabaseAccess {
             contacts.add(contactName);
         }
         return contacts;
+    }
+
+    public static int getContactId(String contactName) throws SQLException {
+        String sql = "SELECT Contact_ID FROM CONTACTS WHERE Contact_Name = ?" ;
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, contactName);
+        ResultSet rs = ps.executeQuery();
+        int contactId = 0;
+        while(rs.next())
+        {
+            contactId = rs.getInt("Contact_ID");
+        }
+        return contactId;
     }
 /*
     public static ObservableList <Contact> getContacts() throws SQLException {

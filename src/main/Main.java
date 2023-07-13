@@ -31,10 +31,12 @@ public class Main extends Application {
         LoginController.changeLanguage();
     }
 
-
     public static void main(String[] args) throws SQLException {
 
+        //Open Database connection
         JDBC.openConnection();
+
+        //Change language to French
         Locale.setDefault(new Locale("fr","FR"));
 
        /* Scanner keyboard = new Scanner(System.in);

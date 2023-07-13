@@ -76,24 +76,25 @@ public class AppointmentDAO
         ps.setInt(8, 1);
         ps.setInt(9, 3);
         ps.executeUpdate();
-
-
     }
 
-    public static void insertAppointment(String title, String description, String location, String type, String start, String end, int customerId, int contactId) throws SQLException {
+
+
+    public static void insertAppointment(String title, String description, String location, String type, Timestamp timestamp, Timestamp endstamp, int customerId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, title);
-        ps.setString(2, description);
+        ps.setString(2,  description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setString(5, start);
-        ps.setString(6, end);
+        ps.setTimestamp(5, timestamp);
+        ps.setTimestamp(6, endstamp);
         ps.setInt(7, customerId);
         ps.setInt(8, 1);
         ps.setInt(9, contactId);
         ps.executeUpdate();
     }
+
 
     public static void deleteAppointment(int appointmentId) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";

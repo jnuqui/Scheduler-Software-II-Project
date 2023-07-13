@@ -14,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -37,6 +38,11 @@ public class AddAppointmentController implements Initializable
     public ComboBox startTimeComboBox;
     @FXML
     public ComboBox endTimeComboBox;
+    @FXML
+    public TextField titleTextfield;
+    public TextField descriptionTextfield;
+    public TextField typeTextfield;
+    public TextField customerIdTextfield;
 
 
     private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
@@ -116,14 +122,16 @@ public class AddAppointmentController implements Initializable
         endTimeComboBox.setItems(myLT);
     }
 
-    public void testPrint()
-    {
-        System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
+    public void testPrint() throws SQLException {
+        //System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
+    System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
     }
 
     public void insertAppointment()
     {
-       //(String title, String description, String location, String type, String start, String end, int customerId, int contactId
+        String title = titleTextfield.getText();
+       //String title, String description, String location, String type,
+        // Timestamp timestamp, Timestamp endstamp, int customerId, int contactId
         //AppointmentDAO.insertAppointment();
     }
 

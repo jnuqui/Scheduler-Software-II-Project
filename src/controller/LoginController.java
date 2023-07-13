@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -38,6 +39,29 @@ public class LoginController implements Initializable {
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
 
     ZoneId myZoneId = ZoneId.systemDefault();
+
+    public void login(ActionEvent actionEvent) throws IOException {
+
+            if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test")))
+            {
+            }
+            else
+            {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.show();
+                alert.setHeaderText("Error");
+                alert.setContentText("Wrong username or password");
+                return;
+            }
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1019, 500);
+        stage.setTitle("Scheduler Dashboard");
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
