@@ -154,14 +154,14 @@ public class AddAppointmentController implements Initializable
     System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
     }
 
-    public void insertAppointment()
+    public void insertAppointmentTestFill()
     {
-        String title = titleTextfield.getText();
-        String description = descriptionTextfield.getText();
-        String location = locationComboBox.getValue().toString();
-        String type = typeTextfield.getText();
+        titleTextfield.setText("Title Test");
+        descriptionTextfield.setText("Description Test");
+        locationComboBox.getSelectionModel().select(1);
+        typeTextfield.setText("Shooting the breeze");
 
-        //Start
+        /*/Start
         LocalDate ldStart = startDatePicker.getValue();
         LocalTime ltStart = (LocalTime) startTimeComboBox.getValue();
         LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
@@ -171,13 +171,38 @@ public class AddAppointmentController implements Initializable
         LocalDate ldEnd = endDatePicker.getValue();
         LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);*/
+
+        customerIdComboBox.getSelectionModel().select(1);
+        userIdComboBox.getSelectionModel().select(1);
+        contactComboBox.getSelectionModel().select(1);
+    }
+
+    public void insertAppointment() throws SQLException {
+        String title = titleTextfield.getText();
+        String description = descriptionTextfield.getText();
+        String location = locationComboBox.getValue().toString();
+        String type = typeTextfield.getText();
+
+        //Start
+        LocalDate ldStart = startDatePicker.getValue();
+        LocalTime ltStart = LocalTime.parse(startTimeComboBox.getValue().toString());
+        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
+        Timestamp tsStart = Timestamp.valueOf(ldtStart);
+
+        //End
+        LocalDate ldEnd = endDatePicker.getValue();
+        LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
+        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
         Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
 
+        int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
+        int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
+        int contactId = DatabaseAccess.getContactId(contactComboBox.getValue().toString());
 
-
-       //String title, String description, String location, String type,
-        // Timestamp timestamp, Timestamp endstamp, int customerId, int contactId
-        //AppointmentDAO.insertAppointment();
+        //(String title, String description, String location, String type,
+          //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
+        AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
     }
 
 

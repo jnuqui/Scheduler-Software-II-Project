@@ -26,7 +26,7 @@
       <TextField fx:id="typeTextfield" layoutX="201.0" layoutY="338.0" />
       <ComboBox fx:id="locationComboBox" layoutX="200.0" layoutY="259.0" prefWidth="150.0" />
       <ComboBox fx:id="contactComboBox" layoutX="199.0" layoutY="298.0" prefWidth="150.0" />
-      <Button layoutX="257.0" layoutY="556.0" mnemonicParsing="false" text="Add" />
+      <Button fx:id="addButton" layoutX="257.0" layoutY="556.0" mnemonicParsing="false" onAction="#insertAppointment" text="Add" />
       <Button layoutX="317.0" layoutY="556.0" mnemonicParsing="false" text="Reset" />
       <Button layoutX="359.0" layoutY="629.0" mnemonicParsing="false" onAction="#toSchedulerDashboard" text="Cancel" />
       <Label layoutX="83.0" layoutY="418.0" text="End Date and Time" />
@@ -40,5 +40,6 @@
       <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false" onAction="#testPrint" text="Test Print" />
       <ComboBox fx:id="userIdComboBox" layoutX="202.0" layoutY="491.0" prefWidth="150.0" />
       <ComboBox fx:id="customerIdComboBox" layoutX="202.0" layoutY="451.0" prefWidth="150.0" />
+      <Button fx:id="testFillButton" layoutX="359.0" layoutY="86.0" mnemonicParsing="false" onAction="#insertAppointmentTestFill" text="Test Fill" />
    </children>
 </AnchorPane>

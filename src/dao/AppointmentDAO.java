@@ -80,17 +80,17 @@ public class AppointmentDAO
 
 //hello
 
-    public static void insertAppointment(String title, String description, String location, String type, Timestamp timestamp, Timestamp endstamp, int customerId, int contactId) throws SQLException {
+    public static void insertAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setString(1, title);
         ps.setString(2,  description);
         ps.setString(3, location);
         ps.setString(4, type);
-        ps.setTimestamp(5, timestamp);
-        ps.setTimestamp(6, endstamp);
+        ps.setTimestamp(5, tsStart);
+        ps.setTimestamp(6, tsEnd);
         ps.setInt(7, customerId);
-        ps.setInt(8, 1);
+        ps.setInt(8, userId);
         ps.setInt(9, contactId);
         ps.executeUpdate();
     }

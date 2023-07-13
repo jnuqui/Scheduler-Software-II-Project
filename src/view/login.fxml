@@ -10,14 +10,14 @@
    <children>
       <Pane prefHeight="358.0" prefWidth="347.0">
          <children>
-            <Button fx:id="buttonLogin" layoutX="155.0" layoutY="231.0" mnemonicParsing="false" text="Login" />
+            <Button fx:id="buttonLogin" layoutX="155.0" layoutY="231.0" mnemonicParsing="false" onAction="#login" text="Login" />
             <Label fx:id="labelLocationDetect" layoutX="82.0" layoutY="113.0" text="Location Detected:" />
             <Label fx:id="labelPassword" layoutX="79.0" layoutY="187.0" text="Password" />
             <Label fx:id="labelUsername" layoutX="77.0" layoutY="155.0" text="Username" />
             <TextField fx:id="textfieldUsername" layoutX="145.0" layoutY="151.0" />
             <Label fx:id="labelLocation" layoutX="206.0" layoutY="113.0" text="Label" />
             <TextField fx:id="textfieldPassword" layoutX="145.0" layoutY="183.0" />
-            <Button fx:id="testButton" layoutX="193.0" layoutY="278.0" mnemonicParsing="false" onAction="#login" text="Test button" />
+            <Button fx:id="testButton" layoutX="193.0" layoutY="278.0" mnemonicParsing="false" onAction="#toSchedulerDashboard" text="Test button" />
          </children>
       </Pane>
    </children>
