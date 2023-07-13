@@ -120,7 +120,7 @@ public class AddAppointmentController implements Initializable
     }
 
     public void populateContacts() throws SQLException {
-        contactComboBox.setItems(DatabaseAccess.getContacts());
+        contactComboBox.setItems(DatabaseAccess.getContactNames());
     }
 
     public void populateCustomerIds() throws SQLException {
@@ -191,7 +191,7 @@ public class AddAppointmentController implements Initializable
         Timestamp tsStart = Timestamp.valueOf(ldtStart);
 
         //End
-        LocalDate ldEnd = endDatePicker.getValue();
+        LocalDate ldEnd = startDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
         Timestamp tsEnd = Timestamp.valueOf(ldtEnd);

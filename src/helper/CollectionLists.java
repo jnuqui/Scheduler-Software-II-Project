@@ -8,7 +8,6 @@ import java.time.LocalTime;
 
 public class CollectionLists {
     private static ObservableList<String> places = FXCollections.observableArrayList();
-    private static ObservableList<Contact> contacts = FXCollections.observableArrayList();
     static String[] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
 
     public static void loadPlaces() {

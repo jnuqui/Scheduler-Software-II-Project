@@ -37,7 +37,10 @@ public class Main extends Application {
         JDBC.openConnection();
 
         //Change language to French
-        Locale.setDefault(new Locale("fr","FR"));
+        //Locale.setDefault(new Locale("fr","FR"));
+
+        //Set default system language.
+        Locale.setDefault(new Locale("en", "US"));
 
        /* Scanner keyboard = new Scanner(System.in);
         System.out.print("Enter a language(es, de, or fr. Or en): ");

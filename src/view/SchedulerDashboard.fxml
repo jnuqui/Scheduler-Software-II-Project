@@ -13,11 +13,12 @@
           <TableColumn fx:id="titleColumn" prefWidth="81.0" text="Title" />
             <TableColumn fx:id="descriptionColumn" prefWidth="112.0" text="Description" />
             <TableColumn fx:id="locationColumn" prefWidth="76.0" text="Location" />
+            <TableColumn fx:id="contactColumn" prefWidth="105.0" text="Contact" />
             <TableColumn fx:id="typeColumn" prefWidth="42.0" text="Type" />
             <TableColumn fx:id="startColumn" prefWidth="157.0" text="Start" />
             <TableColumn fx:id="endColumn" minWidth="0.0" prefWidth="128.0" text="End" />
             <TableColumn fx:id="customerId" prefWidth="92.0" text="Customer_ID" />
-            <TableColumn fx:id="contactId" prefWidth="73.0" text="Contact_ID" />
+            <TableColumn fx:id="contactId" prefWidth="43.0" text="Contact_ID" />
         </columns>
       </TableView>
       <Button layoutX="29.0" layoutY="99.0" mnemonicParsing="false" onAction="#toCustomerGUI" text="Customers" />

@@ -62,7 +62,7 @@ public abstract class DatabaseAccess {
         ResultSet rs = ps.executeQuery();
     }
 
-    public static ObservableList <String> getContacts() throws SQLException {
+    public static ObservableList <String> getContactNames() throws SQLException {
         String sql = "SELECT Contact_Name FROM CONTACTS";
         ObservableList<String> contacts = FXCollections.observableArrayList();
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -74,6 +74,8 @@ public abstract class DatabaseAccess {
         }
         return contacts;
     }
+
+
 
     public static ObservableList <String> getUsers() throws SQLException {
         String sql = "SELECT User_ID FROM USERS";
@@ -114,7 +116,18 @@ public abstract class DatabaseAccess {
         return users;
     }
 
-
+    public static String getContactName(int contactId) throws SQLException {
+        String sql = "SELECT Contact_Name FROM CONTACTS WHERE Contact_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contactId);
+        ResultSet rs = ps.executeQuery();
+        String contactName = "";
+        while(rs.next())
+        {
+            contactName = rs.getString("Contact_Name");
+        }
+        return contactName;
+    }
 
     public static int getContactId(String contactName) throws SQLException {
         String sql = "SELECT Contact_ID FROM CONTACTS WHERE Contact_Name = ?" ;
@@ -128,19 +141,19 @@ public abstract class DatabaseAccess {
         }
         return contactId;
     }
-/*
+
     public static ObservableList <Contact> getContacts() throws SQLException {
         String sql = "SELECT Contact_Name FROM CONTACTS";
-        ObservableList<String> contacts = FXCollections.observableArrayList();
+        ObservableList<Contact> contacts = FXCollections.observableArrayList();
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while(rs.next())
         {
-            String contactName = rs.getString("Contact_Name");
-            contacts.add(contactName);
+            Contact contact = new Contact(rs.getString("Column_Name"));
+            contacts.add(contact);
         }
         return contacts;
-    }*/
+    }
 
     //TEST - DELETE LATER
     public static void selectAppointment() throws SQLException {

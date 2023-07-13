@@ -5,6 +5,7 @@ import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
+import model.Contact;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,6 +16,28 @@ import java.time.LocalTime;
 
 public class AppointmentDAO
 {
+    //this works - don't want to break it so I'm going to copy and paste it to try a query within the while loop
+    /*public static ObservableList<Appointment> getAppointments() throws SQLException {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM APPOINTMENTS";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int appointmentId = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int contactId = rs.getInt("Contact_ID");
+            Appointment appointment = new Appointment(appointmentId, title, description, location, type, startTime, endTime, customerId, contactId);
+            allAppointments.add(appointment);
+        }
+        return allAppointments;
+    }*/
+
     public static ObservableList<Appointment> getAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS";
@@ -35,8 +58,6 @@ public class AppointmentDAO
         }
         return allAppointments;
     }
-
-
 
 
 
