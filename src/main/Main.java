@@ -62,6 +62,7 @@ public class Main extends Application {
         //Setting the system to a different timezone
         TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
 
+
         launch(args);
         JDBC.closeConnection();
     }
