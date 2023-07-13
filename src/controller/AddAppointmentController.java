@@ -43,6 +43,8 @@ public class AddAppointmentController implements Initializable
     public TextField descriptionTextfield;
     public TextField typeTextfield;
     public TextField customerIdTextfield;
+    @FXML
+    public ComboBox userIdComboBox;
 
 
     private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
@@ -58,7 +60,14 @@ public class AddAppointmentController implements Initializable
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
         populateTimeComboBoxes();
+
+        try {
+            populateUsers();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void saveSampleAppointment() throws SQLException {
@@ -104,6 +113,10 @@ public class AddAppointmentController implements Initializable
 
     public void populateContacts() throws SQLException {
         contactComboBox.setItems(DatabaseAccess.getContacts());
+    }
+
+    public void populateUsers() throws SQLException{
+        userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
     public void populateTimeComboBoxes()

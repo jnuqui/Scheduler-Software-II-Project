@@ -4,6 +4,7 @@ import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
+import model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -72,6 +73,32 @@ public abstract class DatabaseAccess {
             contacts.add(contactName);
         }
         return contacts;
+    }
+
+    public static ObservableList <String> getUsers() throws SQLException {
+        String sql = "SELECT User_ID FROM USERS";
+        ObservableList<String> users = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String userId = rs.getString("User_ID");
+            users.add(userId);
+        }
+        return users;
+    }
+
+    public static ObservableList <Integer> getUsersNull() throws SQLException {
+        String sql = "SELECT User_ID FROM USERS";
+        ObservableList<Integer> users = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            int userId = rs.getInt("User_ID");
+            users.add(userId);
+        }
+        return users;
     }
 
     public static int getContactId(String contactName) throws SQLException {

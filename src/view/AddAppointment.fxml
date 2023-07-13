@@ -33,12 +33,12 @@
       <Label layoutX="117.0" layoutY="455.0" text="Customer_ID" />
       <TextField fx:id="customerIdTextfield" layoutX="202.0" layoutY="451.0" />
       <Label layoutX="144.0" layoutY="495.0" text="User_ID" />
-      <TextField fx:id="userIdTextField" disable="true" layoutX="201.0" layoutY="491.0" text="1" />
       <Button fx:id="addTest" layoutX="106.0" layoutY="591.0" mnemonicParsing="false" onAction="#insertTest" text="Add Test" />
       <DatePicker fx:id="startDatePicker" layoutX="201.0" layoutY="375.0" prefHeight="25.0" prefWidth="117.0" promptText="Month / Day" />
       <DatePicker fx:id="endDatePicker" layoutX="201.0" layoutY="414.0" prefHeight="25.0" prefWidth="117.0" promptText="Month / Day" />
       <ComboBox fx:id="startTimeComboBox" editable="true" layoutX="337.0" layoutY="375.0" prefHeight="25.0" prefWidth="95.0" promptText="Start Time" />
       <ComboBox fx:id="endTimeComboBox" editable="true" layoutX="337.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="End Time" />
       <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false" onAction="#testPrint" text="Test Print" />
+      <ComboBox fx:id="userIdComboBox" layoutX="202.0" layoutY="491.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
