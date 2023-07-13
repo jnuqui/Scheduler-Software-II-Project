@@ -88,6 +88,19 @@ public abstract class DatabaseAccess {
         return users;
     }
 
+    public static ObservableList <String> getCustomerIds() throws SQLException {
+        String sql = "SELECT Customer_ID FROM CUSTOMERS";
+        ObservableList<String> customerIds = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String customerId = rs.getString("Customer_ID");
+            customerIds.add(customerId);
+        }
+        return customerIds;
+    }
+
     public static ObservableList <Integer> getUsersNull() throws SQLException {
         String sql = "SELECT User_ID FROM USERS";
         ObservableList<Integer> users = FXCollections.observableArrayList();
@@ -100,6 +113,8 @@ public abstract class DatabaseAccess {
         }
         return users;
     }
+
+
 
     public static int getContactId(String contactName) throws SQLException {
         String sql = "SELECT Contact_ID FROM CONTACTS WHERE Contact_Name = ?" ;

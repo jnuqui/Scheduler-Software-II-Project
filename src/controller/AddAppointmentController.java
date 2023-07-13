@@ -42,9 +42,11 @@ public class AddAppointmentController implements Initializable
     public TextField titleTextfield;
     public TextField descriptionTextfield;
     public TextField typeTextfield;
-    public TextField customerIdTextfield;
+    @FXML
+    public ComboBox customerIdComboBox;
     @FXML
     public ComboBox userIdComboBox;
+
 
 
     private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
@@ -62,6 +64,12 @@ public class AddAppointmentController implements Initializable
         }
 
         populateTimeComboBoxes();
+
+        try {
+            populateCustomerIds();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
 
         try {
             populateUsers();
@@ -115,9 +123,15 @@ public class AddAppointmentController implements Initializable
         contactComboBox.setItems(DatabaseAccess.getContacts());
     }
 
+    public void populateCustomerIds() throws SQLException {
+        customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
+    }
+
     public void populateUsers() throws SQLException{
         userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
+
+
 
     public void populateTimeComboBoxes()
     {
@@ -143,6 +157,24 @@ public class AddAppointmentController implements Initializable
     public void insertAppointment()
     {
         String title = titleTextfield.getText();
+        String description = descriptionTextfield.getText();
+        String location = locationComboBox.getValue().toString();
+        String type = typeTextfield.getText();
+
+        //Start
+        LocalDate ldStart = startDatePicker.getValue();
+        LocalTime ltStart = (LocalTime) startTimeComboBox.getValue();
+        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
+        Timestamp tsStart = Timestamp.valueOf(ldtStart);
+
+        //End
+        LocalDate ldEnd = endDatePicker.getValue();
+        LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
+        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
+
+
+
        //String title, String description, String location, String type,
         // Timestamp timestamp, Timestamp endstamp, int customerId, int contactId
         //AppointmentDAO.insertAppointment();

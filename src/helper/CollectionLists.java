@@ -6,22 +6,20 @@ import model.Contact;
 
 import java.time.LocalTime;
 
-public class CollectionLists
-{
+public class CollectionLists {
     private static ObservableList<String> places = FXCollections.observableArrayList();
     private static ObservableList<Contact> contacts = FXCollections.observableArrayList();
-    static String [] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
+    static String[] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
 
-    public static void loadPlaces()
-    {
-        for (int i = 0; i<=3; i++) {
+    public static void loadPlaces() {
+        for (int i = 0; i <= 3; i++) {
             places.add(officeLocation[i]);
         }
     }
 
-    public static ObservableList<String> getPlaces()
-    {
+    public static ObservableList<String> getPlaces() {
         loadPlaces();
         return places;
     }
+
 }

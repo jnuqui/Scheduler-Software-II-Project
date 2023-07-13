@@ -78,7 +78,7 @@ public class AppointmentDAO
         ps.executeUpdate();
     }
 
-
+//hello
 
     public static void insertAppointment(String title, String description, String location, String type, Timestamp timestamp, Timestamp endstamp, int customerId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";

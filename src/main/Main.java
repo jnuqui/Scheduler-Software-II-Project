@@ -60,7 +60,7 @@ public class Main extends Application {
         System.out.println(AppointmentDAO.getTimestamp());
 
         //Setting the system to a different timezone
-        TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
 
 
         launch(args);
