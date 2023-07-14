@@ -8,7 +8,8 @@ import java.time.LocalTime;
 
 public class CollectionLists {
     private static ObservableList<String> places = FXCollections.observableArrayList();
-    static String[] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
+    public static String[] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
+    public static boolean locationLoaded = false;
 
     public static void loadPlaces() {
         for (int i = 0; i <= 3; i++) {
@@ -17,8 +18,10 @@ public class CollectionLists {
     }
 
     public static ObservableList<String> getPlaces() {
-        loadPlaces();
+        if(!locationLoaded) {
+            loadPlaces();
+            locationLoaded = true;
+        }
         return places;
     }
-
 }

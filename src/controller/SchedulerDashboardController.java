@@ -10,10 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -39,7 +36,7 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn locationColumn;
     @FXML
-    public TableColumn<Appointment, String> contactColumn = new TableColumn<>("Contact Name");
+    public TableColumn contactColumn;
     @FXML
     public TableColumn typeColumn;
     @FXML
@@ -47,9 +44,11 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");;
     @FXML
-    public TableColumn customerId;
+    public TableColumn customerIdColumn;
+    //@FXML
+    //public TableColumn contactIdColumn;
     @FXML
-    public TableColumn contactId;
+    public TableColumn userIdColumn;
 
     public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
     public ObservableList<Contact>  allContacts = FXCollections.observableArrayList();
@@ -58,45 +57,21 @@ public class SchedulerDashboardController implements Initializable
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         try {
-            allAppointments = AppointmentDAO.getAppointments();
+            allAppointments = AppointmentDAO.getAppointmentsv2();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         populateTablev2();
 
     }
 
-    public void populateTable()
+    /*public void populateTable()
     {
         try {
             appointmentsTable.setItems(AppointmentDAO.getAppointments());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
-        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-    }
-
-    public void populateTablev2()
-    {
-        try {
-            appointmentsTable.setItems(AppointmentDAO.getAppointments());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -106,13 +81,62 @@ public class SchedulerDashboardController implements Initializable
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        contactId.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
+    }*/
+
+    public void populateTablev2()
+    {
+        try {
+            appointmentsTable.setItems(AppointmentDAO.getAppointmentsv2());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         startColumn.setCellFactory(createCellFactory(formatter));
         endColumn.setCellFactory(createCellFactory(formatter));
     }
+
+    public void populateTableMonth()
+    {
+        try {
+            appointmentsTable.setItems(AppointmentDAO.getAppointmentsByMonth());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        startColumn.setCellFactory(createCellFactory(formatter));
+        endColumn.setCellFactory(createCellFactory(formatter));
+    }
+
+
 
     private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
         return column -> new javafx.scene.control.TableCell<Appointment, T>() {
@@ -135,6 +159,7 @@ public class SchedulerDashboardController implements Initializable
         Scene scene = new Scene(root, 600, 500);
         stage.setTitle("Customer Dashboard");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -145,6 +170,7 @@ public class SchedulerDashboardController implements Initializable
         Scene scene = new Scene(root, 500, 700);
         stage.setTitle("Add Appointment");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -155,6 +181,7 @@ public class SchedulerDashboardController implements Initializable
         Scene scene = new Scene(root, 500, 700);
         stage.setTitle("Update Appointment");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -164,10 +191,19 @@ public class SchedulerDashboardController implements Initializable
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.show();
             alert.setHeaderText("Error");
-            alert.setContentText("Hello Gabe");
+            alert.setContentText("Please select an appointment to delete.");
             return;
         }
-        AppointmentDAO.deleteAppointment(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
-        populateTablev2();
+        else {
+            String appointmentId = String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
+            String type = appointmentsTable.getSelectionModel().getSelectedItem().getType();
+            AppointmentDAO.deleteAppointment(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.show();
+            alert.setHeaderText("Delete Successful");
+            alert.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted!");
+            populateTablev2();
+        }
     }
 }

@@ -27,13 +27,11 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable
 {
     @FXML
-    public ComboBox locationComboBox;
+    private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
     @FXML
     public DatePicker startDatePicker;
-    @FXML
-    public DatePicker endDatePicker;
     @FXML
     public ComboBox startTimeComboBox;
     @FXML
@@ -47,16 +45,14 @@ public class AddAppointmentController implements Initializable
     @FXML
     public ComboBox userIdComboBox;
 
-
-
     private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
     LocalTime [] time = new LocalTime[13];
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //AppointmentDAO.selectAppointmentId();
+            populateLocation();
 
-        populateLocation();
         try {
             populateContacts();
         } catch (SQLException throwables) {
@@ -94,9 +90,10 @@ public class AddAppointmentController implements Initializable
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1019, 500);
+        Scene scene = new Scene(root, 1240, 600);
         stage.setTitle("Scheduler Dashboard");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -116,7 +113,7 @@ public class AddAppointmentController implements Initializable
 
     public void populateLocation()
     {
-        locationComboBox.setItems(CollectionLists.getPlaces());
+            locationComboBox.setItems(CollectionLists.getPlaces());
     }
 
     public void populateContacts() throws SQLException {
