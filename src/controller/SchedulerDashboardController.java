@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import helper.CollectionLists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -106,9 +107,9 @@ public class SchedulerDashboardController implements Initializable
         //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        startColumn.setCellFactory(createCellFactory(formatter));
-        endColumn.setCellFactory(createCellFactory(formatter));
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //startColumn.setCellFactory(createCellFactory(formatter));
+        //endColumn.setCellFactory(createCellFactory(formatter));
     }
 
     public void populateTableMonth()
@@ -131,13 +132,11 @@ public class SchedulerDashboardController implements Initializable
         //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        startColumn.setCellFactory(createCellFactory(formatter));
-        endColumn.setCellFactory(createCellFactory(formatter));
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        //startColumn.setCellFactory(createCellFactory(formatter));
+        //endColumn.setCellFactory(createCellFactory(formatter));
     }
-
-
-
+/*
     private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
         return column -> new javafx.scene.control.TableCell<Appointment, T>() {
             @Override
@@ -151,6 +150,7 @@ public class SchedulerDashboardController implements Initializable
             }
         };
     }
+    */
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
@@ -206,4 +206,11 @@ public class SchedulerDashboardController implements Initializable
             populateTablev2();
         }
     }
+
+    public void testPrint()
+    {
+        System.out.println(CollectionLists.myDTF(allAppointments.get(1).getStartTime()));
+    }
+
+
 }

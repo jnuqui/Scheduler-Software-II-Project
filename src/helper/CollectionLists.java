@@ -4,7 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Contact;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class CollectionLists {
     private static ObservableList<String> places = FXCollections.observableArrayList();
@@ -23,5 +25,12 @@ public class CollectionLists {
             locationLoaded = true;
         }
         return places;
+    }
+
+    public static String myDTF (LocalDateTime myLDT)
+    {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
+        String formattedDate = myLDT.format(format);
+        return formattedDate;
     }
 }

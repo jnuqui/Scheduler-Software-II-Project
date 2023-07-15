@@ -34,5 +34,6 @@
       </RadioButton>
       <RadioButton fx:id="monthAppointmentsRadio" layoutX="426.0" layoutY="102.0" mnemonicParsing="false" onAction="#populateTableMonth" text="Month" toggleGroup="$filter" />
       <RadioButton layoutX="426.0" layoutY="128.0" mnemonicParsing="false" text="Week" toggleGroup="$filter" />
+      <Button fx:id="testPrintButton" layoutX="620.0" layoutY="54.0" mnemonicParsing="false" onAction="#testPrint" text="test print" />
    </children>
 </AnchorPane>

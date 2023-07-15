@@ -50,8 +50,8 @@ public class AddAppointmentController implements Initializable
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //AppointmentDAO.selectAppointmentId();
-            populateLocation();
+
+        populateLocation();
 
         try {
             populateContacts();
@@ -74,28 +74,7 @@ public class AddAppointmentController implements Initializable
         }
     }
 
-    public void saveSampleAppointment() throws SQLException {
-        LocalDate myLD = LocalDate.of(2023, 07, 06);
-        LocalTime myT = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute());
-        LocalDateTime myLDT = LocalDateTime.of(myLD,myT);
-        ZoneId myET = ZoneId.of("US/Eastern");
-        //ZonedDateTime myZDT =
-        Timestamp ts = Timestamp.valueOf(myLDT);
-       // AppointmentDAO.insertTest(ts);
-        System.out.println(ts);
-    }
 
-
-    public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1240, 600);
-        stage.setTitle("Scheduler Dashboard");
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
 
     public void insertTest() throws SQLException {
         LocalDate startDate = LocalDate.now();
@@ -120,16 +99,6 @@ public class AddAppointmentController implements Initializable
         contactComboBox.setItems(DatabaseAccess.getContactNames());
     }
 
-    public void populateCustomerIds() throws SQLException {
-        customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
-    }
-
-    public void populateUsers() throws SQLException{
-        userIdComboBox.setItems(DatabaseAccess.getUsers());
-    }
-
-
-
     public void populateTimeComboBoxes()
     {
         //start time
@@ -144,6 +113,14 @@ public class AddAppointmentController implements Initializable
             myLT.add(time[i]);
         }
         endTimeComboBox.setItems(myLT);
+    }
+
+    public void populateCustomerIds() throws SQLException {
+        customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
+    }
+
+    public void populateUsers() throws SQLException{
+        userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
     public void testPrint() throws SQLException {
@@ -169,6 +146,13 @@ public class AddAppointmentController implements Initializable
         LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
         Timestamp tsEnd = Timestamp.valueOf(ldtEnd);*/
+
+        LocalDate ldStart = LocalDate.now();
+        LocalTime ltStart = LocalTime.now();
+        LocalTime ltEnd = LocalTime.now().plusHours(1);
+        startDatePicker.setValue(ldStart);
+        startTimeComboBox.setValue(ltStart);
+        endTimeComboBox.setValue(ltEnd);
 
         customerIdComboBox.getSelectionModel().select(1);
         userIdComboBox.getSelectionModel().select(1);
@@ -202,5 +186,14 @@ public class AddAppointmentController implements Initializable
         AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
     }
 
-
+    public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
+    {
+        Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 1240, 600);
+        stage.setTitle("Scheduler Dashboard");
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
 }

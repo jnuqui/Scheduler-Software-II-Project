@@ -112,14 +112,6 @@ public class AppointmentDAO
         return allAppointments;
     }
 
-    public static int selectAppointmentId() throws SQLException {
-        String sql = "SELECT MAX(Appointment_ID) FROM APPOINTMENTS";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-
-        return rs.getInt("Appointment_ID");
-        }
-
     public static Timestamp getTimestamp() throws SQLException {
         String sql = "SELECT Start FROM APPOINTMENTS WHERE Appointment_ID = 1";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -130,10 +122,6 @@ public class AppointmentDAO
         }
         return myTS;
     }
-
-
-
-
 //INSERT INTO appointments VALUES(1, 'title', 'description', 'location', 'Planning Session', '2020-05-28 12:00:00', '2020-05-28 13:00:00', NOW(), 'script', NOW(), 'script', 1, 1, 3);
     public static void insertTest(Timestamp timestamp, Timestamp endstamp) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
