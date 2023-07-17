@@ -29,6 +29,8 @@ import java.util.ResourceBundle;
 public class UpdateAppointmentController implements Initializable
 {
     @FXML
+    public TextField appointmentIdTextfield;
+    @FXML
     private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
@@ -143,10 +145,27 @@ public class UpdateAppointmentController implements Initializable
         contactComboBox.getSelectionModel().select(1);
     }
 
-    public void populateLocationUpdate(String location)
+
+public void setAppointmentId(String appointmentId)
+{
+    appointmentIdTextfield.setText(appointmentId);
+}
+
+    public void setLocationUpdate(String location)
     {
         locationComboBox.getSelectionModel().select(CollectionLists.returnUpdateLocation(location));
     }
+
+    public void setCustomerId(String customerId) throws SQLException {
+        customerIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingCustomerId(customerId));
+    }
+
+    public void setUserId(String userId) throws SQLException {
+        userIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingUserId(userId));
+    }
+
+
+
 
     public void updateAppointmentFill(String title, String description, String location, String contact, String type)
     {

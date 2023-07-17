@@ -54,6 +54,47 @@ public abstract class DatabaseAccess {
         return customerIds;
     }
 
+    public static int getMatchingCustomerId(String customerId) throws SQLException {
+
+        String[] customerIdList = getCustomerIds().toArray(new String[0]);
+        int customerIdIndex = 0;
+        for (int i = 0; i <= customerIdList.length; i++) {
+            if (customerId.equals(customerIdList[i]))
+            {
+                customerIdIndex = i;
+                break;
+            }
+        }
+        return customerIdIndex;
+    }
+
+    public static ObservableList <String> getUserIds() throws SQLException {
+        String sql = "SELECT User_ID FROM USERS";
+        ObservableList<String> userIds = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String userId = rs.getString("User_ID");
+            userIds.add(userId);
+        }
+        return userIds;
+    }
+
+    public static int getMatchingUserId(String userId) throws SQLException {
+
+        String[] userIdList = getUserIds().toArray(new String[0]);
+        int userIdIndex = 0;
+        for (int i = 0; i <= userIdList.length; i++) {
+            if (userId.equals(userIdList[i]))
+            {
+                userIdIndex = i;
+                break;
+            }
+        }
+        return userIdIndex;
+    }
+
     public static int getContactId(String contactName) throws SQLException {
         String sql = "SELECT Contact_ID FROM CONTACTS WHERE Contact_Name = ?" ;
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

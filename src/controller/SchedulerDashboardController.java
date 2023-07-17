@@ -196,8 +196,7 @@ public class SchedulerDashboardController implements Initializable
     }
 
 
-    public void toUpdateAppointmentv2(ActionEvent actionEvent) throws IOException
-    {
+    public void toUpdateAppointmentv2(ActionEvent actionEvent) throws IOException, SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -214,7 +213,15 @@ public class SchedulerDashboardController implements Initializable
             loader.load();
 
             UpdateAppointmentController myUpdate = loader.getController();
-            myUpdate.populateLocationUpdate(sendLocation());
+            myUpdate.setAppointmentId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId()));
+            myUpdate.setLocationUpdate(sendLocation());
+            //myUpdate.setContact
+            //myUpdate.setType
+            //myUpdate.setStartDate
+            //myUpdate.setStartTime
+            //myUpdate.setEndTime
+            myUpdate.setCustomerId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getCustomerId()));
+            myUpdate.setUserId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getUserId()));
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
