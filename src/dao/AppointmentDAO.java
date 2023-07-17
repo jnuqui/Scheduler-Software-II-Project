@@ -112,6 +112,35 @@ public class AppointmentDAO
         return allAppointments;
     }
 
+    public static ObservableList<Appointment> getAppointmentsByWeek() throws SQLException {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT appointments.*, contacts.Contact_Name" +
+        " FROM appointments" +
+        " JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID" +
+        " WHERE DATE(`Start`) >= NOW() AND DATE(`End`) <= (NOW() + INTERVAL 7 DAY)" +
+        " ORDER BY Appointment_ID ASC";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int appointmentId = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String contactName = rs.getString("Contact_Name");
+            String type = rs.getString("Type");
+            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int contactId = rs.getInt("Contact_ID");
+            int userId = rs.getInt("User_ID");
+            Appointment appointment = new Appointment(appointmentId, title, description, location, contactName, type, startTime, endTime, customerId, contactId, userId);
+            allAppointments.add(appointment);
+        }
+        return allAppointments;
+    }
+
+
+
     public static Timestamp getTimestamp() throws SQLException {
         String sql = "SELECT Start FROM APPOINTMENTS WHERE Appointment_ID = 1";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);

@@ -26,8 +26,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-public class UpdateAppointmentController implements Initializable
-{
+public class UpdateAppointmentController implements Initializable {
     @FXML
     public TextField appointmentIdTextfield;
     @FXML
@@ -50,7 +49,7 @@ public class UpdateAppointmentController implements Initializable
     public ComboBox userIdComboBox;
 
     private ObservableList<LocalTime> myLT = FXCollections.observableArrayList();
-    LocalTime [] time = new LocalTime[13];
+    LocalTime[] time = new LocalTime[13];
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -76,8 +75,8 @@ public class UpdateAppointmentController implements Initializable
             throwables.printStackTrace();
         }
     }
-    public void populateLocation()
-    {
+
+    public void populateLocation() {
         locationComboBox.setItems(CollectionLists.getPlaces());
     }
 
@@ -85,8 +84,7 @@ public class UpdateAppointmentController implements Initializable
         contactComboBox.setItems(DatabaseAccess.getContactNames());
     }
 
-    public void populateTimeComboBoxes()
-    {
+    public void populateTimeComboBoxes() {
         //start time
         for (int i = 0; i <= 12; i++) {
             time[i] = LocalTime.of((i + 8), 0);
@@ -105,7 +103,7 @@ public class UpdateAppointmentController implements Initializable
         customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
     }
 
-    public void populateUsers() throws SQLException{
+    public void populateUsers() throws SQLException {
         userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
@@ -114,8 +112,7 @@ public class UpdateAppointmentController implements Initializable
         System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
     }
 
-    public void insertAppointmentTestFill()
-    {
+    public void insertAppointmentTestFill() {
         titleTextfield.setText("Title Test");
         descriptionTextfield.setText("Description Test");
         locationComboBox.getSelectionModel().select(1);
@@ -146,15 +143,49 @@ public class UpdateAppointmentController implements Initializable
     }
 
 
-public void setAppointmentId(String appointmentId)
-{
-    appointmentIdTextfield.setText(appointmentId);
-}
+    public void setAppointmentId(String appointmentId) {
+        appointmentIdTextfield.setText(appointmentId);
+    }
 
-    public void setLocationUpdate(String location)
+    public void setTitle(String title)
     {
+        titleTextfield.setText(title);
+    }
+
+    public void setDescription(String description)
+    {
+        descriptionTextfield.setText(description);
+    }
+
+    public void setLocation(String location) {
         locationComboBox.getSelectionModel().select(CollectionLists.returnUpdateLocation(location));
     }
+
+    public void setContact(String contact) {
+        contactComboBox.setValue(contact);
+    }
+
+    public void setType(String contact)
+    {
+        typeTextfield.setText(contact);
+    }
+
+    public void setStartDate(LocalDate localDate)
+    {
+        startDatePicker.setValue(localDate);
+    }
+
+    public void setStartTime(LocalTime localTime)
+    {
+        startTimeComboBox.setValue(localTime);
+    }
+
+    public void setEndTime(LocalTime localTime)
+    {
+        endTimeComboBox.setValue(localTime);
+    }
+
+
 
     public void setCustomerId(String customerId) throws SQLException {
         customerIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingCustomerId(customerId));
@@ -201,6 +232,7 @@ public void setAppointmentId(String appointmentId)
 
 
     public void updateAppointment() throws SQLException {
+        int appointmentId = Integer.parseInt(appointmentIdTextfield.getText());
         String title = titleTextfield.getText();
         String description = descriptionTextfield.getText();
         String location = locationComboBox.getValue().toString();
@@ -224,7 +256,7 @@ public void setAppointmentId(String appointmentId)
 
         //(String title, String description, String location, String type,
         //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
-        AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
+        AppointmentDAO.updateAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId, appointmentId);
     }
 
 

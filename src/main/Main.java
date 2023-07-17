@@ -64,12 +64,9 @@ public class Main extends Application {
         ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
         System.out.println(myZDT);
         System.out.println(AppointmentDAO.getTimestamp());
-        System.out.println(officeLocation[3]);
-        System.out.println(CollectionLists.returnUpdateLocation("London, England"));
 
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
-
 
         launch(args);
         JDBC.closeConnection();

@@ -141,6 +141,34 @@ public class SchedulerDashboardController implements Initializable
         //endColumn.setCellFactory(createCellFactory(formatter));
     }
 
+    public void populateTableWeek() {
+        {
+            try {
+                appointmentsTable.setItems(AppointmentDAO.getAppointmentsByWeek());
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+            appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+            contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+            userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+
+            //Use with Callback method below
+            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            //startColumn.setCellFactory(createCellFactory(formatter));
+            //endColumn.setCellFactory(createCellFactory(formatter));
+        }
+    }
+
     /*
     private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
         return column -> new javafx.scene.control.TableCell<Appointment, T>() {
@@ -214,12 +242,14 @@ public class SchedulerDashboardController implements Initializable
 
             UpdateAppointmentController myUpdate = loader.getController();
             myUpdate.setAppointmentId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId()));
-            myUpdate.setLocationUpdate(sendLocation());
-            //myUpdate.setContact
-            //myUpdate.setType
-            //myUpdate.setStartDate
-            //myUpdate.setStartTime
-            //myUpdate.setEndTime
+            myUpdate.setTitle(appointmentsTable.getSelectionModel().getSelectedItem().getTitle());
+            myUpdate.setDescription(appointmentsTable.getSelectionModel().getSelectedItem().getDescription());
+            myUpdate.setLocation(sendLocation());
+            myUpdate.setContact(appointmentsTable.getSelectionModel().getSelectedItem().getContactName());
+            myUpdate.setType(appointmentsTable.getSelectionModel().getSelectedItem().getType());
+            myUpdate.setStartDate(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime().toLocalDate());
+            myUpdate.setStartTime(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime().toLocalTime());
+            myUpdate.setEndTime(appointmentsTable.getSelectionModel().getSelectedItem().getEndTime().toLocalTime());
             myUpdate.setCustomerId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getCustomerId()));
             myUpdate.setUserId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getUserId()));
 
