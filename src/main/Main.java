@@ -3,6 +3,7 @@ package main;
 import controller.LoginController;
 import dao.AppointmentDAO;
 import dao.DatabaseAccess;
+import helper.CollectionLists;
 import helper.JDBC;
 import helper.LanguageConversion;
 import javafx.application.Application;
@@ -18,6 +19,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 import java.util.TimeZone;
+
+import static helper.CollectionLists.officeLocation;
 
 public class Main extends Application {
 
@@ -61,6 +64,8 @@ public class Main extends Application {
         ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
         System.out.println(myZDT);
         System.out.println(AppointmentDAO.getTimestamp());
+        System.out.println(officeLocation[3]);
+        System.out.println(CollectionLists.returnUpdateLocation("London, England"));
 
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));

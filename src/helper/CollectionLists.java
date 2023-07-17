@@ -2,6 +2,7 @@ package helper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Appointment;
 import model.Contact;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,19 @@ public class CollectionLists {
         return places;
     }
 
-    public static String myDTF (LocalDateTime myLDT)
+    public static int returnUpdateLocation(String location) {
+        int locationIndex = 0;
+        for (int i = 0; i <= 3; i++) {
+            if (location.equals(officeLocation[i]))
+            {
+                locationIndex = i;
+                break;
+            }
+        }
+        return locationIndex;
+    }
+
+    public static String myFormattedDTF (LocalDateTime myLDT)
     {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         String formattedDate = myLDT.format(format);

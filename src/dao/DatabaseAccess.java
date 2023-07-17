@@ -13,12 +13,7 @@ import java.sql.Timestamp;
 
 public abstract class DatabaseAccess {
 
-    //Later to edit for UpdateDAO
-    public static void getAppointmentId(int appointmentId) throws SQLException {
-        String sql = "SELECT Appointment_ID FROM APPOINTMENTS WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-    }
+
 
     public static ObservableList <String> getContactNames() throws SQLException {
         String sql = "SELECT Contact_Name FROM CONTACTS";

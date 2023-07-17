@@ -122,6 +122,7 @@ public class AppointmentDAO
         }
         return myTS;
     }
+
 //INSERT INTO appointments VALUES(1, 'title', 'description', 'location', 'Planning Session', '2020-05-28 12:00:00', '2020-05-28 13:00:00', NOW(), 'script', NOW(), 'script', 1, 1, 3);
     public static void insertTest(Timestamp timestamp, Timestamp endstamp) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -153,6 +154,34 @@ public class AppointmentDAO
         ps.setInt(8, userId);
         ps.setInt(9, contactId);
         ps.executeUpdate();
+    }
+
+    public static void updateAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId, int appointmentId) throws SQLException {
+        String sql = "UPDATE APPOINTMENTS\n" +
+                "set Title = ?, Description = ?,\n" +
+                "Location = ?, Type = ?,\n" +
+                "Start = ?, End = ?, \n" +
+                "Customer_ID = ?, User_ID = ?,\n" +
+                "Contact_ID = ?\n" +
+                "where appointment_id = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, title);
+        ps.setString(2,  description);
+        ps.setString(3, location);
+        ps.setString(4, type);
+        ps.setTimestamp(5, tsStart);
+        ps.setTimestamp(6, tsEnd);
+        ps.setInt(7, customerId);
+        ps.setInt(8, userId);
+        ps.setInt(9, contactId);
+        ps.setInt(10, appointmentId);
+        ps.executeUpdate();
+    }
+
+    public static void getAppointment(int appointmentId) throws SQLException {
+        String sql = "SELECT Appointment_ID FROM APPOINTMENTS WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
     }
 
 

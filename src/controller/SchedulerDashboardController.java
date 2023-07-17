@@ -64,6 +64,7 @@ public class SchedulerDashboardController implements Initializable
         }
         populateTablev2();
 
+        //Random print
     }
 
     /*public void populateTable()
@@ -107,6 +108,7 @@ public class SchedulerDashboardController implements Initializable
         //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
+        //Use with Callback method below.
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         //startColumn.setCellFactory(createCellFactory(formatter));
         //endColumn.setCellFactory(createCellFactory(formatter));
@@ -132,11 +134,14 @@ public class SchedulerDashboardController implements Initializable
         //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
+
+        //Use with Callback method below
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         //startColumn.setCellFactory(createCellFactory(formatter));
         //endColumn.setCellFactory(createCellFactory(formatter));
     }
-/*
+
+    /*
     private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
         return column -> new javafx.scene.control.TableCell<Appointment, T>() {
             @Override
@@ -149,8 +154,8 @@ public class SchedulerDashboardController implements Initializable
                 }
             }
         };
-    }
-    */
+    }*/
+
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
@@ -185,6 +190,41 @@ public class SchedulerDashboardController implements Initializable
         stage.show();
     }
 
+    public String sendLocation()
+    {
+        return appointmentsTable.getSelectionModel().getSelectedItem().getLocation();
+    }
+
+
+    public void toUpdateAppointmentv2(ActionEvent actionEvent) throws IOException
+    {
+        if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select an appointment to update.");
+            return;
+        }
+        else {
+            //int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/UpdateAppointment.fxml"));
+            loader.load();
+
+            UpdateAppointmentController myUpdate = loader.getController();
+            myUpdate.populateLocationUpdate(sendLocation());
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setTitle("Update Appointment");
+            stage.setScene(new Scene(scene));
+            stage.centerOnScreen();
+            stage.show();
+        }
+    }
+
     public void deleteAppointment() throws SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -209,7 +249,7 @@ public class SchedulerDashboardController implements Initializable
 
     public void testPrint()
     {
-        System.out.println(CollectionLists.myDTF(allAppointments.get(1).getStartTime()));
+        System.out.println(allAppointments.get(1).getStartTime());
     }
 
 
