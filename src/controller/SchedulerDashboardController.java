@@ -64,6 +64,7 @@ public class SchedulerDashboardController implements Initializable
         }
         populateTablev2();
 
+
         //Random print
     }
 
@@ -90,11 +91,13 @@ public class SchedulerDashboardController implements Initializable
 
     public void populateTablev2()
     {
-        try {
+        /*try {
             appointmentsTable.setItems(AppointmentDAO.getAppointmentsv2());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
-        }
+        }*/
+
+        appointmentsTable.setItems(allAppointments);
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -189,7 +192,7 @@ public class SchedulerDashboardController implements Initializable
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 500);
+        Scene scene = new Scene(root, 950, 400);
         stage.setTitle("Customer Dashboard");
         stage.setScene(scene);
         stage.centerOnScreen();

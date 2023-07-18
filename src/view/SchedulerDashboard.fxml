@@ -27,7 +27,7 @@
       <Button layoutX="165.0" layoutY="29.0" mnemonicParsing="false" onAction="#toAddAppointment" text="Add" />
       <Button layoutX="213.0" layoutY="29.0" mnemonicParsing="false" onAction="#toUpdateAppointmentv2" text="Update" />
       <Button fx:id="deleteAppointmentButton" layoutX="276.0" layoutY="29.0" mnemonicParsing="false" onAction="#deleteAppointment" text="Delete" />
-      <RadioButton fx:id="allAppointmentsRadio" layoutX="426.0" layoutY="79.0" mnemonicParsing="false" onAction="#populateTablev2" text="All">
+      <RadioButton fx:id="allAppointmentsRadio" layoutX="426.0" layoutY="79.0" mnemonicParsing="false" onAction="#populateTablev2" selected="true" text="All">
          <toggleGroup>
             <ToggleGroup fx:id="filter" />
          </toggleGroup>
