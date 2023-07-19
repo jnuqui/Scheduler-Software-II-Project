@@ -36,4 +36,10 @@ public class FirstLevelDivision
     public void setCountryIdFK(int countryIdFK) {
         this.countryIdFK = countryIdFK;
     }
+
+    @Override
+    public String toString()
+    {
+        return divisionName;
+    }
 }

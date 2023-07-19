@@ -83,7 +83,14 @@ public class CustomerController implements Initializable
             alert.setContentText("Delete customer appointments first.");
             return;
         }
-        //CustomerDAO.deleteCustomer();
+        else {
+            CustomerDAO.deleteCustomer(customersTable.getSelectionModel().getSelectedItem().getCustomerId());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.show();
+            alert.setHeaderText("Delete Successful");
+            alert.setContentText("Customer ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + " deleted!");
+            populateTable();
+        }
     }
 
 
@@ -96,6 +103,7 @@ public class CustomerController implements Initializable
         Scene scene = new Scene(root, 500, 550);
         stage.setTitle("Add Customer");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 
@@ -103,10 +111,43 @@ public class CustomerController implements Initializable
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/UpdateCustomer.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 650, 500);
+        Scene scene = new Scene(root, 500, 550);
         stage.setTitle("Update Customer");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
+    }
+
+    public void toUpdateCustomerv2(ActionEvent actionEvent) throws IOException, SQLException {
+        if( customersTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select a customer to update.");
+            return;
+        }
+        else {
+            //int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId();
+
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/UpdateCustomer.fxml"));
+            loader.load();
+
+            UpdateCustomerController myUpdate = loader.getController();
+            myUpdate.setCustomer(customersTable.getSelectionModel().getSelectedItem().getCustomerId(),
+                    customersTable.getSelectionModel().getSelectedItem().toString(),
+                    customersTable.getSelectionModel().getSelectedItem().getAddress(),
+                    customersTable.getSelectionModel().getSelectedItem().getPostalCode(),
+                    customersTable.getSelectionModel().getSelectedItem().getPhone());
+
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Parent scene = loader.getRoot();
+            stage.setTitle("Update Customer");
+            stage.setScene(new Scene(scene));
+            stage.centerOnScreen();
+            stage.show();
+        }
     }
 
 

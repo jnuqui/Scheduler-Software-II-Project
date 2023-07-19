@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Country;
+import model.FirstLevelDivision;
 
 import java.io.IOException;
 import java.net.URL;
@@ -26,7 +27,7 @@ public class AddCustomerController implements Initializable
     @FXML
     public ComboBox<Country> countryComboBox;
     @FXML
-    public ComboBox firstLevelDivisionComboBox;
+    public ComboBox<FirstLevelDivision> firstLevelDivisionComboBox;
     @FXML
     public TextField customerNameTextField;
     @FXML
@@ -35,8 +36,6 @@ public class AddCustomerController implements Initializable
     public TextField postalCodeTextField;
     @FXML
     public TextField phoneTextField;
-
-    String selectedCountry = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,8 +85,8 @@ public class AddCustomerController implements Initializable
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
-        FirstLevelDivisionDAO.getAllFLD(countryId);
-        firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getFLDStrings());
+        //FirstLevelDivisionDAO.getAllFLD(countryId);
+        firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
     public void addCustomer() throws SQLException {
@@ -117,9 +116,10 @@ public class AddCustomerController implements Initializable
         //firstLevelDivisionComboBox.getItems().removeAll();
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 700, 500);
+        Scene scene = new Scene(root, 950, 400);
         stage.setTitle("Customer Dashboard");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
     }
 

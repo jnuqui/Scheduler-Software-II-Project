@@ -41,6 +41,22 @@ public class CustomerDAO {
         ps.executeUpdate();
     }
 
+    public static void updateCustomer(String customerName, String address, String postalCode, String phone, int divisionIdFK, int customerId) throws SQLException {
+        String sql = "UPDATE CUSTOMERS set Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?," +
+                "                Division_ID = ?" +
+                "                where Customer_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, customerName);
+        ps.setString(2,  address);
+        ps.setString(3, postalCode);
+        ps.setString(4, phone);
+        ps.setInt(5, divisionIdFK);
+        ps.setInt(6, customerId);
+        ps.executeUpdate();
+    }
+
+
+
     public static int checkCustomerAppointments(int customerId) throws SQLException
     {
         String sql = "SELECT COUNT(appointment_id) AS RowCount from APPOINTMENTS where customer_id = ?;";
@@ -54,12 +70,8 @@ public class CustomerDAO {
 
 
     public static void deleteCustomer(int customerId) throws SQLException {
-        //NEED A CHECK TO SEE IF APPOINTMENTS EXIST
-        if (checkCustomerAppointments(customerId) > 0)
-        {
-
-        }
-        String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+        //NEED A CHECK TO SEE IF CUSTOMER EXISTS
+        String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, customerId);
         ps.executeUpdate();

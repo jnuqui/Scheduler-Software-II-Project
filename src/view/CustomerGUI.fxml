@@ -18,7 +18,7 @@
         </columns>
       </TableView>
       <Button layoutX="146.0" layoutY="25.0" mnemonicParsing="false" onAction="#toAddCustomer" text="Add" />
-      <Button layoutX="207.0" layoutY="25.0" mnemonicParsing="false" onAction="#toUpdateCustomer" text="Update" />
+      <Button layoutX="207.0" layoutY="25.0" mnemonicParsing="false" onAction="#toUpdateCustomerv2" text="Update" />
       <Button layoutX="287.0" layoutY="25.0" mnemonicParsing="false" onAction="#deleteCustomer" text="Remove" />
       <Button layoutX="778.0" layoutY="340.0" mnemonicParsing="false" onAction="#toSchedulerDashboard" text="Close" />
    </children>
