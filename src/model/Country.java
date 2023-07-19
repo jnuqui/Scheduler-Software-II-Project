@@ -26,6 +26,11 @@ public class Country
         this.countryId = countryId;
         this.countryName = countryName;
     }
+
+    @Override
+    public String toString() {
+        return countryName;
+    }
 }
 
 

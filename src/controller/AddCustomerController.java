@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Country;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,7 +24,7 @@ public class AddCustomerController implements Initializable
 {
 
     @FXML
-    public ComboBox countryComboBox;
+    public ComboBox<Country> countryComboBox;
     @FXML
     public ComboBox firstLevelDivisionComboBox;
     @FXML
@@ -40,23 +41,32 @@ public class AddCustomerController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        countryComboBox.setPromptText("Select Country");
+        //countryComboBox.setPromptText("Select Country");
+        //countryComboBox.setSelectionModel();
         try {
-            populateCountries();
+            populateCountriesv2();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
+        //countryComboBox.setValue(countryComboBox.getItems().get(0));
     }
 
     public void populateCountries() throws SQLException {
         CountryDAO.clearCountries();
-        countryComboBox.setItems(CountryDAO.getCountriesStrings());
+        //countryComboBox.setItems(CountryDAO.getCountriesStrings());
+    }
+
+    public void populateCountriesv2() throws SQLException {
+        CountryDAO.clearCountries();
+        countryComboBox.setItems(CountryDAO.getCountries());
+       // countryComboBox.setValue(CountryDAO.getCountries().get(0));
     }
 
     public void passCountry() throws SQLException {
         firstLevelDivisionComboBox.getItems().removeAll();
-        /*String selectedCountry = countryComboBox.getSelectionModel().getSelectedItem().toString();
+        //optional fancy feature
+        /*
+        String selectedCountry = countryComboBox.getValue().getCountryName();
         if(selectedCountry.equals("U.S"))
         {
             firstLevelDivisionComboBox.setPromptText("Select U.S State");
@@ -69,7 +79,9 @@ public class AddCustomerController implements Initializable
         {
             firstLevelDivisionComboBox.setPromptText("Select Canadian Province");
         }*/
-        populateFirstLevelDivisions(CountryDAO.getMatchingCountryId(countryComboBox.getSelectionModel().getSelectedItem().toString()));
+
+        //populateFirstLevelDivisions(CountryDAO.getMatchingCountryId(countryComboBox.getSelectionModel().getSelectedItem().toString()));
+        populateFirstLevelDivisions(countryComboBox.getValue().getCountryId());
     }
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
@@ -92,6 +104,7 @@ public class AddCustomerController implements Initializable
         System.out.println(phone);
         System.out.println(divisionIdFK);
         */
+
         CustomerDAO.insertCustomer(customerName, address, postalCode, phone, divisionIdFK);
     }
 
@@ -102,7 +115,6 @@ public class AddCustomerController implements Initializable
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
         //firstLevelDivisionComboBox.getItems().removeAll();
-        //countryComboBox.getItems().removeAll();
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
