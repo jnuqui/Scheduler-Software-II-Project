@@ -45,5 +45,19 @@ public class FirstLevelDivisionDAO
         allFLDStrings.clear();
     }
 
+    public static int getMatchingDivisionId(String division) throws SQLException
+    {
+        int divisionId = -1;
+        String sql = "SELECT DIVISION_ID FROM FIRST_LEVEL_DIVISIONS WHERE DIVISION = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, division);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            divisionId = rs.getInt("Division_ID");
+        }
+        return divisionId;
+    }
+
 
 }

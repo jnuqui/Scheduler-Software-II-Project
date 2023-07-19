@@ -35,6 +35,12 @@ public class CountryDAO {
             return allCountriesStrings;
     }
 
+    public static void clearCountries()
+    {
+        allCountries.clear();
+        allCountriesStrings.clear();
+    }
+
     public static int getMatchingCountryId(String country) throws SQLException
     {
         int countryId = -1;
@@ -46,7 +52,6 @@ public class CountryDAO {
         {
             countryId = rs.getInt("Country_ID");
         }
-
         return countryId;
     }
 }

@@ -1,6 +1,7 @@
 package controller;
 
 import dao.CountryDAO;
+import dao.CustomerDAO;
 import dao.FirstLevelDivisionDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +11,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Country;
 
 import java.io.IOException;
 import java.net.URL;
@@ -25,11 +26,21 @@ public class AddCustomerController implements Initializable
     public ComboBox countryComboBox;
     @FXML
     public ComboBox firstLevelDivisionComboBox;
-    static int countryCount = 0;
+    @FXML
+    public TextField customerNameTextField;
+    @FXML
+    public TextField addressTextField;
+    @FXML
+    public TextField postalCodeTextField;
+    @FXML
+    public TextField phoneTextField;
+
+    String selectedCountry = null;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        countryComboBox.setPromptText("Select Country");
         try {
             populateCountries();
         } catch (SQLException throwables) {
@@ -39,14 +50,25 @@ public class AddCustomerController implements Initializable
     }
 
     public void populateCountries() throws SQLException {
-        //if(countryCount ==  )
+        CountryDAO.clearCountries();
         countryComboBox.setItems(CountryDAO.getCountriesStrings());
-        countryCount = countryComboBox.getVisibleRowCount();
     }
 
     public void passCountry() throws SQLException {
-        //testPrint(countryComboBox.getSelectionModel().getSelectedItem().toString());
         firstLevelDivisionComboBox.getItems().removeAll();
+        /*String selectedCountry = countryComboBox.getSelectionModel().getSelectedItem().toString();
+        if(selectedCountry.equals("U.S"))
+        {
+            firstLevelDivisionComboBox.setPromptText("Select U.S State");
+        }
+        if(selectedCountry.equals("UK"))
+        {
+            firstLevelDivisionComboBox.setPromptText("Select UK Region");
+        }
+        if(selectedCountry.equals("Canada"))
+        {
+            firstLevelDivisionComboBox.setPromptText("Select Canadian Province");
+        }*/
         populateFirstLevelDivisions(CountryDAO.getMatchingCountryId(countryComboBox.getSelectionModel().getSelectedItem().toString()));
     }
 
@@ -56,14 +78,31 @@ public class AddCustomerController implements Initializable
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getFLDStrings());
     }
 
-    public void testPrint(String country)
-    {
-        System.out.println(country);
+    public void addCustomer() throws SQLException {
+        String customerName = customerNameTextField.getText();
+        String address = addressTextField.getText();
+        String postalCode = postalCodeTextField.getText();
+        String phone = phoneTextField.getText();
+        int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
+
+        /* in case I want to test more printing stuff
+        System.out.println(customerName);
+        System.out.println(address);
+        System.out.println(postalCode);
+        System.out.println(phone);
+        System.out.println(divisionIdFK);
+        */
+        CustomerDAO.insertCustomer(customerName, address, postalCode, phone, divisionIdFK);
     }
 
+    public void testPrint() throws SQLException {
+        System.out.println(FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString()));
+    }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
+        //firstLevelDivisionComboBox.getItems().removeAll();
+        //countryComboBox.getItems().removeAll();
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 700, 500);
