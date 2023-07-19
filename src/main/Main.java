@@ -69,18 +69,9 @@ public class Main extends Application {
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
 
+        /*
         // Filename variable
-        String fileName = "login_activity.txt", item;
-
-        // create scanner object
-        Scanner keyboard = new Scanner(System.in);
-
-        //get item count
-        System.out.println("how may do you have ?");
-        int numItems = keyboard.nextInt();
-
-        // clear keyboard buffer
-        keyboard.nextLine();
+        String fileName = "login_activity.txt";
 
         // create filewriter object
         FileWriter fWriter = new FileWriter(fileName, true);
@@ -88,18 +79,13 @@ public class Main extends Application {
         //create and open file
         PrintWriter outputFile = new PrintWriter(fWriter);
 
-        // get items and write to file
-        for(int i=0; i<numItems; i++)
-        {
-            System.out.print("Enter Item" + (i+1));
-            item = keyboard.nextLine();
-            outputFile.println(item);
-        }
+        //write
+        outputFile.println("testtesttest123");
 
         // close file
         outputFile.close();
         System.out.println("File written");
-
+*/
 
 
         launch(args);

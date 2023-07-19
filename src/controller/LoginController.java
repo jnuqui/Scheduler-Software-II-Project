@@ -1,5 +1,6 @@
 package controller;
 
+import helper.CollectionLists;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,8 +14,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -37,16 +42,26 @@ public class LoginController implements Initializable {
     @FXML
     private TextField textfieldUsername;
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
-
     ZoneId myZoneId = ZoneId.systemDefault();
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        labelLocation.setText(myZoneId.toString());
+        labelLocationDetect.setText(rb.getString(labelLocationDetect.getText()));
+        labelUsername.setText(rb.getString(labelUsername.getText()));
+        labelPassword.setText(rb.getString(labelPassword.getText()));
+        buttonLogin.setText(rb.getString(buttonLogin.getText()));
+    }
 
     public void login(ActionEvent actionEvent) throws IOException {
 
             if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test")))
             {
+                recordActivity(textfieldUsername.getText(), "successful");
             }
             else
             {
+                recordActivity(textfieldUsername.getText(), "unsuccessful");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.show();
                 alert.setHeaderText("Error");
@@ -54,13 +69,34 @@ public class LoginController implements Initializable {
                 return;
             }
 
-
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1019, 500);
+        Scene scene = new Scene(root, 1240, 600);
         stage.setTitle("Scheduler Dashboard");
         stage.setScene(scene);
+        stage.centerOnScreen();
         stage.show();
+    }
+
+    public void recordActivity(String userAttempt, String attempt) throws IOException {
+        LocalDateTime myLDT = LocalDateTime.now();
+        String loginAttemptTime = CollectionLists.myFormattedDTF(myLDT);
+        String loginActivity = "Login by \"" + userAttempt + "\" was " + attempt + " at " + loginAttemptTime + " " + myZoneId.toString();
+
+        // Filename variable
+        String fileName = "login_activity.txt";
+
+        // create filewriter object
+        FileWriter fWriter = new FileWriter(fileName, true);
+
+        //create and open file
+        PrintWriter outputFile = new PrintWriter(fWriter);
+
+        //write
+        outputFile.println(loginActivity);
+
+        // close file
+        outputFile.close();
     }
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException {
@@ -80,12 +116,5 @@ public class LoginController implements Initializable {
         //textfieldUsername.setText("hey");
     }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        labelLocation.setText(myZoneId.toString());
-        labelLocationDetect.setText(rb.getString(labelLocationDetect.getText()));
-        labelUsername.setText(rb.getString(labelUsername.getText()));
-        labelPassword.setText(rb.getString(labelPassword.getText()));
-        buttonLogin.setText(rb.getString(buttonLogin.getText()));
-    }
+
 }

@@ -10,5 +10,4 @@ import java.sql.SQLException;
 public class LoginDAO
 {
 
-    
 }
