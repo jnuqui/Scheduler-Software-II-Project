@@ -282,7 +282,13 @@ public class SchedulerDashboardController implements Initializable
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.show();
             alert.setHeaderText("Delete Successful");
-            alert.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted!");
+            alert.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted");
+
+            try {
+                allAppointments = AppointmentDAO.getAppointmentsv2();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             populateTablev2();
         }
     }
@@ -291,6 +297,4 @@ public class SchedulerDashboardController implements Initializable
     {
         System.out.println(allAppointments.get(1).getStartTime());
     }
-
-
 }

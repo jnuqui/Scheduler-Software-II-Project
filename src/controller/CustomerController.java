@@ -88,7 +88,12 @@ public class CustomerController implements Initializable
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.show();
             alert.setHeaderText("Delete Successful");
-            alert.setContentText("Customer ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + " deleted!");
+            alert.setContentText("Customer ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + " deleted.");
+            try {
+                allCustomers = CustomerDAO.getCustomers();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
             populateTable();
         }
     }

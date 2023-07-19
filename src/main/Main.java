@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.*;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.*;
@@ -34,7 +35,7 @@ public class Main extends Application {
         LoginController.changeLanguage();
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, IOException {
 
         //Open Database connection
         JDBC.openConnection();
@@ -67,6 +68,39 @@ public class Main extends Application {
 
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
+
+        // Filename variable
+        String fileName = "login_activity.txt", item;
+
+        // create scanner object
+        Scanner keyboard = new Scanner(System.in);
+
+        //get item count
+        System.out.println("how may do you have ?");
+        int numItems = keyboard.nextInt();
+
+        // clear keyboard buffer
+        keyboard.nextLine();
+
+        // create filewriter object
+        FileWriter fWriter = new FileWriter(fileName, true);
+
+        //create and open file
+        PrintWriter outputFile = new PrintWriter(fWriter);
+
+        // get items and write to file
+        for(int i=0; i<numItems; i++)
+        {
+            System.out.print("Enter Item" + (i+1));
+            item = keyboard.nextLine();
+            outputFile.println(item);
+        }
+
+        // close file
+        outputFile.close();
+        System.out.println("File written");
+
+
 
         launch(args);
         JDBC.closeConnection();
