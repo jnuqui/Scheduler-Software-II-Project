@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -26,7 +27,7 @@ import java.util.ResourceBundle;
 public class CustomerController implements Initializable
 {
     @FXML
-    public TableView customersTable;
+    public TableView<Customer> customersTable;
 
     public ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
     @FXML
@@ -63,6 +64,26 @@ public class CustomerController implements Initializable
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divisionIdColumn.setCellValueFactory(new PropertyValueFactory<>("divisionIdFK"));
+    }
+
+    public void deleteCustomer() throws SQLException {
+        if(customersTable.getSelectionModel().getSelectedItem() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Error");
+            alert.setContentText("Please select a customer to delete.");
+            return;
+        }
+        if(CustomerDAO.checkCustomerAppointments(customersTable.getSelectionModel().getSelectedItem().getCustomerId()) > 0)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Error");
+            alert.setContentText("Delete customer appointments first.");
+            return;
+        }
+        //CustomerDAO.deleteCustomer();
     }
 
 

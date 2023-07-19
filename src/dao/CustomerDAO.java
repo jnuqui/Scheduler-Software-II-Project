@@ -40,6 +40,30 @@ public class CustomerDAO {
         ps.setInt(5, divisionIdFK);
         ps.executeUpdate();
     }
+
+    public static int checkCustomerAppointments(int customerId) throws SQLException
+    {
+        String sql = "SELECT COUNT(appointment_id) AS RowCount from APPOINTMENTS where customer_id = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerId);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int count = rs.getInt("RowCount");
+        return count;
+    }
+
+
+    public static void deleteCustomer(int customerId) throws SQLException {
+        //NEED A CHECK TO SEE IF APPOINTMENTS EXIST
+        if (checkCustomerAppointments(customerId) > 0)
+        {
+
+        }
+        String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, customerId);
+        ps.executeUpdate();
+    }
 }
 
 
