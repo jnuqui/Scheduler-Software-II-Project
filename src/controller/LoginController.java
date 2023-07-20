@@ -55,16 +55,6 @@ public class LoginController implements Initializable {
         labelUsername.setText(rb.getString(labelUsername.getText()));
         labelPassword.setText(rb.getString(labelPassword.getText()));
         buttonLogin.setText(rb.getString(buttonLogin.getText()));
-
-        try {
-            //Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now().atZone(myZoneId).withZoneSameInstant(myUTC).toLocalDateTime());
-            Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now());
-
-            System.out.print(nextAppointment.getStartTime());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
     }
 
     public void login(ActionEvent actionEvent) throws IOException, SQLException {

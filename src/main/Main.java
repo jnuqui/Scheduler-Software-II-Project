@@ -62,6 +62,7 @@ public class Main extends Application {
         LocalTime myLT = LocalTime.of(22, 0);
         LocalDateTime myLDT = LocalDateTime.of(myLD, myLT);
         ZoneId myZoneId = ZoneId.systemDefault();
+
         ZonedDateTime myZDT = ZonedDateTime.of(myLDT, myZoneId);
         System.out.println(myZDT);
         System.out.println(AppointmentDAO.getTimestamp());
@@ -69,25 +70,15 @@ public class Main extends Application {
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
 
-        /*
-        // Filename variable
-        String fileName = "login_activity.txt";
+        ZoneId myBusinessZone = ZoneId.of("America/New_York");
+        LocalDateTime myTestLDT = LocalDateTime.of(2023, 7, 19, 10, 0);
+        ZonedDateTime myTestZDT = myTestLDT.atZone(myZoneId);
+        ZonedDateTime myNewZDT = myTestZDT.withZoneSameInstant(myBusinessZone);
+        LocalDateTime myNewLDT = myNewZDT.toLocalDateTime();
 
-        // create filewriter object
-        FileWriter fWriter = new FileWriter(fileName, true);
-
-        //create and open file
-        PrintWriter outputFile = new PrintWriter(fWriter);
-
-        //write
-        outputFile.println("testtesttest123");
-
-        // close file
-        outputFile.close();
-        System.out.println("File written");
-*/
-
-
+        System.out.println("10AM from Local time should be 12PM in New York Time. It should be 12 below this line.");
+        System.out.println(CollectionLists.myFormattedDTF(myNewLDT));
+        System.out.println(myNewLDT.getDayOfWeek());
 
         launch(args);
         JDBC.closeConnection();
