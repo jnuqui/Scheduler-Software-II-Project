@@ -44,6 +44,17 @@ public class Appointment
         this.contactId = contactId;
     }
 
+    public Appointment(int appointmentId, LocalDateTime startTime, LocalDateTime endTime)
+    {
+        this.appointmentId = appointmentId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public Appointment(){
+
+    }
+
     public String getContactName() {
         return contactName;
     }
@@ -131,6 +142,12 @@ public class Appointment
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public String toString()
+    {
+        return title;
     }
 }
 

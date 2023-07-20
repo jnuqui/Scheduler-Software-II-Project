@@ -88,6 +88,7 @@ public class Main extends Application {
 */
 
 
+
         launch(args);
         JDBC.closeConnection();
     }

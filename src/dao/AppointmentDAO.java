@@ -1,11 +1,10 @@
 package dao;
 
-import controller.SchedulerDashboardController;
+
 import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Appointment;
-import model.Contact;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZonedDateTime;
 
 public class AppointmentDAO
 {
@@ -220,4 +220,27 @@ public class AppointmentDAO
         ps.setInt(1, appointmentId);
         ps.executeUpdate();
     }
+
+
+    public static Appointment checkAppointment(LocalDateTime nowLDT) throws SQLException {
+        String sql = "SELECT *\n" +
+                "FROM appointments\n" +
+                "WHERE Start >= ? AND Start <= date_add(?, INTERVAL 1 hour);";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, Timestamp.valueOf(nowLDT));
+        ps.setTimestamp(2, Timestamp.valueOf(nowLDT));
+        ResultSet rs = ps.executeQuery();
+        if (!rs.isBeforeFirst()) {
+            Appointment nullAppointment = new Appointment();
+            return nullAppointment;
+        } else {
+            rs.next();
+            int appointmentId = rs.getInt("Appointment_ID");
+            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+            Appointment nextAppointment = new Appointment(appointmentId, startTime, endTime);
+            return nextAppointment;
+        }
+    }
+
 }

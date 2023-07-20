@@ -68,6 +68,11 @@ public class SchedulerDashboardController implements Initializable
         //Random print
     }
 
+    public void checkAppointment()
+    {
+
+    }
+
     /*public void populateTable()
     {
         try {

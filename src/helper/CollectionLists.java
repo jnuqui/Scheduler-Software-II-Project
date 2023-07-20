@@ -43,7 +43,7 @@ public class CollectionLists {
     //might not need this
     public static String myFormattedDTF (LocalDateTime myLDT)
     {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         String formattedDate = myLDT.format(format);
         return formattedDate;
     }

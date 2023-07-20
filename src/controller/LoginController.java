@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AppointmentDAO;
 import helper.CollectionLists;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,11 +14,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Appointment;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -43,6 +46,7 @@ public class LoginController implements Initializable {
     private TextField textfieldUsername;
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
     ZoneId myZoneId = ZoneId.systemDefault();
+    ZoneId myUTC = ZoneId.of("UTC");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -51,9 +55,19 @@ public class LoginController implements Initializable {
         labelUsername.setText(rb.getString(labelUsername.getText()));
         labelPassword.setText(rb.getString(labelPassword.getText()));
         buttonLogin.setText(rb.getString(buttonLogin.getText()));
+
+        try {
+            //Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now().atZone(myZoneId).withZoneSameInstant(myUTC).toLocalDateTime());
+            Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now());
+
+            System.out.print(nextAppointment.getStartTime());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
-    public void login(ActionEvent actionEvent) throws IOException {
+    public void login(ActionEvent actionEvent) throws IOException, SQLException {
 
             if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test")))
             {
@@ -76,6 +90,7 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+        showNextAppointment();
     }
 
     public void recordActivity(String userAttempt, String attempt) throws IOException {
@@ -99,6 +114,23 @@ public class LoginController implements Initializable {
         outputFile.close();
     }
 
+    public void showNextAppointment() throws SQLException {
+        Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now());
+        if (nextAppointment.getStartTime() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.show();
+            alert.setHeaderText("Upcoming Appointment");
+            alert.setContentText("No upcoming appointments.");
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.show();
+            alert.setHeaderText("Upcoming Appointment");
+            alert.setContentText("Appointment ID: " + nextAppointment.getAppointmentId() + " on " + CollectionLists.myFormattedDTF(nextAppointment.getStartTime()));
+        }
+    }
+
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -115,6 +147,4 @@ public class LoginController implements Initializable {
         //labelUsername.setText(rb.getString("Username"));
         //textfieldUsername.setText("hey");
     }
-
-
 }
