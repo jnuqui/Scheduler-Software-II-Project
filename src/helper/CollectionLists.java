@@ -40,11 +40,17 @@ public class CollectionLists {
         return locationIndex;
     }
 
-    //might not need this
     public static String myFormattedDTF (LocalDateTime myLDT)
     {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
         String formattedDate = myLDT.format(format);
+        return formattedDate;
+    }
+
+    public static String myFormattedTF (LocalTime myLT)
+    {
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDate = myLT.format(format);
         return formattedDate;
     }
 }
