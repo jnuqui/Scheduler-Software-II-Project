@@ -59,7 +59,7 @@ public class Main extends Application {
 
         //ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);
 
-        ZoneId myZoneId = ZoneId.systemDefault();
+
 
         //Setting the system to a different timezone
         //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
@@ -78,26 +78,39 @@ public class Main extends Application {
         */
 
         ZoneId myBusinessZone = ZoneId.of("America/New_York");
+        ZoneId myZoneId = ZoneId.systemDefault();
 
+        //Open hour at ET office, perceived from any timezone
         LocalDate today = LocalDate.now();
         LocalTime openHour = LocalTime.of(8, 0);
-        LocalDateTime businessDT = LocalDateTime.of(today, openHour);
-        ZonedDateTime zonedBusinessDT = businessDT.atZone(myBusinessZone);
-        ZonedDateTime myZonedDT = zonedBusinessDT.withZoneSameInstant(myZoneId);
-        LocalDateTime myLDT = myZonedDT.toLocalDateTime();
-        //The opening hour from Eastern Time, but displayed in Denver time
-        LocalTime myNewLT = myLDT.toLocalTime();
+        LocalDateTime businessOpenDT = LocalDateTime.of(today, openHour);
+        ZonedDateTime zonedBusinessOpenDT = businessOpenDT.atZone(myBusinessZone);
+        ZonedDateTime myZonedOpenDT = zonedBusinessOpenDT.withZoneSameInstant(myZoneId);
+        LocalDateTime myOpenLDT = myZonedOpenDT.toLocalDateTime();
+        //The opening hour from Eastern Time, but displayed in the machine's local time
+        LocalTime myNewOpenLT = myOpenLDT.toLocalTime();
 
+        //Closed hour at ET office, perceived from any timezone
+        //LocalDate today = LocalDate.now();
+        LocalTime closedHour = LocalTime.of(22, 0);
+        LocalDateTime businessClosedDT = LocalDateTime.of(today, openHour);
+        ZonedDateTime zonedBusinessClosedDT = businessClosedDT.atZone(myBusinessZone);
+        ZonedDateTime myZonedClosedDT = zonedBusinessClosedDT.withZoneSameInstant(myZoneId);
+        LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
+        //The opening hour from Eastern Time, but displayed in the machine's local time
+        LocalTime myNewClosedLT = myClosedLDT.toLocalTime();
+
+        //The time to put it from this local machine to test against the open hours.
         LocalDate todayAppt = LocalDate.now();
-        LocalTime apptStart = LocalTime.of(18, 0);
+        LocalTime apptStart = LocalTime.of(6, 0);
         LocalDateTime myDT = LocalDateTime.of(todayAppt, apptStart);
         ZonedDateTime myZonedDT2 = myDT.atZone(myZoneId);
         ZonedDateTime zonedBusinessDT2 = myZonedDT2.withZoneSameInstant(myBusinessZone);
         LocalDateTime myLDT2 = zonedBusinessDT2.toLocalDateTime();
         LocalTime myNewLT2 = myLDT2.toLocalTime();
 
-        System.out.println("The time that the Eastern Time office is open, but from Denver local Time: " + CollectionLists.myFormattedTF(myNewLT));
-        System.out.println("The time that I'm putting in from Denver, but what is being tested at Eastern, which should be 20: " + CollectionLists.myFormattedTF(myNewLT2));
+        System.out.println("The time that the Eastern Time office is open, but from Denver local Time: " + CollectionLists.myFormattedTF(myNewOpenLT));
+        System.out.println("The time that I'm putting in from Denver - I want to start at 8:00 at the business. But I have to do it from 6AM " + CollectionLists.myFormattedTF(myNewLT2));
 
         launch(args);
         JDBC.closeConnection();

@@ -86,17 +86,18 @@ public class UpdateAppointmentController implements Initializable {
 
     public void populateTimeComboBoxes() {
         //start time
-        for (int i = 0; i <= 12; i++) {
+        /*for (int i = 0; i <= 12; i++) {
             time[i] = LocalTime.of((i + 8), 0);
             myLT.add(time[i]);
         }
-        startTimeComboBox.setItems(myLT);
+        ;
         //endtime
         for (int i = 0; i <= 12; i++) {
             time[i] = LocalTime.of((i + 8), 0);
             myLT.add(time[i]);
-        }
-        endTimeComboBox.setItems(myLT);
+        }*/
+        startTimeComboBox.setItems(CollectionLists.getTimes());
+        endTimeComboBox.setItems(CollectionLists.getTimes());
     }
 
     public void populateCustomerIds() throws SQLException {

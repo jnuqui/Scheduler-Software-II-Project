@@ -45,8 +45,8 @@ public class AddAppointmentController implements Initializable
     @FXML
     public ComboBox userIdComboBox;
 
-    private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
-    LocalTime [] time = new LocalTime[13];
+    //private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
+    //LocalTime [] time = new LocalTime[46];
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,18 +101,17 @@ public class AddAppointmentController implements Initializable
 
     public void populateTimeComboBoxes()
     {
-        //start time
-        for (int i = 0; i <= 12; i++) {
-            time[i] = LocalTime.of((i + 8), 0);
+        //for both boxes
+        /*for (int i = 0; i <= 23; i++) {
+            {
+                time[i] = LocalTime.of((i), 0);
             myLT.add(time[i]);
-        }
-        startTimeComboBox.setItems(myLT);
-        //endtime
-        for (int i = 0; i <= 12; i++) {
-            time[i] = LocalTime.of((i + 8), 0);
-            myLT.add(time[i]);
-        }
-        endTimeComboBox.setItems(myLT);
+                time[i + 1] = LocalTime.of((i), 30);
+                myLT.add(time[i + 1]);
+            }
+        }*/
+        startTimeComboBox.setItems(CollectionLists.getTimes());
+        endTimeComboBox.setItems(CollectionLists.getTimes());
     }
 
     public void populateCustomerIds() throws SQLException {
