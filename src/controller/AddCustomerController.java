@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AppointmentDAO;
 import dao.CountryDAO;
 import dao.CustomerDAO;
 import dao.FirstLevelDivisionDAO;
@@ -108,7 +109,8 @@ public class AddCustomerController implements Initializable
     }
 
     public void testPrint() throws SQLException {
-        System.out.println(FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString()));
+        //System.out.println(FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString()));
+
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException

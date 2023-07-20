@@ -1,6 +1,7 @@
 package dao;
 
 
+import helper.CollectionLists;
 import helper.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -243,4 +244,34 @@ public class AppointmentDAO
         }
     }
 
+    public static String checkAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT) throws SQLException {
+        String sql = "SELECT Start, End FROM appointments WHERE (Start BETWEEN ? AND ?) OR (End BETWEEN ? AND ?);";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, Timestamp.valueOf(startLDT));
+        ps.setTimestamp(2, Timestamp.valueOf(endLDT));
+        ps.setTimestamp(3, Timestamp.valueOf(startLDT));
+        ps.setTimestamp(4, Timestamp.valueOf(endLDT));
+        ResultSet rs = ps.executeQuery();
+        if (!rs.isBeforeFirst()) {
+            return "No conflict";
+        } else {
+            rs.next();
+            LocalDateTime startConflictDateTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endConflictDateTime = rs.getTimestamp("End").toLocalDateTime();
+            LocalTime startConflictTime = startConflictDateTime.toLocalTime();
+            LocalTime endConflictTime = endConflictDateTime.toLocalTime();
+            String overlapReport = "No conflict";
+            /*if (startConflictDateTime.equals(startLDT) || startConflictDateTime.equals(endLDT)
+            || endConflictDateTime.equals(startLDT) || endConflictDateTime.equals(endLDT))
+            {
+                return overlapReport;
+            }*/
+            if(endLDT.equals(startConflictDateTime) || startLDT.equals(endConflictDateTime))
+            {
+                return overlapReport;
+            }
+
+            return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
+        }
+    }
 }

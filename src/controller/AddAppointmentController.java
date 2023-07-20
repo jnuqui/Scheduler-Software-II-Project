@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -124,7 +125,20 @@ public class AddAppointmentController implements Initializable
 
     public void testPrint() throws SQLException {
         //System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
-    System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
+    //System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
+        //Start
+        LocalDate ldStart = startDatePicker.getValue();
+        LocalTime ltStart = LocalTime.parse(startTimeComboBox.getValue().toString());
+        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
+
+        //End
+        LocalDate ldEnd = startDatePicker.getValue();
+        LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
+        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+
+        //test print on this check. Put in dialog box after
+        //System.out.println(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd));
+
     }
 
     public void insertAppointmentTestFill()
@@ -183,6 +197,17 @@ public class AddAppointmentController implements Initializable
         //(String title, String description, String location, String type,
           //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
         AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
+    }
+
+    public void checkTimeOrder(LocalTime startTime, LocalTime endTime) throws Exception
+    {
+        if(endTime.isBefore(startTime))
+        {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("End time must be after Start Time");
+        }
     }
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
