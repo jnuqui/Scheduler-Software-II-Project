@@ -60,7 +60,7 @@ public class Main extends Application {
 
 
         //Setting the system to a different timezone
-        //TimeZone.setDefault(TimeZone.getTimeZone("America/New_York"));
+        //TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
 
         //Perfect working example
         /*
