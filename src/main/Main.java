@@ -54,8 +54,6 @@ public class Main extends Application {
         ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
         System.out.println(rb.getString("Username"));*/
 
-        //DatabaseAccess.select(3);
-        //DatabaseAccess.selectAppointment();
 
         //ZoneId.getAvailableZoneIds().stream().filter(z->z.contains("America")).sorted().forEach(System.out::println);
 
@@ -80,38 +78,40 @@ public class Main extends Application {
         ZoneId myBusinessZone = ZoneId.of("America/New_York");
         ZoneId myZoneId = ZoneId.systemDefault();
 
-        //Open hour at ET office, perceived from any timezone
+        //Checking local times against open hours
         LocalDate today = LocalDate.now();
-        LocalTime openHour = LocalTime.of(8, 0);
-        LocalDateTime businessOpenDT = LocalDateTime.of(today, openHour);
-        ZonedDateTime zonedBusinessOpenDT = businessOpenDT.atZone(myBusinessZone);
-        ZonedDateTime myZonedOpenDT = zonedBusinessOpenDT.withZoneSameInstant(myZoneId);
-        LocalDateTime myOpenLDT = myZonedOpenDT.toLocalDateTime();
+        LocalTime startApptHour = LocalTime.of(5, 0);
+        LocalDateTime localStartDT = LocalDateTime.of(today, startApptHour);
+        ZonedDateTime zonedLocalStartDT = localStartDT.atZone(myZoneId);
+        ZonedDateTime myZonedStartApptDT = zonedLocalStartDT.withZoneSameInstant(myBusinessZone);
+        LocalDateTime myStartLDT = myZonedStartApptDT.toLocalDateTime();
         //The opening hour from Eastern Time, but displayed in the machine's local time
-        LocalTime myNewOpenLT = myOpenLDT.toLocalTime();
+        //LocalTime myNewOpenLT = myStartLDT.toLocalTime();
 
         //Closed hour at ET office, perceived from any timezone
         //LocalDate today = LocalDate.now();
-        LocalTime closedHour = LocalTime.of(22, 0);
-        LocalDateTime businessClosedDT = LocalDateTime.of(today, openHour);
-        ZonedDateTime zonedBusinessClosedDT = businessClosedDT.atZone(myBusinessZone);
-        ZonedDateTime myZonedClosedDT = zonedBusinessClosedDT.withZoneSameInstant(myZoneId);
-        LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
+        LocalTime endApptHour = LocalTime.of(6, 0);
+        LocalDateTime localEndDT = LocalDateTime.of(today, endApptHour);
+        ZonedDateTime zonedLocalEndDT = localEndDT.atZone(myZoneId);
+        ZonedDateTime myZonedEndApptDT = zonedLocalEndDT.withZoneSameInstant(myBusinessZone);
+        LocalDateTime myEndLDT = myZonedEndApptDT.toLocalDateTime();
         //The opening hour from Eastern Time, but displayed in the machine's local time
-        LocalTime myNewClosedLT = myClosedLDT.toLocalTime();
+        //LocalTime myNewClosedLT = myEndLDT.toLocalTime();
 
+        /*
         //The time to put it from this local machine to test against the open hours.
         LocalDate todayAppt = LocalDate.now();
-        LocalTime apptStart = LocalTime.of(6, 0);
+        LocalTime apptStart = LocalTime.of(5, 59);
         LocalDateTime myDT = LocalDateTime.of(todayAppt, apptStart);
         ZonedDateTime myZonedDT2 = myDT.atZone(myZoneId);
         ZonedDateTime zonedBusinessDT2 = myZonedDT2.withZoneSameInstant(myBusinessZone);
         LocalDateTime myLDT2 = zonedBusinessDT2.toLocalDateTime();
-        LocalTime myNewLT2 = myLDT2.toLocalTime();
+        LocalTime myNewLT2 = myLDT2.toLocalTime();*/
 
-        System.out.println("The time that the Eastern Time office is open, but from Denver local Time: " + CollectionLists.myFormattedTF(myNewOpenLT));
-        System.out.println("The time that I'm putting in from Denver - I want to start at 8:00 at the business. But I have to do it from 6AM " + CollectionLists.myFormattedTF(myNewLT2));
+        //System.out.println("The time that the Eastern Time office is open, but from Denver local Time: " + CollectionLists.myFormattedTF(myNewOpenLT));
+        //System.out.println("The time that I'm putting in from Denver (6am) - I want to start at 8:00 at the business. But I have to do it from 6AM " + CollectionLists.myFormattedTF(myNewLT2));
 
+        System.out.println(CollectionLists.checkTimeRange(localStartDT, localEndDT));
         launch(args);
         JDBC.closeConnection();
     }

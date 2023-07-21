@@ -5,8 +5,7 @@ import javafx.collections.ObservableList;
 import model.Appointment;
 import model.Contact;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 
 public class CollectionLists {
@@ -21,7 +20,41 @@ public class CollectionLists {
     public static LocalTime [] time = new LocalTime[48];
     public static boolean timesLoaded = false;
 
+    //Creating the appointment times for the business
 
+    public static String checkTimeRange(LocalDateTime startLDT, LocalDateTime endLDT)
+    {
+        boolean withinTime = false;
+        ZoneId myBusinessZone = ZoneId.of("America/New_York");
+        ZoneId myZoneId = ZoneId.systemDefault();
+
+        //Open hour at ET office, perceived from any timezone
+        LocalDate today = LocalDate.now();
+        LocalTime openHour = LocalTime.of(8, 0);
+        LocalDateTime businessOpenDT = LocalDateTime.of(today, openHour);
+        ZonedDateTime zonedBusinessOpenDT = businessOpenDT.atZone(myBusinessZone);
+        ZonedDateTime myZonedOpenDT = zonedBusinessOpenDT.withZoneSameInstant(myZoneId);
+        LocalDateTime myOpenLDT = myZonedOpenDT.toLocalDateTime();
+        //The opening hour from Eastern Time, but displayed in the machine's local time
+        //LocalTime myNewOpenLT = myOpenLDT.toLocalTime();
+
+        //Closed hour at ET office, perceived from any timezone
+        //LocalDate today = LocalDate.now();
+        LocalTime closedHour = LocalTime.of(22, 0);
+        LocalDateTime businessClosedDT = LocalDateTime.of(today, closedHour);
+        ZonedDateTime zonedBusinessClosedDT = businessClosedDT.atZone(myBusinessZone);
+        ZonedDateTime myZonedClosedDT = zonedBusinessClosedDT.withZoneSameInstant(myZoneId);
+        LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
+        //The opening hour from Eastern Time, but displayed in the machine's local time
+        //LocalTime myNewClosedLT = myClosedLDT.toLocalTime();
+        if (startLDT.isAfter(myOpenLDT) && (endLDT.isBefore(myClosedLDT)))
+        {
+            withinTime = true;
+        }
+
+        return "Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
+                "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT);
+    }
 
     public static void loadTimes()
     {

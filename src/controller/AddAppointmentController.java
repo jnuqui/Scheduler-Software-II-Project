@@ -136,8 +136,17 @@ public class AddAppointmentController implements Initializable
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
 
-        //test print on this check. Put in dialog box after
-        //System.out.println(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd));
+        if(ldtEnd.isBefore(ldtStart))
+        {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("End time must be after Start Time");
+        }
+        else {
+            //test print on this check. Put in dialog box after
+            System.out.println(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd));
+        }
 
     }
 
@@ -199,7 +208,7 @@ public class AddAppointmentController implements Initializable
         AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
     }
 
-    public void checkTimeOrder(LocalTime startTime, LocalTime endTime) throws Exception
+    public void checkTimeOrder(LocalTime startTime, LocalTime endTime)
     {
         if(endTime.isBefore(startTime))
         {
