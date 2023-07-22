@@ -32,7 +32,7 @@
       <Label layoutX="83.0" layoutY="418.0" text="Start and End Time" />
       <Label layoutX="117.0" layoutY="455.0" text="Customer_ID" />
       <Label layoutX="144.0" layoutY="495.0" text="User_ID" />
-      <Button fx:id="addTest" layoutX="106.0" layoutY="591.0" mnemonicParsing="false" onAction="#insertTest" text="Add Test" />
+      <Button fx:id="addTest" layoutX="106.0" layoutY="591.0" mnemonicParsing="false"  text="Add Test" />
       <DatePicker fx:id="startDatePicker" layoutX="201.0" layoutY="375.0" prefHeight="25.0" prefWidth="117.0" promptText="Month / Day" />
       <ComboBox fx:id="startTimeComboBox" layoutX="202.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="Start Time" />
       <ComboBox fx:id="endTimeComboBox" layoutX="305.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="End Time" />

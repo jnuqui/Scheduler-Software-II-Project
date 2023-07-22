@@ -52,77 +52,45 @@ public class AddAppointmentController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        populateLocation();
-
         try {
-            populateContacts();
+            populateComboBoxes();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
 
-        populateTimeComboBoxes();
-
-        try {
-            populateCustomerIds();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        try {
-            populateUsers();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
     }
 
-
-
-    public void insertTest() throws SQLException {
-        LocalDate startDate = LocalDate.now();
-        LocalTime startTime = LocalTime.of(LocalTime.now().getHour(), LocalTime.now().getMinute());
-        LocalDateTime startLDT = LocalDateTime.of(startDate, startTime);
-
-        LocalDate endDate = LocalDate.now();
-        LocalTime endTime = LocalTime.now().plusHours(1);
-        LocalDateTime endLDT = LocalDateTime.of(endDate, endTime);
-
-        Timestamp tsStart = Timestamp.valueOf(startLDT);
-        Timestamp tsEnd = Timestamp.valueOf(endLDT);
-        AppointmentDAO.insertTest(tsStart, tsEnd);
-    }
-
-    public void populateLocation()
-    {
-            locationComboBox.setItems(CollectionLists.getPlaces());
-    }
-
-    public void populateContacts() throws SQLException {
+    public void populateComboBoxes() throws SQLException {
+        locationComboBox.setItems(CollectionLists.getPlaces());
         contactComboBox.setItems(DatabaseAccess.getContactNames());
-    }
-
-    public void populateTimeComboBoxes()
-    {
         startTimeComboBox.setItems(CollectionLists.getTimes());
         endTimeComboBox.setItems(CollectionLists.getTimes());
-    }
-
-    public void populateCustomerIds() throws SQLException {
         customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
-    }
-
-    public void populateUsers() throws SQLException{
         userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
-    public void testPrint() throws SQLException {
-        try{
-            inputCheck();
-            goodAppointmentTime();
-        }
-        catch (Exception e)
+    public boolean inputCheck()
+    {
+        boolean good = true;
+        if (titleTextfield.getText() == "" ||
+                descriptionTextfield.getText() == "" ||
+                locationComboBox.getValue() == null ||
+                typeTextfield.getText() == "" ||
+                startDatePicker.getValue() == null ||
+                startTimeComboBox.getValue() == null ||
+                endTimeComboBox.getValue() == null ||
+                customerIdComboBox.getValue() == null ||
+                userIdComboBox.getValue() == null ||
+                contactComboBox.getValue() == null)
         {
-
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Inputs");
+            alert.setContentText("Please complete all fields.");
+            good = false;
         }
+        System.out.println("Input check: " + good);
+        return good;
     }
 
     public boolean goodAppointmentTime() throws SQLException {
@@ -187,62 +155,6 @@ public class AddAppointmentController implements Initializable
         return good;
     }
 
-    public void insertAppointmentTestFill()
-    {
-        titleTextfield.setText("Title Test");
-        descriptionTextfield.setText("Description Test");
-        locationComboBox.getSelectionModel().select(1);
-        typeTextfield.setText("Shooting the breeze");
-
-        /*/Start
-        LocalDate ldStart = startDatePicker.getValue();
-        LocalTime ltStart = (LocalTime) startTimeComboBox.getValue();
-        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
-        Timestamp tsStart = Timestamp.valueOf(ldtStart);
-
-        //End
-        LocalDate ldEnd = endDatePicker.getValue();
-        LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
-        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
-        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);*/
-
-        LocalDate ldStart = LocalDate.now();
-        LocalTime ltStart = LocalTime.now();
-        LocalTime ltEnd = LocalTime.now().plusHours(1);
-        startDatePicker.setValue(ldStart);
-        startTimeComboBox.setValue(CollectionLists.myFormattedTF(ltStart));
-        endTimeComboBox.setValue(CollectionLists.myFormattedTF(ltEnd));
-
-        customerIdComboBox.getSelectionModel().select(1);
-        userIdComboBox.getSelectionModel().select(1);
-        contactComboBox.getSelectionModel().select(1);
-    }
-
-    public boolean inputCheck()
-    {
-        boolean good = true;
-
-        if (titleTextfield.getText() == "" ||
-                descriptionTextfield.getText() == "" ||
-                locationComboBox.getValue() == null ||
-                typeTextfield.getText() == "" ||
-                startDatePicker.getValue() == null ||
-                startTimeComboBox.getValue() == null ||
-        endTimeComboBox.getValue() == null ||
-                customerIdComboBox.getValue() == null ||
-        userIdComboBox.getValue() == null ||
-        contactComboBox.getValue() == null)
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Inputs");
-            alert.setContentText("Please complete all fields.");
-            good = false;
-        }
-                System.out.println("Input check: " + good);
-        return good;
-    }
-
     public void insertAppointment() throws SQLException {
 
         try{
@@ -283,9 +195,9 @@ public class AddAppointmentController implements Initializable
         }
         catch (Exception e)
         {
-           // System.out.println("Check test");
+            // System.out.println("Check test");
         }
-        }
+    }
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
@@ -296,5 +208,32 @@ public class AddAppointmentController implements Initializable
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public void insertAppointmentTestFill()
+    {
+        titleTextfield.setText("Title Test");
+        descriptionTextfield.setText("Description Test");
+        locationComboBox.getSelectionModel().select(1);
+        typeTextfield.setText("Shooting the breeze");
+
+        LocalDate ldStart = LocalDate.now();
+        LocalTime ltStart = LocalTime.now();
+        LocalTime ltEnd = LocalTime.now().plusHours(1);
+        startDatePicker.setValue(ldStart);
+        startTimeComboBox.setValue(CollectionLists.myFormattedTF(ltStart));
+        endTimeComboBox.setValue(CollectionLists.myFormattedTF(ltEnd));
+
+        customerIdComboBox.getSelectionModel().select(1);
+        userIdComboBox.getSelectionModel().select(1);
+        contactComboBox.getSelectionModel().select(1);
+    }
+    public void testPrint() throws SQLException {
+        try{
+            inputCheck();
+            goodAppointmentTime();
+        }
+        catch (Exception e)
+        { }
     }
 }

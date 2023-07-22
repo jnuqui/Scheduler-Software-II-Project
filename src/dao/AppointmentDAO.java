@@ -270,6 +270,11 @@ public class AppointmentDAO
             {
                 return overlapReport;
             }
+
+            if((startLDT.equals(startConflictDateTime) && endLDT.equals(endConflictDateTime)) || (startLDT.equals(startConflictDateTime)) || (endLDT.equals(endConflictDateTime)))
+            {
+                return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
+            }
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
         }
     }
