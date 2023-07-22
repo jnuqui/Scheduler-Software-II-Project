@@ -105,6 +105,9 @@ public class AddAppointmentController implements Initializable
         LocalDate ldEnd = startDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+
+        int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
+
         if(startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
                 endTimeComboBox.getValue() == null )
@@ -135,12 +138,12 @@ public class AddAppointmentController implements Initializable
             alert.setContentText("Appointment cannot be set in the past.");
             good = false;
         }
-        else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd).equals("No"))
+        else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId).equals("No"))
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.show();
             alert.setHeaderText("Conflicting Time");
-            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd));
+            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
             good = false;
         }
         else if (!CollectionLists.checkTimeRange(ldtStart, ldtEnd))
@@ -149,6 +152,7 @@ public class AddAppointmentController implements Initializable
             alert.show();
             alert.setHeaderText("Check Time");
             alert.setContentText("Time is not within 8:00AM - 10:00PM ET");
+            //System.out.println(CollectionLists.myFormattedDTF(ldtStart) + " " + CollectionLists.myFormattedDTF(ldtEnd));
             good = false;
         }
         System.out.println("goodAppointmentTime: " + good);

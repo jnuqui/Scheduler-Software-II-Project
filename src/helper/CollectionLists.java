@@ -27,11 +27,13 @@ public class CollectionLists {
         boolean withinTime = false;
         ZoneId myBusinessZone = ZoneId.of("America/New_York");
         ZoneId myZoneId = ZoneId.systemDefault();
+        LocalDateTime appointmentDateTime = startLDT;
+        LocalDate appointmentDate = appointmentDateTime.toLocalDate();
 
         //Open hour at ET office, perceived from any timezone
-        LocalDate today = LocalDate.now();
+        //LocalDate today = LocalDate.now();
         LocalTime openHour = LocalTime.of(8, 0);
-        LocalDateTime businessOpenDT = LocalDateTime.of(today, openHour);
+        LocalDateTime businessOpenDT = LocalDateTime.of(appointmentDate, openHour);
         ZonedDateTime zonedBusinessOpenDT = businessOpenDT.atZone(myBusinessZone);
         ZonedDateTime myZonedOpenDT = zonedBusinessOpenDT.withZoneSameInstant(myZoneId);
         LocalDateTime myOpenLDT = myZonedOpenDT.toLocalDateTime();
@@ -41,7 +43,7 @@ public class CollectionLists {
         //Closed hour at ET office, perceived from any timezone
         //LocalDate today = LocalDate.now();
         LocalTime closedHour = LocalTime.of(22, 0);
-        LocalDateTime businessClosedDT = LocalDateTime.of(today, closedHour);
+        LocalDateTime businessClosedDT = LocalDateTime.of(appointmentDate, closedHour);
         ZonedDateTime zonedBusinessClosedDT = businessClosedDT.atZone(myBusinessZone);
         ZonedDateTime myZonedClosedDT = zonedBusinessClosedDT.withZoneSameInstant(myZoneId);
         LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
@@ -58,6 +60,9 @@ public class CollectionLists {
             withinTime = true;
         }
 
+        System.out.println("Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
+                      "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT));
+        System.out.println(withinTime);
         return withinTime;
 
         //return "Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
