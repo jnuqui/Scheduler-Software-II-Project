@@ -108,13 +108,13 @@ public class LoginController implements Initializable {
         Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now());
         if (nextAppointment.getStartTime() == null)
         {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.show();
             alert.setHeaderText("Upcoming Appointment");
             alert.setContentText("No upcoming appointments.");
         }
         else {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.show();
             alert.setHeaderText("Upcoming Appointment");
             alert.setContentText("Appointment ID: " + nextAppointment.getAppointmentId() + " on " + CollectionLists.myFormattedDTF(nextAppointment.getStartTime()));

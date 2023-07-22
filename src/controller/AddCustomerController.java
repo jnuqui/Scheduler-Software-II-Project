@@ -57,31 +57,17 @@ public class AddCustomerController implements Initializable
     }
 
     public void populateCountriesv2() throws SQLException {
-        CountryDAO.clearCountries();
-        countryComboBox.setItems(CountryDAO.getCountries());
-       // countryComboBox.setValue(CountryDAO.getCountries().get(0));
+            CountryDAO.clearCountries();
+            countryComboBox.setItems(CountryDAO.getCountries());
     }
 
     public void passCountry() throws SQLException {
-        firstLevelDivisionComboBox.getItems().removeAll();
-        //optional fancy feature
-        /*
-        String selectedCountry = countryComboBox.getValue().getCountryName();
-        if(selectedCountry.equals("U.S"))
-        {
-            firstLevelDivisionComboBox.setPromptText("Select U.S State");
+        try {
+            firstLevelDivisionComboBox.getItems().removeAll();
+            populateFirstLevelDivisions(countryComboBox.getValue().getCountryId());
         }
-        if(selectedCountry.equals("UK"))
-        {
-            firstLevelDivisionComboBox.setPromptText("Select UK Region");
+        catch (Exception e) {
         }
-        if(selectedCountry.equals("Canada"))
-        {
-            firstLevelDivisionComboBox.setPromptText("Select Canadian Province");
-        }*/
-
-        //populateFirstLevelDivisions(CountryDAO.getMatchingCountryId(countryComboBox.getSelectionModel().getSelectedItem().toString()));
-        populateFirstLevelDivisions(countryComboBox.getValue().getCountryId());
     }
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {

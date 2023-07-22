@@ -82,25 +82,14 @@ public class UpdateCustomerController implements Initializable
 
 
     public void passCountry() throws SQLException {
-        firstLevelDivisionComboBox.getItems().removeAll();
-        //optional fancy feature
-        /*
-        String selectedCountry = countryComboBox.getValue().getCountryName();
-        if(selectedCountry.equals("U.S"))
-        {
-            firstLevelDivisionComboBox.setPromptText("Select U.S State");
+        try {
+            firstLevelDivisionComboBox.getItems().removeAll();
+            populateFirstLevelDivisions(countryComboBox.getValue().getCountryId());
         }
-        if(selectedCountry.equals("UK"))
+        catch (Exception e)
         {
-            firstLevelDivisionComboBox.setPromptText("Select UK Region");
-        }
-        if(selectedCountry.equals("Canada"))
-        {
-            firstLevelDivisionComboBox.setPromptText("Select Canadian Province");
-        }*/
 
-        //populateFirstLevelDivisions(CountryDAO.getMatchingCountryId(countryComboBox.getSelectionModel().getSelectedItem().toString()));
-        populateFirstLevelDivisions(countryComboBox.getValue().getCountryId());
+        }
     }
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
