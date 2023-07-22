@@ -253,14 +253,14 @@ public class AppointmentDAO
         ps.setTimestamp(4, Timestamp.valueOf(endLDT));
         ResultSet rs = ps.executeQuery();
         if (!rs.isBeforeFirst()) {
-            return "No conflict";
+            return "No";
         } else {
             rs.next();
             LocalDateTime startConflictDateTime = rs.getTimestamp("Start").toLocalDateTime();
             LocalDateTime endConflictDateTime = rs.getTimestamp("End").toLocalDateTime();
             LocalTime startConflictTime = startConflictDateTime.toLocalTime();
             LocalTime endConflictTime = endConflictDateTime.toLocalTime();
-            String overlapReport = "No conflict";
+            String overlapReport = "No";
             /*if (startConflictDateTime.equals(startLDT) || startConflictDateTime.equals(endLDT)
             || endConflictDateTime.equals(startLDT) || endConflictDateTime.equals(endLDT))
             {
@@ -270,7 +270,6 @@ public class AppointmentDAO
             {
                 return overlapReport;
             }
-
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
         }
     }

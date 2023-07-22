@@ -22,7 +22,7 @@ public class CollectionLists {
 
     //Creating the appointment times for the business
 
-    public static String checkTimeRange(LocalDateTime startLDT, LocalDateTime endLDT)
+    public static boolean checkTimeRange(LocalDateTime startLDT, LocalDateTime endLDT)
     {
         boolean withinTime = false;
         ZoneId myBusinessZone = ZoneId.of("America/New_York");
@@ -47,13 +47,21 @@ public class CollectionLists {
         LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
         //The opening hour from Eastern Time, but displayed in the machine's local time
         //LocalTime myNewClosedLT = myClosedLDT.toLocalTime();
+
         if (startLDT.isAfter(myOpenLDT) && (endLDT.isBefore(myClosedLDT)))
         {
             withinTime = true;
         }
 
-        return "Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
-                "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT);
+        if (startLDT.isEqual(myOpenLDT) || (endLDT.isEqual(myClosedLDT)))
+        {
+            withinTime = true;
+        }
+
+        return withinTime;
+
+        //return "Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
+          //      "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT);
     }
 
     public static void loadTimes()
