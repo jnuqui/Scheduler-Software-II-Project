@@ -36,9 +36,9 @@
       <DatePicker fx:id="startDatePicker" layoutX="201.0" layoutY="375.0" prefHeight="25.0" prefWidth="117.0" promptText="Month / Day" />
       <ComboBox fx:id="startTimeComboBox" layoutX="202.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="Start Time" />
       <ComboBox fx:id="endTimeComboBox" layoutX="305.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="End Time" />
-      <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false" onAction="#testPrint" text="Test Print" />
+      <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false"  text="Test Print" />
       <ComboBox fx:id="userIdComboBox" layoutX="202.0" layoutY="491.0" prefHeight="25.0" prefWidth="68.0" />
       <ComboBox fx:id="customerIdComboBox" layoutX="202.0" layoutY="451.0" prefHeight="25.0" prefWidth="66.0" />
-      <Button fx:id="testFillButton" layoutX="359.0" layoutY="86.0" mnemonicParsing="false" onAction="#insertAppointmentTestFill" text="Test Fill" />
+      <Button fx:id="testFillButton" layoutX="359.0" layoutY="86.0" mnemonicParsing="false"  text="Test Fill" />
    </children>
 </AnchorPane>

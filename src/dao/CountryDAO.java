@@ -56,15 +56,29 @@ public class CountryDAO {
         return countryId;
     }*/
 
-    public static Country returnUpdateCountry(String country) {
-        int countryIndex = 0;
-        for (int i = 0; i <= allCountries.size(); i++) {
-            if (country.equals(allCountries.get(i)))
-            {
-                countryIndex = i;
-                break;
-            }
-        }
-        return allCountries.get(countryIndex);
+    public static int returnUpdateCountryId(int divisionId) throws SQLException {
+        String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, divisionId);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int countryId = rs.getInt("Country_ID");
+        return countryId;
+    }
+
+    public static Country returnUpdateCountry(int countryUpdateId) throws SQLException {
+        String sql = "SELECT Country_ID, Country FROM Countries WHERE Country_Id = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, countryUpdateId);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        int countryId = rs.getInt("Country_ID");
+        String countryName = rs.getString("Country");
+        Country country = new Country(countryId, countryName);
+        return country;
+    }
+
+    public static Country getCountryForBox(int divisionId) throws SQLException {
+        return returnUpdateCountry(returnUpdateCountryId(divisionId));
     }
 }
