@@ -261,6 +261,8 @@ public class SchedulerDashboardController implements Initializable
             myUpdate.setCustomerId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getCustomerId()));
             myUpdate.setUserId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getUserId()));
 
+            myUpdate.setOriginalApptTime(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime(), appointmentsTable.getSelectionModel().getSelectedItem().getEndTime());
+
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();
             stage.setTitle("Update Appointment");

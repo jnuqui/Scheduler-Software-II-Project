@@ -280,4 +280,47 @@ public class AppointmentDAO
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
     }
+
+    public static String checkUpdateAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT, int customerId, int appointmentId) throws SQLException {
+        //String sql = "SELECT Start, End FROM appointments WHERE (Start BETWEEN ? AND ?) OR (End BETWEEN ? AND ?);";
+        //String sql = "SELECT Start, End FROM appointments WHERE ((? < End) AND (?) > Start);";
+        String sql = "SELECT Appointment_ID, Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ? AND NOT Appointment_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, Timestamp.valueOf(endLDT));
+        ps.setTimestamp(2, Timestamp.valueOf(startLDT));
+        ps.setInt(3, customerId);
+        ps.setInt(4, appointmentId);
+        ResultSet rs = ps.executeQuery();
+        if (!rs.isBeforeFirst()) {
+            System.out.println("No results");
+            return "No";
+        } else {
+            rs.next();
+            LocalDateTime startConflictDateTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endConflictDateTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerIdFound = rs.getInt("Customer_ID");
+            //int appointmentIdFound = rs.getInt("Appointment_ID");
+            LocalTime startConflictTime = startConflictDateTime.toLocalTime();
+            LocalTime endConflictTime = endConflictDateTime.toLocalTime();
+            String overlapReport = "No";
+            /*if (startConflictDateTime.equals(startLDT) || startConflictDateTime.equals(endLDT)
+            || endConflictDateTime.equals(startLDT) || endConflictDateTime.equals(endLDT))
+            {
+                return overlapReport;
+            }*/
+            if(endLDT.equals(startConflictDateTime) || startLDT.equals(endConflictDateTime))
+            {
+                return overlapReport;
+            }
+
+            /*if((startLDT.equals(startConflictDateTime) && endLDT.equals(endConflictDateTime)) || (startLDT.equals(startConflictDateTime)) || (endLDT.equals(endConflictDateTime)))
+            {
+                return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
+            }*/
+            return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
+        }
+    }
+
+
+
 }

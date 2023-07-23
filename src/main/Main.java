@@ -40,24 +40,8 @@ public class Main extends Application {
         //Open Database connection
         JDBC.openConnection();
 
-        //Change language to French
+        //Change Locale to French
         //Locale.setDefault(new Locale("fr","FR"));
-
-        //Set default system language.
-        Locale.setDefault(new Locale("en", "US"));
-
-       /* Scanner keyboard = new Scanner(System.in);
-        System.out.print("Enter a language(es, de, or fr. Or en): ");
-        String languageCode = keyboard.nextLine();
-        if(languageCode.equals("fr"))
-            LanguageConversion.changeToFrench();
-        ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
-        System.out.println(rb.getString("Username"));*/
-
-
-        //Setting the system to a different timezone
-        //TimeZone.setDefault(TimeZone.getTimeZone("America/Los_Angeles"));
-
 
         launch(args);
         JDBC.closeConnection();

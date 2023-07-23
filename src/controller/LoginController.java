@@ -48,6 +48,12 @@ public class LoginController implements Initializable {
     ZoneId myZoneId = ZoneId.systemDefault();
     ZoneId myUTC = ZoneId.of("UTC");
 
+    String successful = "successful";
+    String unsuccessful = "unsuccessful";
+    String error = "Error";
+    String errorDetail = "Wrong username or password.";
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelLocation.setText(myZoneId.toString());
@@ -59,20 +65,16 @@ public class LoginController implements Initializable {
 
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
 
-            if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test")))
-            {
+            if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test"))) {
                 recordActivity(textfieldUsername.getText(), "successful");
-            }
-            else
-            {
+            } else {
                 recordActivity(textfieldUsername.getText(), "unsuccessful");
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.show();
-                alert.setHeaderText("Error");
-                alert.setContentText("Wrong username or password");
+                alert.setHeaderText(rb.getString(error));
+                alert.setContentText(rb.getString(errorDetail));
                 return;
             }
-
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 1240, 600);

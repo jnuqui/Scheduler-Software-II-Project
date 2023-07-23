@@ -13,3 +13,6 @@ https://stackoverflow.com/questions/867194/java-resultset-how-to-check-if-there-
 
 For adding time to "Now" SQL
 https://stackoverflow.com/questions/2642885/display-rows-from-mysql-where-a-datetime-is-within-the-next-hour
+
+Filtering queries that have a matching row
+https://stackoverflow.com/questions/57079980/how-to-not-display-an-item-in-select-query

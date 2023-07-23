@@ -12,9 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -29,6 +27,7 @@ import java.util.ResourceBundle;
 public class UpdateAppointmentController implements Initializable {
     @FXML
     public TextField appointmentIdTextfield;
+    public Button updateButton;
     @FXML
     private ComboBox locationComboBox;
     @FXML
@@ -47,6 +46,9 @@ public class UpdateAppointmentController implements Initializable {
     public ComboBox customerIdComboBox;
     @FXML
     public ComboBox userIdComboBox;
+
+    LocalDateTime originalStart;
+    LocalDateTime originalEnd;
 
     private ObservableList<LocalTime> myLT = FXCollections.observableArrayList();
     LocalTime[] time = new LocalTime[13];
@@ -76,6 +78,31 @@ public class UpdateAppointmentController implements Initializable {
         }
     }
 
+    public void setOriginalApptTime(LocalDateTime start, LocalDateTime end)
+    {
+        originalStart = start;
+        originalEnd = end;
+    }
+
+    public boolean updateTimeSame()
+    {
+        boolean good = false;
+        //Start
+        LocalDate ldStart = startDatePicker.getValue();
+        LocalTime ltStart = LocalTime.parse(startTimeComboBox.getValue().toString());
+        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
+
+        //End
+        LocalDate ldEnd = startDatePicker.getValue();
+        LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
+        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+        if(ldtStart.isEqual(originalStart) && ldtEnd.isEqual(originalEnd))
+            {
+                good = true;
+            }
+        return good;
+    }
+
     public void populateLocation() {
         locationComboBox.setItems(CollectionLists.getPlaces());
     }
@@ -85,17 +112,6 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     public void populateTimeComboBoxes() {
-        //start time
-        /*for (int i = 0; i <= 12; i++) {
-            time[i] = LocalTime.of((i + 8), 0);
-            myLT.add(time[i]);
-        }
-        ;
-        //endtime
-        for (int i = 0; i <= 12; i++) {
-            time[i] = LocalTime.of((i + 8), 0);
-            myLT.add(time[i]);
-        }*/
         startTimeComboBox.setItems(CollectionLists.getTimes());
         endTimeComboBox.setItems(CollectionLists.getTimes());
     }
@@ -108,10 +124,8 @@ public class UpdateAppointmentController implements Initializable {
         userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
-    public void testPrint() throws SQLException {
-        //System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
-        System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
-    }
+
+
 
     public void insertAppointmentTestFill() {
         titleTextfield.setText("Title Test");
@@ -197,71 +211,148 @@ public class UpdateAppointmentController implements Initializable {
     }
 
 
-
-
-    public void updateAppointmentFill(String title, String description, String location, String contact, String type)
+    public boolean inputCheck()
     {
-        titleTextfield.setText("Title Test");
-        descriptionTextfield.setText("Description Test");
-        locationComboBox.getSelectionModel().select(CollectionLists.returnUpdateLocation(location));
-        //contactComboBox
-        typeTextfield.setText("Shooting the breeze");
-
-        /*/Start
-        LocalDate ldStart = startDatePicker.getValue();
-        LocalTime ltStart = (LocalTime) startTimeComboBox.getValue();
-        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
-        Timestamp tsStart = Timestamp.valueOf(ldtStart);
-
-        //End
-        LocalDate ldEnd = endDatePicker.getValue();
-        LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
-        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
-        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);*/
-
-        LocalDate ldStart = LocalDate.now();
-        LocalTime ltStart = LocalTime.now();
-        LocalTime ltEnd = LocalTime.now().plusHours(1);
-        startDatePicker.setValue(ldStart);
-        startTimeComboBox.setValue(ltStart);
-        endTimeComboBox.setValue(ltEnd);
-
-        customerIdComboBox.getSelectionModel().select(1);
-        userIdComboBox.getSelectionModel().select(1);
-        contactComboBox.getSelectionModel().select(1);
+        boolean good = true;
+        if (titleTextfield.getText() == "" ||
+                descriptionTextfield.getText() == "" ||
+                locationComboBox.getValue() == null ||
+                typeTextfield.getText() == "" ||
+                startDatePicker.getValue() == null ||
+                startTimeComboBox.getValue() == null ||
+                endTimeComboBox.getValue() == null ||
+                customerIdComboBox.getValue() == null ||
+                userIdComboBox.getValue() == null ||
+                contactComboBox.getValue() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Inputs");
+            alert.setContentText("Please complete all fields.");
+            good = false;
+        }
+        System.out.println("Input check: " + good);
+        return good;
     }
 
 
-    public void updateAppointment() throws SQLException {
-        int appointmentId = Integer.parseInt(appointmentIdTextfield.getText());
-        String title = titleTextfield.getText();
-        String description = descriptionTextfield.getText();
-        String location = locationComboBox.getValue().toString();
-        String type = typeTextfield.getText();
+    public boolean goodAppointmentTime() throws SQLException {
 
+        boolean good = true;
         //Start
         LocalDate ldStart = startDatePicker.getValue();
         LocalTime ltStart = LocalTime.parse(startTimeComboBox.getValue().toString());
         LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
-        Timestamp tsStart = Timestamp.valueOf(ldtStart);
 
         //End
         LocalDate ldEnd = startDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
-        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
 
         int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
-        int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
-        int contactId = DatabaseAccess.getContactId(contactComboBox.getValue().toString());
-
-        //(String title, String description, String location, String type,
-        //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
-        AppointmentDAO.updateAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId, appointmentId);
+        int appointmentId = Integer.parseInt(appointmentIdTextfield.getText());
+        if(startDatePicker.getValue() == null ||
+                startTimeComboBox.getValue() == null ||
+                endTimeComboBox.getValue() == null )
+        {
+            good = false;
+        }
+        else if(ldtEnd.isBefore(ldtStart))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("End time must be after Start Time");
+            good = false;
+        }
+        else if (ldtStart.isEqual(ldtEnd))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("Start and end time cannot be the same.");
+            good = false;
+        }
+        else if (ldtStart.isBefore(LocalDateTime.now()) || ldtEnd.isBefore(LocalDateTime.now()))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("Appointment cannot be set in the past.");
+            good = false;
+        }
+        else if (updateTimeSame() == true)
+        {
+            good = true;
+        }
+        else if (!CollectionLists.checkTimeRange(ldtStart, ldtEnd))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Time");
+            alert.setContentText("Time is not within 8:00AM - 10:00PM ET");
+            //System.out.println(CollectionLists.myFormattedDTF(ldtStart) + " " + CollectionLists.myFormattedDTF(ldtEnd));
+            good = false;
+        }
+        else if (!AppointmentDAO.checkUpdateAppointmentOverlap(ldtStart, ldtEnd, customerId, appointmentId).equals("No"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Conflicting Time");
+            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
+            good = false;
+        }
+        System.out.println("goodAppointmentTime: " + good);
+        return good;
     }
 
+    public void updateAppointment() throws SQLException {
+        try {
+            boolean inputWorks = inputCheck();
+            boolean timeWorks = goodAppointmentTime();
+            if (inputWorks && timeWorks)
+            {
+                int appointmentId = Integer.parseInt(appointmentIdTextfield.getText());
+                String title = titleTextfield.getText();
+                String description = descriptionTextfield.getText();
+                String location = locationComboBox.getValue().toString();
+                String type = typeTextfield.getText();
 
+                //Start
+                LocalDate ldStart = startDatePicker.getValue();
+                LocalTime ltStart = LocalTime.parse(startTimeComboBox.getValue().toString());
+                LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
+                Timestamp tsStart = Timestamp.valueOf(ldtStart);
 
+                //End
+                LocalDate ldEnd = startDatePicker.getValue();
+                LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
+                LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
+                Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
+
+                int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
+                int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
+                int contactId = DatabaseAccess.getContactId(contactComboBox.getValue().toString());
+
+                //(String title, String description, String location, String type,
+                //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
+                AppointmentDAO.updateAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId, appointmentId);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.show();
+                alert.setHeaderText("Successfully updated.");
+                alert.setContentText("Appointment for customer " + customerId + " successfully updated.");
+
+                originalStart = ldtStart;
+                originalEnd = ldtEnd;
+            }
+        }
+        catch (Exception e)
+        {
+             System.out.println("Update didn't work");
+        }
+
+        }
 
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
@@ -275,4 +366,16 @@ public class UpdateAppointmentController implements Initializable {
     }
 
 
+    public void testPrint() throws SQLException {
+        //System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
+        //System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
+        try{
+            inputCheck();
+            goodAppointmentTime();
+            System.out.println("Is the update time the same as before? - " + updateTimeSame());
+        }
+        catch (Exception e)
+        { }
+
+    }
 }

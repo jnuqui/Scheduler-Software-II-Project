@@ -138,14 +138,6 @@ public class AddAppointmentController implements Initializable
             alert.setContentText("Appointment cannot be set in the past.");
             good = false;
         }
-        else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId).equals("No"))
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Conflicting Time");
-            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
-            good = false;
-        }
         else if (!CollectionLists.checkTimeRange(ldtStart, ldtEnd))
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -155,6 +147,15 @@ public class AddAppointmentController implements Initializable
             //System.out.println(CollectionLists.myFormattedDTF(ldtStart) + " " + CollectionLists.myFormattedDTF(ldtEnd));
             good = false;
         }
+        else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId).equals("No"))
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Conflicting Time");
+            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
+            good = false;
+        }
+
         System.out.println("goodAppointmentTime: " + good);
         return good;
     }
