@@ -53,11 +53,6 @@ public class UpdateCustomerController implements Initializable
         //countryComboBox.setValue(countryComboBox.getItems().get(0));
     }
 
-    public void populateCountries() throws SQLException {
-        CountryDAO.clearCountries();
-        //countryComboBox.setItems(CountryDAO.getCountriesStrings());
-    }
-
     public void populateCountriesv2() throws SQLException {
         CountryDAO.clearCountries();
         countryComboBox.setItems(CountryDAO.getCountries());
@@ -73,13 +68,8 @@ public class UpdateCustomerController implements Initializable
         phoneTextField.setText(phone);
 
         //missing in param, too
-        //firstLevelDivisionComboBox.setValue();
-
+        //firstLevelDivisionComboBox.setSelectionModel();
     }
-
-
-
-
 
     public void passCountry() throws SQLException {
         try {
@@ -106,14 +96,6 @@ public class UpdateCustomerController implements Initializable
         String phone = phoneTextField.getText();
         int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
 
-        /* in case I want to test more printing stuff
-        System.out.println(customerName);
-        System.out.println(address);
-        System.out.println(postalCode);
-        System.out.println(phone);
-        System.out.println(divisionIdFK);
-        */
-
         CustomerDAO.updateCustomer(customerName, address, postalCode, phone, divisionIdFK, customerId);
     }
 
@@ -123,7 +105,6 @@ public class UpdateCustomerController implements Initializable
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
-        //firstLevelDivisionComboBox.getItems().removeAll();
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 950, 400);

@@ -41,19 +41,11 @@ public class AddCustomerController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //countryComboBox.setPromptText("Select Country");
-        //countryComboBox.setSelectionModel();
         try {
             populateCountriesv2();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //countryComboBox.setValue(countryComboBox.getItems().get(0));
-    }
-
-    public void populateCountries() throws SQLException {
-        CountryDAO.clearCountries();
-        //countryComboBox.setItems(CountryDAO.getCountriesStrings());
     }
 
     public void populateCountriesv2() throws SQLException {
@@ -82,14 +74,6 @@ public class AddCustomerController implements Initializable
         String postalCode = postalCodeTextField.getText();
         String phone = phoneTextField.getText();
         int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
-
-        /* in case I want to test more printing stuff
-        System.out.println(customerName);
-        System.out.println(address);
-        System.out.println(postalCode);
-        System.out.println(phone);
-        System.out.println(divisionIdFK);
-        */
 
         CustomerDAO.insertCustomer(customerName, address, postalCode, phone, divisionIdFK);
     }

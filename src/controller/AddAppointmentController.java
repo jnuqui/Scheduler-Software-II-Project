@@ -46,8 +46,6 @@ public class AddAppointmentController implements Initializable
     @FXML
     public ComboBox userIdComboBox;
 
-    //private ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
-    //LocalTime [] time = new LocalTime[46];
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -215,6 +213,8 @@ public class AddAppointmentController implements Initializable
         stage.show();
     }
 
+    //Ready to delete this tester
+/*
     public void insertAppointmentTestFill()
     {
         titleTextfield.setText("Title Test");
@@ -232,7 +232,10 @@ public class AddAppointmentController implements Initializable
         customerIdComboBox.getSelectionModel().select(1);
         userIdComboBox.getSelectionModel().select(1);
         contactComboBox.getSelectionModel().select(1);
-    }
+    }/*
+
+    //Ready to delete this when the time comes
+    /*
     public void testPrint() throws SQLException {
         try{
             inputCheck();
@@ -240,5 +243,5 @@ public class AddAppointmentController implements Initializable
         }
         catch (Exception e)
         { }
-    }
+    }*/
 }

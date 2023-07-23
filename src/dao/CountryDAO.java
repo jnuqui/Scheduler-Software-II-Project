@@ -26,14 +26,14 @@ public class CountryDAO {
         }
         return allCountries;
     }
-
+/*
     public static ObservableList<String> getCountriesStrings() throws SQLException {
             getCountries();
             for (int i = 0; i <= (allCountries.size() - 1); i++) {
                 allCountriesStrings.add(allCountries.get(i).getCountryName());
             }
             return allCountriesStrings;
-    }
+    }*/
 
     public static void clearCountries()
     {
@@ -41,6 +41,7 @@ public class CountryDAO {
         allCountriesStrings.clear();
     }
 
+    /*
     public static int getMatchingCountryId(String country) throws SQLException
     {
         int countryId = -1;
@@ -53,5 +54,5 @@ public class CountryDAO {
             countryId = rs.getInt("Country_ID");
         }
         return countryId;
-    }
+    }*/
 }

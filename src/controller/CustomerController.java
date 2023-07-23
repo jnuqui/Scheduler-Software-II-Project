@@ -99,8 +99,6 @@ public class CustomerController implements Initializable
     }
 
 
-
-
     public void toAddCustomer (ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddCustomer.fxml"));
@@ -144,7 +142,9 @@ public class CustomerController implements Initializable
                     customersTable.getSelectionModel().getSelectedItem().toString(),
                     customersTable.getSelectionModel().getSelectedItem().getAddress(),
                     customersTable.getSelectionModel().getSelectedItem().getPostalCode(),
-                    customersTable.getSelectionModel().getSelectedItem().getPhone());
+                    customersTable.getSelectionModel().getSelectedItem().getPhone()
+
+            );
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();

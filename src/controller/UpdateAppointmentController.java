@@ -133,18 +133,6 @@ public class UpdateAppointmentController implements Initializable {
         locationComboBox.getSelectionModel().select(1);
         typeTextfield.setText("Shooting the breeze");
 
-        /*/Start
-        LocalDate ldStart = startDatePicker.getValue();
-        LocalTime ltStart = (LocalTime) startTimeComboBox.getValue();
-        LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
-        Timestamp tsStart = Timestamp.valueOf(ldtStart);
-
-        //End
-        LocalDate ldEnd = endDatePicker.getValue();
-        LocalTime ltEnd = (LocalTime) endTimeComboBox.getValue();
-        LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
-        Timestamp tsEnd = Timestamp.valueOf(ldtEnd);*/
-
         LocalDate ldStart = LocalDate.now();
         LocalTime ltStart = LocalTime.now();
         LocalTime ltEnd = LocalTime.now().plusHours(1);
@@ -367,12 +355,10 @@ public class UpdateAppointmentController implements Initializable {
 
 
     public void testPrint() throws SQLException {
-        //System.out.print(startDatePicker.getValue().toString() + " " + startTimeComboBox.getValue().toString());
-        //System.out.println(DatabaseAccess.getContactId(contactComboBox.getValue().toString()));
         try{
             inputCheck();
             goodAppointmentTime();
-            System.out.println("Is the update time the same as before? - " + updateTimeSame());
+           // System.out.println("Is the update time the same as before? - " + updateTimeSame());
         }
         catch (Exception e)
         { }
