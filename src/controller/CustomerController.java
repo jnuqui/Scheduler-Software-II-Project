@@ -142,7 +142,9 @@ public class CustomerController implements Initializable
                     customersTable.getSelectionModel().getSelectedItem().toString(),
                     customersTable.getSelectionModel().getSelectedItem().getAddress(),
                     customersTable.getSelectionModel().getSelectedItem().getPostalCode(),
-                    customersTable.getSelectionModel().getSelectedItem().getPhone()
+                    customersTable.getSelectionModel().getSelectedItem().getPhone(),
+                    customersTable.getSelectionModel().getSelectedItem().getCountry(),
+                    customersTable.getSelectionModel().getSelectedItem().getDivisionName()
 
             );
 

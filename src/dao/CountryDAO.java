@@ -55,4 +55,16 @@ public class CountryDAO {
         }
         return countryId;
     }*/
+
+    public static Country returnUpdateCountry(String country) {
+        int countryIndex = 0;
+        for (int i = 0; i <= allCountries.size(); i++) {
+            if (country.equals(allCountries.get(i)))
+            {
+                countryIndex = i;
+                break;
+            }
+        }
+        return allCountries.get(countryIndex);
+    }
 }

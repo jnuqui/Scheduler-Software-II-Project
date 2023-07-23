@@ -59,16 +59,15 @@ public class UpdateCustomerController implements Initializable
         // countryComboBox.setValue(CountryDAO.getCountries().get(0));
     }
 
-    public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone)
+    public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone, String country, String divisionName)
     {
         customerIdTextfield.setText(String.valueOf(customerId));
         customerNameTextField.setText(customerName);
         addressTextField.setText(address);
         postalCodeTextField.setText(postalCode);
         phoneTextField.setText(phone);
-
-        //missing in param, too
-        //firstLevelDivisionComboBox.setSelectionModel();
+        countryComboBox.setValue(CountryDAO.returnUpdateCountry(country));
+        firstLevelDivisionComboBox.setPromptText(divisionName);
     }
 
     public void passCountry() throws SQLException {
