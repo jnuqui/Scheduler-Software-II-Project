@@ -374,14 +374,24 @@ public class SchedulerDashboardController implements Initializable
             return;
         }
         else {
-            String appointmentId = String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
-            String type = appointmentsTable.getSelectionModel().getSelectedItem().getType();
-            AppointmentDAO.deleteAppointment(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
 
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.show();
-            alert.setHeaderText("Delete Successful");
-            alert.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete appointment (ID:" + appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId() + ") ?");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    String appointmentId = String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
+                    String type = appointmentsTable.getSelectionModel().getSelectedItem().getType();
+                    try {
+                        AppointmentDAO.deleteAppointment(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+
+                    Alert alertDeleted = new Alert(Alert.AlertType.INFORMATION);
+                    alertDeleted.show();
+                    alertDeleted.setHeaderText("Delete Successful");
+                    alertDeleted.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted");
+                }
+            });
 
             try {
                 allAppointments = AppointmentDAO.getAppointmentsv2();
@@ -461,39 +471,37 @@ public class SchedulerDashboardController implements Initializable
 
     public void getCustomReport() throws SQLException {
 
+try {
+    reportCustomTable.setItems(AppointmentDAO.getLocationReport(locationComboBox.getValue().toString()));
 
-            reportCustomTable.setItems(AppointmentDAO.getLocationReport(locationComboBox.getValue().toString()));
+    appointmentIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+    titleCustomColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+    descriptionCustomColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+    locationCustomColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+    contactCustomColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+    typeCustomColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+    startCustomColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+    endCustomColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+    customerIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+    userIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
 
-            appointmentIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-            titleCustomColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            descriptionCustomColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-            locationCustomColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-            contactCustomColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            typeCustomColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            startCustomColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-            endCustomColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-            customerIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            userIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+    appointmentsTable.visibleProperty().setValue(false);
+    reportTypeTable.visibleProperty().setValue(false);
+    reportContactTable.visibleProperty().setValue(false);
+    reportCustomTable.visibleProperty().setValue(true);
 
-
-            appointmentsTable.visibleProperty().setValue(false);
-            reportTypeTable.visibleProperty().setValue(false);
-            reportContactTable.visibleProperty().setValue(false);
-            reportCustomTable.visibleProperty().setValue(true);
-
-            allAppointmentsRadio.setSelected(false);
-            monthAppointmentsRadio.setSelected(false);
-            weekAppointmentRadio.setSelected(false);
-        /*
+    allAppointmentsRadio.setSelected(false);
+    monthAppointmentsRadio.setSelected(false);
+    weekAppointmentRadio.setSelected(false);
+}
         catch (Exception e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.show();
             alert.setHeaderText("Select Location");
             alert.setContentText("Select Location first");
-        }*/
+        }
     }
-
 
 }

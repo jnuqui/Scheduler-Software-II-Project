@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -96,6 +97,11 @@ public class UpdateCustomerController implements Initializable
         int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
 
         CustomerDAO.updateCustomer(customerName, address, postalCode, phone, divisionIdFK, customerId);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.show();
+        alert.setHeaderText("Success.");
+        alert.setContentText("Customer " + customerId + " successfully updated.");
     }
 
     public void testPrint() throws SQLException {

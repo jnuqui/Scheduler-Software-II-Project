@@ -9,10 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointment;
 
@@ -138,5 +135,15 @@ public class LoginController implements Initializable {
         ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
         //labelUsername.setText(rb.getString("Username"));
         //textfieldUsername.setText("hey");
+    }
+
+    public void testAlert()
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete customer?");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                System.out.println("Customer dleeted");
+            }
+        });
     }
 }

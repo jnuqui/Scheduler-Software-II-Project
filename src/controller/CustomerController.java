@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -90,16 +91,26 @@ public class CustomerController implements Initializable
             return;
         }
         else {
-            CustomerDAO.deleteCustomer(customersTable.getSelectionModel().getSelectedItem().getCustomerId());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.show();
-            alert.setHeaderText("Delete Successful");
-            alert.setContentText("Customer ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + " deleted.");
-            try {
-                allCustomers = CustomerDAO.getCustomers();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
-            }
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete customer (ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + ") ?");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
+                    try {
+                        CustomerDAO.deleteCustomer(customersTable.getSelectionModel().getSelectedItem().getCustomerId());
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                    Alert alertDelete = new Alert(Alert.AlertType.INFORMATION);
+                    alertDelete.show();
+                    alertDelete.setHeaderText("Delete Successful");
+                    alertDelete.setContentText("Customer ID:" + customersTable.getSelectionModel().getSelectedItem().getCustomerId() + " deleted.");
+                    try {
+                        allCustomers = CustomerDAO.getCustomers();
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
+                }
+            });
+
             populateTable();
         }
     }
