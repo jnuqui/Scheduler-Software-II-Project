@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import dao.ContactDAO;
 import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
@@ -29,15 +30,38 @@ import java.util.ResourceBundle;
 public class SchedulerDashboardController implements Initializable
 {
     @FXML
-    public TableView reportContactTable;
+    public TableView<Appointment> reportContactTable;
     @FXML
-    public TableView reportTypeTable;
+    public TableView<Appointment> reportTypeTable;
     @FXML
     public ComboBox typeComboBox;
     @FXML
     public ComboBox monthComboBox;
     @FXML
     public ComboBox contactComboBox;
+    public Button typeMonthButton;
+    @FXML
+    public TableView<Appointment> reportCustomTable;
+    @FXML
+    public TableColumn appointmentIdContactColumn;
+    @FXML
+    public TableColumn titleContactColumn;
+    @FXML
+    public TableColumn descriptionContactColumn;
+    @FXML
+    public TableColumn locationContactColumn;
+    @FXML
+    public TableColumn contactContactColumn;
+    @FXML
+    public TableColumn typeContactColumn;
+    @FXML
+    public TableColumn startContactColumn;
+    @FXML
+    public TableColumn endContactColumn;
+    @FXML
+    public TableColumn customerIdContactColumn;
+    @FXML
+    public TableColumn userIdContactColumn;
     @FXML
     private TableView<Appointment> appointmentsTable;
     @FXML
@@ -134,6 +158,11 @@ public class SchedulerDashboardController implements Initializable
         //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
+        appointmentsTable.visibleProperty().setValue(true);
+        reportTypeTable.visibleProperty().setValue(false);
+        reportContactTable.visibleProperty().setValue(false);
+        reportCustomTable.visibleProperty().setValue(false);
+
         //Use with Callback method below.
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         //startColumn.setCellFactory(createCellFactory(formatter));
@@ -161,6 +190,10 @@ public class SchedulerDashboardController implements Initializable
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
 
+        appointmentsTable.visibleProperty().setValue(true);
+        reportTypeTable.visibleProperty().setValue(false);
+        reportContactTable.visibleProperty().setValue(false);
+        reportCustomTable.visibleProperty().setValue(false);
         //Use with Callback method below
         //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         //startColumn.setCellFactory(createCellFactory(formatter));
@@ -187,6 +220,10 @@ public class SchedulerDashboardController implements Initializable
             //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
             userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
+            appointmentsTable.visibleProperty().setValue(true);
+            reportTypeTable.visibleProperty().setValue(false);
+            reportContactTable.visibleProperty().setValue(false);
+            reportCustomTable.visibleProperty().setValue(false);
 
             //Use with Callback method below
             //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -323,9 +360,42 @@ public class SchedulerDashboardController implements Initializable
         System.out.println(allAppointments.get(1).getStartTime());
     }
 
-    public void testTableView()
+    public void getTypeMonthReport()
     {
-        reportTypeTable.visibleProperty().setValue(true);
+
+
         appointmentsTable.visibleProperty().setValue(false);
+        reportTypeTable.visibleProperty().setValue(true);
+        reportContactTable.visibleProperty().setValue(false);
+        reportCustomTable.visibleProperty().setValue(false);
     }
+
+    public void getContactReport() throws SQLException {
+        reportContactTable.setItems(AppointmentDAO.getContactReport(contactComboBox.getValue().toString()));
+
+        appointmentIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+        titleContactColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        descriptionContactColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        locationContactColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+        contactContactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+        typeContactColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        startContactColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        endContactColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        customerIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        userIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        appointmentsTable.visibleProperty().setValue(false);
+        reportTypeTable.visibleProperty().setValue(false);
+        reportContactTable.visibleProperty().setValue(true);
+        reportCustomTable.visibleProperty().setValue(false);
+    }
+
+    public void getCustomReport() {
+        appointmentsTable.visibleProperty().setValue(false);
+        reportTypeTable.visibleProperty().setValue(false);
+        reportContactTable.visibleProperty().setValue(false);
+        reportCustomTable.visibleProperty().setValue(true);
+    }
+
+
 }

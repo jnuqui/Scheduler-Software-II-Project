@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import dao.ContactDAO;
 import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
@@ -187,7 +188,7 @@ public class AddAppointmentController implements Initializable
 
                 int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
                 int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
-                int contactId = DatabaseAccess.getContactId(contactComboBox.getValue().toString());
+                int contactId = ContactDAO.getContactId(contactComboBox.getValue().toString());
 
                 //(String title, String description, String location, String type,
                 //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)

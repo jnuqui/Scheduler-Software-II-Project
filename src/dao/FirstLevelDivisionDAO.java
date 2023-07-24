@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class FirstLevelDivisionDAO
+public abstract class FirstLevelDivisionDAO
 {
     static ObservableList<FirstLevelDivision> allFLD = FXCollections.observableArrayList();
     static ObservableList<String> allFLDStrings = FXCollections.observableArrayList();

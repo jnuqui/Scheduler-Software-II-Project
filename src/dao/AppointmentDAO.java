@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZonedDateTime;
 
-public class AppointmentDAO
+public abstract class AppointmentDAO
 {
     //this works - don't want to break it so I'm going to copy and paste it to try a query within the while loop
     /*public static ObservableList<Appointment> getAppointments() throws SQLException {
@@ -319,6 +319,71 @@ public class AppointmentDAO
             }*/
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
+    }
+/*
+    public static ObservableList<Appointment> getMonthTypeReport(String month, String type) throws SQLException {
+        ObservableList<Appointment> monthTypeAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT Appointment_ID, Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ? AND NOT Appointment_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, Timestamp.valueOf(endLDT));
+        ps.setTimestamp(2, Timestamp.valueOf(startLDT));
+        ResultSet rs = ps.executeQuery();
+
+
+        return monthTypeAppointments;
+    }*/
+
+    /*public static ObservableList<Appointment> getContactReportOld(int contactIdComboBox) throws SQLException {
+        ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM appointments WHERE Contact_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, contactIdComboBox);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            int appointmentId = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String contactName = rs.getString("Contact_Name");
+            String type = rs.getString("Type");
+            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int contactId = rs.getInt("Contact_ID");
+            int userId = rs.getInt("User_ID");
+            Appointment appointment = new Appointment(appointmentId, title, description, location, contactName, type, startTime, endTime, customerId, contactId, userId);
+            contactAppointments.add(appointment);
+        }
+        return contactAppointments;
+    }*/
+
+    public static ObservableList<Appointment> getContactReport(String contactNameBox) throws SQLException {
+        ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
+        String sql =     "SELECT appointments.*, contacts.Contact_Name\n" +
+                "FROM appointments\n" +
+                "JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID\n" +
+                "WHERE Contact_Name = ? ORDER BY Appointment_ID ASC;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setString(1, contactNameBox);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next())
+        {
+            int appointmentId = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String contactName = rs.getString("Contact_Name");
+            String type = rs.getString("Type");
+            LocalDateTime startTime = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDateTime endTime = rs.getTimestamp("End").toLocalDateTime();
+            int customerId = rs.getInt("Customer_ID");
+            int contactId = rs.getInt("Contact_ID");
+            int userId = rs.getInt("User_ID");
+            Appointment appointment = new Appointment(appointmentId, title, description, location, contactName, type, startTime, endTime, customerId, contactId, userId);
+            contactAppointments.add(appointment);
+        }
+        return contactAppointments;
     }
 
 
