@@ -19,3 +19,6 @@ https://stackoverflow.com/questions/57079980/how-to-not-display-an-item-in-selec
 
 searching by month
 https://www.tutorialspoint.com/mysql-query-to-select-all-entries-from-a-particular-month#:~:text=To%20select%20all%20entries%20from%20a%20particular%20month%20in%20MySQL,()%20or%20month()%20function.
+
+join help
+https://learnsql.com/blog/how-to-join-3-tables-or-more-in-sql/
