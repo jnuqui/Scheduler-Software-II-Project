@@ -29,6 +29,8 @@ public class UpdateAppointmentController implements Initializable {
     public TextField appointmentIdTextfield;
     public Button updateButton;
     @FXML
+    public ComboBox typeComboBox;
+    @FXML
     private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
@@ -62,6 +64,8 @@ public class UpdateAppointmentController implements Initializable {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        populateTypes();
 
         populateTimeComboBoxes();
 
@@ -109,6 +113,11 @@ public class UpdateAppointmentController implements Initializable {
 
     public void populateContacts() throws SQLException {
         contactComboBox.setItems(DatabaseAccess.getContactNames());
+    }
+
+    public void populateTypes()
+    {
+        typeComboBox.setItems(CollectionLists.getTypes());
     }
 
     public void populateTimeComboBoxes() {
@@ -168,9 +177,9 @@ public class UpdateAppointmentController implements Initializable {
         contactComboBox.setValue(contact);
     }
 
-    public void setType(String contact)
+    public void setType(String type)
     {
-        typeTextfield.setText(contact);
+        typeComboBox.setValue(type);
     }
 
     public void setStartDate(LocalDate localDate)
@@ -205,7 +214,7 @@ public class UpdateAppointmentController implements Initializable {
         if (titleTextfield.getText() == "" ||
                 descriptionTextfield.getText() == "" ||
                 locationComboBox.getValue() == null ||
-                typeTextfield.getText() == "" ||
+                typeComboBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
                 endTimeComboBox.getValue() == null ||
@@ -304,7 +313,7 @@ public class UpdateAppointmentController implements Initializable {
                 String title = titleTextfield.getText();
                 String description = descriptionTextfield.getText();
                 String location = locationComboBox.getValue().toString();
-                String type = typeTextfield.getText();
+                String type = typeComboBox.getValue().toString();
 
                 //Start
                 LocalDate ldStart = startDatePicker.getValue();

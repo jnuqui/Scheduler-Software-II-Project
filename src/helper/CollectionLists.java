@@ -15,10 +15,20 @@ public class CollectionLists {
     public static String[] officeLocation = {"Phoenix, Arizona", "White Plains, New York", "Montreal, Canada", "London, England"};
     public static boolean locationLoaded = false;
 
+    //Types for appointments
+    private static ObservableList<String> types = FXCollections.observableArrayList();
+    public static String[] typeAppointment = {"Finances", "Planning Session", "De-Briefing", "Fun" };
+    public static boolean typesLoaded = false;
+
     //Times for appointments
     private static ObservableList <LocalTime> myLT = FXCollections.observableArrayList();
     public static LocalTime [] time = new LocalTime[48];
     public static boolean timesLoaded = false;
+
+    //Months for report 1
+    private static ObservableList <String> allMonths = FXCollections.observableArrayList();
+    public static String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    public static boolean monthsLoaded = false;
 
     //Creating the appointment times for the business
 
@@ -115,6 +125,52 @@ public class CollectionLists {
         }
         return locationIndex;
     }
+
+    //Begin type methods
+    public static void loadTypes() {
+        for (int i = 0; i <= 3; i++) {
+            types.add(typeAppointment[i]);
+        }
+    }
+//type
+    public static ObservableList<String> getTypes() {
+        if(!typesLoaded) {
+            loadTypes();
+            typesLoaded = true;
+        }
+        return types;
+    }
+//type
+    public static int returnUpdateType(String type) {
+        int typeIndex = 0;
+        for (int i = 0; i <= 3; i++) {
+            if (type.equals(typeAppointment[i]))
+            {
+                typeIndex = i;
+                break;
+            }
+        }
+        return typeIndex;
+    }
+//End type methods
+
+    //begin month methods
+    //Begin type methods
+    public static void loadMonths() {
+        for (int i = 0; i <= 11; i++) {
+            allMonths.add(months[i]);
+        }
+    }
+    //type
+    public static ObservableList<String> getMonths() {
+        if(!monthsLoaded) {
+            loadMonths();
+            monthsLoaded = true;
+        }
+        return allMonths;
+    }
+
+//end month methods
 
     public static String myFormattedDTF (LocalDateTime myLDT)
     {

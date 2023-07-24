@@ -23,7 +23,6 @@
          </font></TextField>
       <TextField fx:id="titleTextfield" layoutX="199.0" layoutY="183.0" prefHeight="25.0" prefWidth="170.0" />
       <TextField fx:id="descriptionTextfield" layoutX="200.0" layoutY="221.0" prefHeight="25.0" prefWidth="170.0" />
-      <TextField fx:id="typeTextfield" layoutX="201.0" layoutY="338.0" prefHeight="25.0" prefWidth="170.0" />
       <ComboBox fx:id="locationComboBox" layoutX="200.0" layoutY="259.0" prefHeight="25.0" prefWidth="170.0" />
       <ComboBox fx:id="contactComboBox" layoutX="199.0" layoutY="298.0" prefHeight="25.0" prefWidth="170.0" />
       <Button fx:id="addButton" layoutX="257.0" layoutY="556.0" mnemonicParsing="false" onAction="#insertAppointment" text="Add" />
@@ -32,13 +31,14 @@
       <Label layoutX="83.0" layoutY="418.0" text="Start and End Time" />
       <Label layoutX="117.0" layoutY="455.0" text="Customer_ID" />
       <Label layoutX="144.0" layoutY="495.0" text="User_ID" />
-      <Button fx:id="addTest" layoutX="106.0" layoutY="591.0" mnemonicParsing="false"  text="Add Test" />
+      <Button fx:id="addTest" layoutX="106.0" layoutY="591.0" mnemonicParsing="false" text="Add Test" />
       <DatePicker fx:id="startDatePicker" layoutX="201.0" layoutY="375.0" prefHeight="25.0" prefWidth="117.0" promptText="Month / Day" />
       <ComboBox fx:id="startTimeComboBox" layoutX="202.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="Start Time" />
       <ComboBox fx:id="endTimeComboBox" layoutX="305.0" layoutY="414.0" prefHeight="25.0" prefWidth="95.0" promptText="End Time" />
-      <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false"  text="Test Print" />
+      <Button fx:id="testPrintButton" layoutX="385.0" layoutY="491.0" mnemonicParsing="false" text="Test Print" />
       <ComboBox fx:id="userIdComboBox" layoutX="202.0" layoutY="491.0" prefHeight="25.0" prefWidth="68.0" />
       <ComboBox fx:id="customerIdComboBox" layoutX="202.0" layoutY="451.0" prefHeight="25.0" prefWidth="66.0" />
-      <Button fx:id="testFillButton" layoutX="359.0" layoutY="86.0" mnemonicParsing="false"  text="Test Fill" />
+      <Button fx:id="testFillButton" layoutX="359.0" layoutY="86.0" mnemonicParsing="false" text="Test Fill" />
+      <ComboBox fx:id="typeComboBox" layoutX="196.0" layoutY="338.0" prefHeight="25.0" prefWidth="170.0" />
    </children>
 </AnchorPane>

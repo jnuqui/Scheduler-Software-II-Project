@@ -28,6 +28,8 @@ import java.util.ResourceBundle;
 public class AddAppointmentController implements Initializable
 {
     @FXML
+    public ComboBox typeComboBox;
+    @FXML
     private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
@@ -61,6 +63,7 @@ public class AddAppointmentController implements Initializable
     public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
         contactComboBox.setItems(DatabaseAccess.getContactNames());
+        typeComboBox.setItems(CollectionLists.getTypes());
         startTimeComboBox.setItems(CollectionLists.getTimes());
         endTimeComboBox.setItems(CollectionLists.getTimes());
         customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
@@ -73,7 +76,7 @@ public class AddAppointmentController implements Initializable
         if (titleTextfield.getText() == "" ||
                 descriptionTextfield.getText() == "" ||
                 locationComboBox.getValue() == null ||
-                typeTextfield.getText() == "" ||
+                typeComboBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
                 endTimeComboBox.getValue() == null ||
@@ -168,7 +171,7 @@ public class AddAppointmentController implements Initializable
                 String title = titleTextfield.getText();
                 String description = descriptionTextfield.getText();
                 String location = locationComboBox.getValue().toString();
-                String type = typeTextfield.getText();
+                String type = typeComboBox.getValue().toString();
 
                 //Start
                 LocalDate ldStart = startDatePicker.getValue();

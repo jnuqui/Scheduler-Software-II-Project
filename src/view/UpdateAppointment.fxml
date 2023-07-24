@@ -38,5 +38,6 @@
       <ComboBox fx:id="userIdComboBox" layoutX="202.0" layoutY="491.0" prefHeight="25.0" prefWidth="68.0" />
       <ComboBox fx:id="customerIdComboBox" layoutX="202.0" layoutY="451.0" prefHeight="25.0" prefWidth="66.0" />
       <Button layoutX="374.0" layoutY="483.0" mnemonicParsing="false" onAction="#testPrint" text="testPrint" />
+      <ComboBox fx:id="typeComboBox" layoutX="40.0" layoutY="338.0" prefHeight="25.0" prefWidth="95.0" />
    </children>
 </AnchorPane>

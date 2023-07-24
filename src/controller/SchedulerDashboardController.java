@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,7 +27,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SchedulerDashboardController implements Initializable
-{   @FXML
+{
+    @FXML
+    public TableView reportContactTable;
+    @FXML
+    public TableView reportTypeTable;
+    @FXML
+    public ComboBox typeComboBox;
+    @FXML
+    public ComboBox monthComboBox;
+    @FXML
+    public ComboBox contactComboBox;
+    @FXML
     private TableView<Appointment> appointmentsTable;
     @FXML
     public TableColumn appointmentIdColumn;
@@ -65,7 +77,13 @@ public class SchedulerDashboardController implements Initializable
         populateTablev2();
 
 
-        //Random print
+        typeComboBox.setItems(CollectionLists.getTypes());
+        monthComboBox.setItems(CollectionLists.getMonths());
+        try {
+            contactComboBox.setItems(DatabaseAccess.getContactNames());
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public void checkAppointment()
@@ -303,5 +321,11 @@ public class SchedulerDashboardController implements Initializable
     public void testPrint()
     {
         System.out.println(allAppointments.get(1).getStartTime());
+    }
+
+    public void testTableView()
+    {
+        reportTypeTable.visibleProperty().setValue(true);
+        appointmentsTable.visibleProperty().setValue(false);
     }
 }

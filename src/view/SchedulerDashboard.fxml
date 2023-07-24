@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -34,6 +36,43 @@
       </RadioButton>
       <RadioButton fx:id="monthAppointmentsRadio" layoutX="426.0" layoutY="102.0" mnemonicParsing="false" onAction="#populateTableMonth" text="Month" toggleGroup="$filter" />
       <RadioButton fx:id="weekAppointmentRadio" layoutX="426.0" layoutY="128.0" mnemonicParsing="false" onAction="#populateTableWeek" text="Week" toggleGroup="$filter" />
-      <Button fx:id="testPrintButton" layoutX="620.0" layoutY="54.0" mnemonicParsing="false" onAction="#testPrint" text="test print" />
+      <Button fx:id="testPrintButton" layoutX="206.0" layoutY="88.0" mnemonicParsing="false" onAction="#testPrint" text="test print" />
+      <Button fx:id="testTableView" layoutX="894.0" layoutY="30.0" mnemonicParsing="false" onAction="#testTableView" text="testTableView" />
+      <TableView fx:id="reportTypeTable" focusTraversable="false" layoutX="3.0" layoutY="160.0" prefHeight="429.0" prefWidth="1230.0" scaleZ="0.0" visible="false">
+        <columns>
+            <TableColumn fx:id="appointmentIdColumn1" prefWidth="108.00000762939453" text="Appointment_ID" />
+            <TableColumn fx:id="titleColumn1" prefWidth="124.99999237060547" text="Title" />
+            <TableColumn fx:id="descriptionColumn1" prefWidth="216.66665649414062" text="Description" />
+            <TableColumn fx:id="locationColumn1" prefWidth="158.33334350585938" text="Location" />
+            <TableColumn fx:id="contactColumn1" prefWidth="113.66668701171875" text="Contact" />
+            <TableColumn fx:id="typeColumn1" prefWidth="121.0" text="Type" />
+            <TableColumn fx:id="startColumn1" prefWidth="120.33331298828125" text="Start" />
+            <TableColumn fx:id="endColumn1" minWidth="0.0" prefWidth="117.33331298828125" text="End" />
+            <TableColumn fx:id="customerIdColumn1" prefWidth="90.0" text="Customer_ID" />
+            <TableColumn fx:id="userIdColumn1" prefWidth="52.3333740234375" text="User_ID" />
+        </columns>
+      </TableView>
+      <TableView fx:id="reportContactTable" focusTraversable="false" layoutX="13.0" layoutY="170.0" prefHeight="429.0" prefWidth="1230.0" visible="false">
+         <columns>
+            <TableColumn fx:id="appointmentIdColumn11" prefWidth="108.00000762939453" text="Appointment_ID" />
+            <TableColumn fx:id="titleColumn11" prefWidth="124.99999237060547" text="Title" />
+            <TableColumn fx:id="descriptionColumn11" prefWidth="216.66665649414062" text="Description" />
+            <TableColumn fx:id="locationColumn11" prefWidth="158.33334350585938" text="Location" />
+            <TableColumn fx:id="contactColumn11" prefWidth="113.66668701171875" text="Contact" />
+            <TableColumn fx:id="typeColumn11" prefWidth="121.0" text="Type" />
+            <TableColumn fx:id="startColumn11" prefWidth="120.33331298828125" text="Start" />
+            <TableColumn fx:id="endColumn11" minWidth="0.0" prefWidth="117.33331298828125" text="End" />
+            <TableColumn fx:id="customerIdColumn11" prefWidth="90.0" text="Customer_ID" />
+            <TableColumn fx:id="userIdColumn11" prefWidth="52.3333740234375" text="User_ID" />
+         </columns>
+      </TableView>
+      <ComboBox fx:id="typeComboBox" layoutX="635.0" layoutY="28.0" prefHeight="25.0" prefWidth="85.0" />
+      <ComboBox fx:id="monthComboBox" layoutX="765.0" layoutY="30.0" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="testTableView1" layoutX="918.0" layoutY="76.0" mnemonicParsing="false" onAction="#testTableView" prefHeight="25.0" prefWidth="107.0" text="testTableView" />
+      <ComboBox fx:id="contactComboBox" layoutX="772.0" layoutY="76.0" prefHeight="25.0" prefWidth="91.0" />
+      <Button fx:id="testTableView11" layoutX="924.0" layoutY="125.0" mnemonicParsing="false" onAction="#testTableView" prefHeight="25.0" prefWidth="107.0" text="testTableView" />
+      <Label layoutX="487.0" layoutY="34.0" text="type and month" />
+      <Label layoutX="534.0" layoutY="69.0" prefHeight="17.0" prefWidth="68.0" text="Contact" />
+      <Label layoutX="539.0" layoutY="105.0" text="By location? " />
    </children>
 </AnchorPane>
