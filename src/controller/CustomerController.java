@@ -44,6 +44,8 @@ public class CustomerController implements Initializable
     public TableColumn phoneColumn;
     @FXML
     public TableColumn divisionIdColumn;
+    @FXML
+    public TableColumn countryColumn;
 
 
     @Override
@@ -66,6 +68,8 @@ public class CustomerController implements Initializable
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divisionIdColumn.setCellValueFactory(new PropertyValueFactory<>("divisionIdFK"));
+        countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
+
     }
 
     public void deleteCustomer() throws SQLException {

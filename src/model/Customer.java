@@ -26,7 +26,7 @@ public class Customer
         this.countryId = countryId;
     }
 
-    public Customer(int customerId, String name, String address, String postalCode, String phone, int divisionIdFK)
+    public Customer(int customerId, String name, String address, String postalCode, String phone, int divisionIdFK, String country)
     {
         this.customerId = customerId;
         this.name = name;
@@ -34,6 +34,7 @@ public class Customer
         this.postalCode = postalCode;
         this.phone = phone;
         this.divisionIdFK = divisionIdFK;
+        this.country = country;
     }
 
     public int getCustomerId() {
