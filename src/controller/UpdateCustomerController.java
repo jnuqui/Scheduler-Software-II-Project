@@ -89,6 +89,9 @@ public class UpdateCustomerController implements Initializable
     }
 
     public void updateCustomer() throws SQLException {
+
+try{
+    if (inputCheck() == true) {
         int customerId = Integer.parseInt(customerIdTextfield.getText());
         String customerName = customerNameTextField.getText();
         String address = addressTextField.getText();
@@ -102,6 +105,12 @@ public class UpdateCustomerController implements Initializable
         alert.show();
         alert.setHeaderText("Success.");
         alert.setContentText("Customer " + customerId + " successfully updated.");
+    }
+    }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public void testPrint() throws SQLException {
@@ -117,6 +126,25 @@ public class UpdateCustomerController implements Initializable
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public boolean inputCheck()
+    {
+        boolean good = true;
+        if(customerNameTextField.getText() == "" ||
+                addressTextField.getText() == "" ||
+                postalCodeTextField.getText() == "" ||
+                phoneTextField.getText() == "" ||
+                countryComboBox.getValue() == null ||
+                firstLevelDivisionComboBox.getValue() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Inputs");
+            alert.setContentText("Please complete all fields.");
+            good = false;
+        }
+        return good;
     }
 
 }

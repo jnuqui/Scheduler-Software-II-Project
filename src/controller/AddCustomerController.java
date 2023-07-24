@@ -70,18 +70,28 @@ public class AddCustomerController implements Initializable
     }
 
     public void addCustomer() throws SQLException {
-        String customerName = customerNameTextField.getText();
-        String address = addressTextField.getText();
-        String postalCode = postalCodeTextField.getText();
-        String phone = phoneTextField.getText();
-        int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
 
-        CustomerDAO.insertCustomer(customerName, address, postalCode, phone, divisionIdFK);
+        try {
+            if (inputCheck() == true) {
+                String customerName = customerNameTextField.getText();
+                String address = addressTextField.getText();
+                String postalCode = postalCodeTextField.getText();
+                String phone = phoneTextField.getText();
+                int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.show();
-        alert.setHeaderText("Success.");
-        alert.setContentText("Customer " + customerName + " successfully added.");
+                CustomerDAO.insertCustomer(customerName, address, postalCode, phone, divisionIdFK);
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.show();
+                alert.setHeaderText("Success.");
+                alert.setContentText("Customer " + customerName + " successfully added.");
+            }
+        }
+        catch (Exception e)
+        {
+            System.out.println("customer add did not work");
+        }
+
     }
 
     public void testPrint() throws SQLException {
@@ -99,6 +109,25 @@ public class AddCustomerController implements Initializable
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
+    }
+
+    public boolean inputCheck()
+    {
+        boolean good = true;
+        if(customerNameTextField.getText() == "" ||
+        addressTextField.getText() == "" ||
+        postalCodeTextField.getText() == "" ||
+        phoneTextField.getText() == "" ||
+        countryComboBox.getValue() == null ||
+    firstLevelDivisionComboBox.getValue() == null)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Check Inputs");
+            alert.setContentText("Please complete all fields.");
+            good = false;
+        }
+        return good;
     }
 
 
