@@ -75,6 +75,28 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public RadioButton weekAppointmentRadio;
     @FXML
+    public ComboBox locationComboBox;
+    @FXML
+    public TableColumn appointmentIdCustomColumn;
+    @FXML
+    public TableColumn titleCustomColumn;
+    @FXML
+    public TableColumn descriptionCustomColumn;
+    @FXML
+    public TableColumn locationCustomColumn;
+    @FXML
+    public TableColumn contactCustomColumn;
+    @FXML
+    public TableColumn typeCustomColumn;
+    @FXML
+    public TableColumn startCustomColumn;
+    @FXML
+    public TableColumn endCustomColumn;
+    @FXML
+    public TableColumn customerIdCustomColumn;
+    @FXML
+    public TableColumn userIdCustomColumn;
+    @FXML
     private TableView<Appointment> appointmentsTable;
     @FXML
     public TableColumn appointmentIdColumn;
@@ -120,6 +142,9 @@ public class SchedulerDashboardController implements Initializable
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+
+        locationComboBox.setItems(CollectionLists.getPlaces());
+
     }
 
     public void checkAppointment()
@@ -434,11 +459,40 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
-    public void getCustomReport() {
-        appointmentsTable.visibleProperty().setValue(false);
-        reportTypeTable.visibleProperty().setValue(false);
-        reportContactTable.visibleProperty().setValue(false);
-        reportCustomTable.visibleProperty().setValue(true);
+    public void getCustomReport() throws SQLException {
+
+
+            reportCustomTable.setItems(AppointmentDAO.getLocationReport(locationComboBox.getValue().toString()));
+
+
+            appointmentIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+            titleCustomColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            descriptionCustomColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            locationCustomColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+            contactCustomColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            typeCustomColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            startCustomColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endCustomColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            customerIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            userIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+
+            appointmentsTable.visibleProperty().setValue(false);
+            reportTypeTable.visibleProperty().setValue(false);
+            reportContactTable.visibleProperty().setValue(false);
+            reportCustomTable.visibleProperty().setValue(true);
+
+            allAppointmentsRadio.setSelected(false);
+            monthAppointmentsRadio.setSelected(false);
+            weekAppointmentRadio.setSelected(false);
+        /*
+        catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Select Location");
+            alert.setContentText("Select Location first");
+        }*/
     }
 
 

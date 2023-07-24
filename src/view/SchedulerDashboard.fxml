@@ -69,17 +69,18 @@
       <Label layoutX="539.0" layoutY="105.0" text="By location? " />
       <TableView fx:id="reportCustomTable" focusTraversable="false" layoutX="5.0" layoutY="162.0" prefHeight="429.0" prefWidth="1230.0" visible="false">
          <columns>
-            <TableColumn fx:id="appointmentIdColumn111" prefWidth="108.00000762939453" text="Custom" />
-            <TableColumn fx:id="titleColumn111" prefWidth="124.99999237060547" text="Title" />
-            <TableColumn fx:id="descriptionColumn111" prefWidth="216.66665649414062" text="Description" />
-            <TableColumn fx:id="locationColumn111" prefWidth="158.33334350585938" text="Location" />
-            <TableColumn fx:id="contactColumn111" prefWidth="113.66668701171875" text="Contact" />
-            <TableColumn fx:id="typeColumn111" prefWidth="121.0" text="Type" />
-            <TableColumn fx:id="startColumn111" prefWidth="120.33331298828125" text="Start" />
-            <TableColumn fx:id="endColumn111" minWidth="0.0" prefWidth="117.33331298828125" text="End" />
-            <TableColumn fx:id="customerIdColumn111" prefWidth="90.0" text="Customer_ID" />
-            <TableColumn fx:id="userIdColumn111" prefWidth="52.3333740234375" text="User_ID" />
+            <TableColumn fx:id="appointmentIdCustomColumn" prefWidth="108.00000762939453" text="Appointment_ID" />
+            <TableColumn fx:id="titleCustomColumn" prefWidth="124.99999237060547" text="Title" />
+            <TableColumn fx:id="descriptionCustomColumn" prefWidth="216.66665649414062" text="Description" />
+            <TableColumn fx:id="locationCustomColumn" prefWidth="158.33334350585938" text="Location" />
+            <TableColumn fx:id="contactCustomColumn" prefWidth="113.66668701171875" text="Contact" />
+            <TableColumn fx:id="typeCustomColumn" prefWidth="121.0" text="Type" />
+            <TableColumn fx:id="startCustomColumn" prefWidth="120.33331298828125" text="Start" />
+            <TableColumn fx:id="endCustomColumn" minWidth="0.0" prefWidth="117.33331298828125" text="End" />
+            <TableColumn fx:id="customerIdCustomColumn" prefWidth="90.0" text="Customer_ID" />
+            <TableColumn fx:id="userIdCustomColumn" prefWidth="52.3333740234375" text="User_ID" />
          </columns>
       </TableView>
+      <ComboBox fx:id="locationComboBox" layoutX="713.0" layoutY="116.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
