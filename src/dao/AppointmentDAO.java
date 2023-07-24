@@ -320,18 +320,20 @@ public abstract class AppointmentDAO
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
     }
-/*
+
     public static ObservableList<Appointment> getMonthTypeReport(String month, String type) throws SQLException {
         ObservableList<Appointment> monthTypeAppointments = FXCollections.observableArrayList();
-        String sql = "SELECT Appointment_ID, Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ? AND NOT Appointment_ID = ?;";
+        String sql = "SELECT Count(*) FROM APPOINTMENTS WHERE monthname(Start)=? AND Type=?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setTimestamp(1, Timestamp.valueOf(endLDT));
-        ps.setTimestamp(2, Timestamp.valueOf(startLDT));
+        ps.setString(1, month);
+        ps.setString(2, type);
         ResultSet rs = ps.executeQuery();
-
-
+        rs.next();
+        int count = rs.getInt("Count(*)");
+        Appointment monthTypeAppointment = new Appointment(month, type, count);
+        monthTypeAppointments.add(monthTypeAppointment);
         return monthTypeAppointments;
-    }*/
+    }
 
     /*public static ObservableList<Appointment> getContactReportOld(int contactIdComboBox) throws SQLException {
         ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
@@ -384,6 +386,7 @@ public abstract class AppointmentDAO
             contactAppointments.add(appointment);
         }
         return contactAppointments;
+
     }
 
 

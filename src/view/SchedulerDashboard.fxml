@@ -40,9 +40,9 @@
       <Button fx:id="typeMonthButton" layoutX="894.0" layoutY="30.0" mnemonicParsing="false" onAction="#getTypeMonthReport" text="Type and Month Report" />
       <TableView fx:id="reportTypeTable" focusTraversable="false" layoutX="5.0" layoutY="162.0" prefHeight="429.0" prefWidth="1230.0" scaleZ="0.0" visible="false">
         <columns>
-            <TableColumn fx:id="appointmentIdColumn1" prefWidth="108.00000762939453" text="Month" />
-            <TableColumn fx:id="typeColumn1" prefWidth="121.0" text="Type" />
-            <TableColumn fx:id="customerIdColumn1" prefWidth="90.0" text="Count" />
+            <TableColumn fx:id="monthReportColumn" prefWidth="108.00000762939453" text="Month" />
+            <TableColumn fx:id="typeReportColumn" prefWidth="121.0" text="Type" />
+            <TableColumn fx:id="countColumn" prefWidth="90.0" text="Count" />
         </columns>
       </TableView>
       <TableView fx:id="reportContactTable" focusTraversable="false" layoutX="5.0" layoutY="162.0" prefHeight="429.0" prefWidth="1230.0" visible="false">

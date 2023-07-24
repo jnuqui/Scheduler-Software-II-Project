@@ -16,6 +16,9 @@ public class Appointment
     int contactId;
     int userId;
 
+    String month;
+    int count;
+
     public Appointment(int appointmentId, String title, String description, String location, String contactName, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int contactId, int userId)
     {
         this.appointmentId = appointmentId;
@@ -49,6 +52,29 @@ public class Appointment
         this.appointmentId = appointmentId;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
+
+    public String getMonth() {
+        return month;
+    }
+
+    public void setMonth(String month) {
+        this.month = month;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public Appointment(String month, String type, int count)
+    {
+        this.month = month;
+        this.type = type;
+        this. count = count;
     }
 
     public Appointment(){

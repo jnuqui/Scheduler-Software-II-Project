@@ -63,6 +63,18 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn userIdContactColumn;
     @FXML
+    public TableColumn monthReportColumn;
+    @FXML
+    public TableColumn typeReportColumn;
+    @FXML
+    public TableColumn countColumn;
+    @FXML
+    public RadioButton allAppointmentsRadio;
+    @FXML
+    public RadioButton monthAppointmentsRadio;
+    @FXML
+    public RadioButton weekAppointmentRadio;
+    @FXML
     private TableView<Appointment> appointmentsTable;
     @FXML
     public TableColumn appointmentIdColumn;
@@ -360,34 +372,66 @@ public class SchedulerDashboardController implements Initializable
         System.out.println(allAppointments.get(1).getStartTime());
     }
 
-    public void getTypeMonthReport()
-    {
+    public void getTypeMonthReport() throws SQLException {
+
+        try{
+
+        reportTypeTable.setItems(AppointmentDAO.getMonthTypeReport(monthComboBox.getValue().toString(), typeComboBox.getValue().toString()));
+
+        monthReportColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
+        typeReportColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
 
 
         appointmentsTable.visibleProperty().setValue(false);
         reportTypeTable.visibleProperty().setValue(true);
         reportContactTable.visibleProperty().setValue(false);
         reportCustomTable.visibleProperty().setValue(false);
+
+        allAppointmentsRadio.setSelected(false);
+        monthAppointmentsRadio.setSelected(false);
+        weekAppointmentRadio.setSelected(false);
+    }        catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Select Month/Type");
+            alert.setContentText("Select Month and Type first");
+        }
     }
 
     public void getContactReport() throws SQLException {
-        reportContactTable.setItems(AppointmentDAO.getContactReport(contactComboBox.getValue().toString()));
 
-        appointmentIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        titleContactColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionContactColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locationContactColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactContactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-        typeContactColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startContactColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endContactColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        userIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        try {
+            reportContactTable.setItems(AppointmentDAO.getContactReport(contactComboBox.getValue().toString()));
 
-        appointmentsTable.visibleProperty().setValue(false);
-        reportTypeTable.visibleProperty().setValue(false);
-        reportContactTable.visibleProperty().setValue(true);
-        reportCustomTable.visibleProperty().setValue(false);
+            appointmentIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+            titleContactColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            descriptionContactColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            locationContactColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+            contactContactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            typeContactColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            startContactColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endContactColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            customerIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            userIdContactColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+            appointmentsTable.visibleProperty().setValue(false);
+            reportTypeTable.visibleProperty().setValue(false);
+            reportContactTable.visibleProperty().setValue(true);
+            reportCustomTable.visibleProperty().setValue(false);
+
+            allAppointmentsRadio.setSelected(false);
+            monthAppointmentsRadio.setSelected(false);
+            weekAppointmentRadio.setSelected(false);
+        }
+        catch (Exception e)
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText("Select Contact");
+            alert.setContentText("Select Contact first");
+        }
     }
 
     public void getCustomReport() {
