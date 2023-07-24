@@ -59,4 +59,14 @@ public class FirstLevelDivisionDAO
         return divisionId;
     }
 
+    public static FirstLevelDivision returnDivision(int divisionId) throws SQLException {
+        String sql = "SELECT * FROM first_level_divisions WHERE Division_ID = ?;";
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setInt(1, divisionId);
+        ResultSet rs = ps.executeQuery();
+        rs.next();
+        String division = rs.getString("Division");
+        FirstLevelDivision updateDivision = new FirstLevelDivision(division);
+        return updateDivision;
+    }
 }

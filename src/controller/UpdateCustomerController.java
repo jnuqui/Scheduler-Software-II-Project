@@ -59,7 +59,7 @@ public class UpdateCustomerController implements Initializable
         // countryComboBox.setValue(CountryDAO.getCountries().get(0));
     }
 
-    public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone, Country country)
+    public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone, Country country, FirstLevelDivision division)
     {
         customerIdTextfield.setText(String.valueOf(customerId));
         customerNameTextField.setText(customerName);
@@ -67,7 +67,7 @@ public class UpdateCustomerController implements Initializable
         postalCodeTextField.setText(postalCode);
         phoneTextField.setText(phone);
         countryComboBox.setValue(country);
-        //irstLevelDivisionComboBox.setPromptText(divisionName);
+        firstLevelDivisionComboBox.setValue(division);
     }
 
     public void passCountry() throws SQLException {

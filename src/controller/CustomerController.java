@@ -3,6 +3,7 @@ package controller;
 import dao.AppointmentDAO;
 import dao.CountryDAO;
 import dao.CustomerDAO;
+import dao.FirstLevelDivisionDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -144,8 +145,9 @@ public class CustomerController implements Initializable
                     customersTable.getSelectionModel().getSelectedItem().getAddress(),
                     customersTable.getSelectionModel().getSelectedItem().getPostalCode(),
                     customersTable.getSelectionModel().getSelectedItem().getPhone(),
-                    CountryDAO.getCountryForBox(customersTable.getSelectionModel().getSelectedItem().getDivisionIdFK())
-            );
+                    CountryDAO.getCountryForBox(customersTable.getSelectionModel().getSelectedItem().getDivisionIdFK()),
+                    FirstLevelDivisionDAO.returnDivision(customersTable.getSelectionModel().getSelectedItem().getDivisionIdFK())
+                    );
 
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             Parent scene = loader.getRoot();

@@ -13,6 +13,11 @@ public class FirstLevelDivision
         this.countryIdFK = countryIdFK;
     }
 
+    public FirstLevelDivision(String divisionName)
+    {
+        this.divisionName = divisionName;
+    }
+
     public int getDivisionId() {
         return divisionId;
     }
