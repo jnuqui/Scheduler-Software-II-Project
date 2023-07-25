@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+/**Class for AppointmentDAO. This handles database queries related to appointments. */
 public abstract class AppointmentDAO
 {
     public static ObservableList<Appointment> getAppointments() throws SQLException {
