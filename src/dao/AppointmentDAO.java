@@ -16,6 +16,9 @@ import java.time.LocalTime;
 /**Class for AppointmentDAO. This handles database queries related to appointments. */
 public abstract class AppointmentDAO
 {
+    /** @return Returns all appointments for the main appointment view. The method uses a
+     *  database query to get all the columns of the appointments table, but makes a join
+     *  with the contacts table to include Contact's Name. */
     public static ObservableList<Appointment> getAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT appointments.*, contacts.Contact_Name\n" +
@@ -42,6 +45,9 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
+    /** @return Returns appointments for the main appointment view, filtered by the current month.
+     *  The method uses a database query to get the same columns as getAppointments, but the current
+     *  date is passed into the query as parameters to retrieve relevant appointments. */
     public static ObservableList<Appointment> getAppointmentsByMonth() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         LocalDateTime today = LocalDateTime.now();
@@ -73,6 +79,10 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
+    /** @return Returns appointments for the main appointment view, filtered by the upcoming week of the current
+     *  date. The method uses a database query to get the same columns as getAppointments, but both the current
+     *  date and current date plus 7 days are passed into the query as parameters to retrieve relevant
+     *  appointments. */
     public static ObservableList<Appointment> getAppointmentsByWeek() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         LocalDateTime today = LocalDateTime.now();
@@ -102,6 +112,19 @@ public abstract class AppointmentDAO
         }
         return allAppointments;
     }
+
+    /** Takes user input to generate an INSERT statement for appointments. Fields from AddAppointment view are passed
+     *  through this method and are used as parameters in the INSERT statement.
+     *  @param title
+     *  @param description
+     *  @param location
+     *  @param type
+     *  @param tsStart
+     *  @param tsEnd
+     *  @param customerId
+     *  @param userId
+     *  @param contactId
+     *   */
 
     public static void insertAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
