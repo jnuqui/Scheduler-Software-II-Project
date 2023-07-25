@@ -40,7 +40,8 @@ public class UpdateCustomerController implements Initializable
     @FXML
     public TextField phoneTextField;
 
-
+    /** The initialize method for the UpdateCustomer view. This method is called when the view is launched
+     *  and contains the method for populating the combo box for Countries on the form. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -51,11 +52,23 @@ public class UpdateCustomerController implements Initializable
         }
     }
 
+    /** This method populates the combo box for countries. It calls a method from the CountryDAO to create a Country
+     *  ObservableList for the combo box. */
     public void populateCountries() throws SQLException {
         CountryDAO.clearCountries();
         countryComboBox.setItems(CountryDAO.getCountries());
     }
 
+    /** This method sets each field of the view from the customer selected by the user. Data of the customer selection
+     *  is passed into this method and used to set each field.
+     * @param customerId The customerId of the customer to update (uneditedable)
+     * @param customerName The customerName of the customer to update
+     * @param address The address of the customer to update
+     * @param postalCode The postalCode of the customer to update
+     * @param phone The phone of the customer to update
+     * @param country The country of the customer to update; Combo box selection is preselected.
+     * @param division The first level division of the customer to update; Combo box selection is preselected.
+     * */
     public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone, Country country, FirstLevelDivision division)
     {
         customerIdTextfield.setText(String.valueOf(customerId));
@@ -66,7 +79,8 @@ public class UpdateCustomerController implements Initializable
         countryComboBox.setValue(country);
         firstLevelDivisionComboBox.setValue(division);
     }
-
+    /** This method gets the Country that the user selects from the country combo box. The selected country then
+     *  gets passed to the populateFirstLevelDivisions method. */
     public void passCountry() throws SQLException {
         try {
             firstLevelDivisionComboBox.getItems().removeAll();
@@ -76,12 +90,17 @@ public class UpdateCustomerController implements Initializable
         {
         }
     }
-
+    /** This method populates the combo box of First Level Divisions. The method is called after a Country is selected
+     *  by the user and a database query is made to find the associated First Level Divisions.
+     *  @param countryId This value is used to generate the appropriate list of First Level Divisions. */
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
+    /** This method gets the values from each field of the form and sends it to the CustomerDAO to an UPDATE
+     *  statement to the database. First, inputCheck is called to check if inputs are filled. Custom confirmation
+     *  message launches when successful. */
     public void updateCustomer() throws SQLException {
 
         try{
@@ -106,6 +125,7 @@ public class UpdateCustomerController implements Initializable
         }
     }
 
+    /** This method brings the user back to the customer dashboard. */
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));

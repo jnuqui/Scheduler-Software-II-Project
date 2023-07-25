@@ -121,7 +121,6 @@ public class CustomerController implements Initializable
         }
     }
 
-
     /** This method brings the user to the AddCustomer view. */
     public void toAddCustomer (ActionEvent actionEvent) throws IOException
     {

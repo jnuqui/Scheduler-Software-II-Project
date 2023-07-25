@@ -277,7 +277,7 @@ public class SchedulerDashboardController implements Initializable
             myUpdate.setAppointmentId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId()));
             myUpdate.setTitle(appointmentsTable.getSelectionModel().getSelectedItem().getTitle());
             myUpdate.setDescription(appointmentsTable.getSelectionModel().getSelectedItem().getDescription());
-            myUpdate.setLocation(sendLocation());
+            myUpdate.setLocation(appointmentsTable.getSelectionModel().getSelectedItem().getLocation());
             myUpdate.setContact(appointmentsTable.getSelectionModel().getSelectedItem().getContactName());
             myUpdate.setType(appointmentsTable.getSelectionModel().getSelectedItem().getType());
             myUpdate.setStartDate(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime().toLocalDate());

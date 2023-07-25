@@ -2,8 +2,6 @@ package controller;
 
 import dao.*;
 import helper.CollectionLists;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -97,7 +95,7 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     /** This method populates the combo boxes for the form. Each combo box uses a method to get an ObservableList for
-     *  each respective combo box.*/
+     *  each respective combo box. */
     public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
         contactComboBox.setItems(ContactDAO.getContactNames());
@@ -108,53 +106,96 @@ public class UpdateAppointmentController implements Initializable {
         userIdComboBox.setItems(UserDAO.getUsers());
     }
 
-
+    /** This method sets appointmentIdTextField. The appointmentId is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param appointmentId This appointmentId is used to set the uneditable textfield that shows what appointment
+     *                      is being updated. */
     public void setAppointmentId(String appointmentId) {
         appointmentIdTextfield.setText(appointmentId);
     }
 
+    /** This method sets titleTextfield. The title is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param title This is used to set the textfield for the title of the appointment
+     *                      is being updated. */
     public void setTitle(String title)
     {
         titleTextfield.setText(title);
     }
 
+    /** This method sets titleTextfield. The description is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param description This is used to set the textfield for the description of the appointment
+     *                      is being updated. */
     public void setDescription(String description)
     {
         descriptionTextfield.setText(description);
     }
 
+    /** This method sets locationComboBox. The location is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param location This is used to set the combo box for the location of the appointment
+     *                      is being updated. */
     public void setLocation(String location) {
         locationComboBox.getSelectionModel().select(CollectionLists.returnUpdateLocation(location));
     }
 
+    /** This method sets the value for contactComboBox. The contact is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param contact This is used to set the combo box for the contact of the appointment
+     *                      is being updated. */
     public void setContact(String contact) {
         contactComboBox.setValue(contact);
     }
 
+    /** This method sets the value for typeComboBox. The type is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param type This is used to set the combo box for the type of the appointment
+     *                      is being updated. */
     public void setType(String type)
     {
         typeComboBox.setValue(type);
     }
 
+    /** This method sets the value for startDatePicker. The LocalDateTime from the user selected appointment gets
+     *  converted to a LocalDate object to appropriately set the DatePicker.
+     *  @param localDate This is used to set the DatePicker for the date of the appointment
+     *                      is being updated. */
     public void setStartDate(LocalDate localDate)
     {
         startDatePicker.setValue(localDate);
     }
 
+    /** This method sets the value for startTimeComboBox. The LocalDateTime from the user selected appointment gets
+     *  converted to a LocalTime object to appropriately set the ComboBox.
+     *  @param localTime This is used to set the ComboBox for the time of the appointment
+     *                      is being updated. */
     public void setStartTime(LocalTime localTime)
     {
         startTimeComboBox.setValue(localTime);
     }
 
+    /** This method sets the value for endTimeComboBox. The LocalDateTime from the user selected appointment gets
+     *  converted to a LocalTime object to appropriately set the ComboBox for the end time.
+     *  @param localTime This is used to set the ComboBox for the time of the appointment
+     *                      is being updated. */
     public void setEndTime(LocalTime localTime)
     {
         endTimeComboBox.setValue(localTime);
     }
 
+    /** This method sets customerIdComboBox. The customerId is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param customerId This customerId is used to set the ComboBox that shows what appointment
+     *                      is being updated. */
     public void setCustomerId(String customerId) throws SQLException {
         customerIdComboBox.getSelectionModel().select(CustomerDAO.getMatchingCustomerId(customerId));
     }
 
+    /** This method sets userIdComboBox. The userId is passed from the appointment selection
+     *  made by the user from the main dashboard.
+     *  @param userId This userId is used to set the ComboBox that shows what appointment
+     *                      is being updated. */
     public void setUserId(String userId) throws SQLException {
         userIdComboBox.getSelectionModel().select(UserDAO.getMatchingUserId(userId));
     }

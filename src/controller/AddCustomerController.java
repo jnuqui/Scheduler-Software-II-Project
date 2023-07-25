@@ -77,7 +77,8 @@ public class AddCustomerController implements Initializable
     }
 
     /** This method gets the values from each field of the form and sends it to the CustomerDAO to an INSERT
-     *  statement to the database. First, inputCheck is called check if inputs are filled. */
+     *  statement to the database. First, inputCheck is called to check if inputs are filled. Custom confirmation
+     *  message launches when successful. */
     public void addCustomer() throws SQLException {
         try {
             if (inputCheck() == true) {
