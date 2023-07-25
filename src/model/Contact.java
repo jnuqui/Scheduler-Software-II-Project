@@ -4,7 +4,6 @@ public class Contact
 {
     int contactId;
     String contactName;
-    String email;
 
     public Contact(String contactName)
     {
@@ -26,16 +25,6 @@ public class Contact
     public void setContactName(String contactName) {
         this.contactName = contactName;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-
 
     @Override
     public String toString(){

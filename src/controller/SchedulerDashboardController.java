@@ -2,7 +2,6 @@ package controller;
 
 import dao.AppointmentDAO;
 import dao.ContactDAO;
-import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

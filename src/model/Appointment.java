@@ -54,22 +54,6 @@ public class Appointment
         this.endTime = endTime;
     }
 
-    public String getMonth() {
-        return month;
-    }
-
-    public void setMonth(String month) {
-        this.month = month;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public Appointment(String month, String type, int count)
     {
         this.month = month;
@@ -144,7 +128,6 @@ public class Appointment
     public LocalDateTime getStartTime() {
         return startTime;
     }
-
 
     public LocalDateTime getEndTime() {
         return endTime;
