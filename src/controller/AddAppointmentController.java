@@ -190,8 +190,6 @@ public class AddAppointmentController implements Initializable
                 int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
                 int contactId = ContactDAO.getContactId(contactComboBox.getValue().toString());
 
-                //(String title, String description, String location, String type,
-                //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
                 AppointmentDAO.insertAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -202,7 +200,7 @@ public class AddAppointmentController implements Initializable
         }
         catch (Exception e)
         {
-            // System.out.println("Check test");
+
         }
     }
 
