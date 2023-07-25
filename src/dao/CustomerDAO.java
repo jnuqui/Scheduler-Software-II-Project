@@ -80,6 +80,34 @@ public abstract class CustomerDAO {
         ps.setInt(1, customerId);
         ps.executeUpdate();
     }
+
+    public static ObservableList <String> getCustomerIds() throws SQLException {
+        String sql = "SELECT Customer_ID FROM CUSTOMERS";
+        ObservableList<String> customerIds = FXCollections.observableArrayList();
+        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next())
+        {
+            String customerId = rs.getString("Customer_ID");
+            customerIds.add(customerId);
+        }
+        return customerIds;
+    }
+
+    public static int getMatchingCustomerId(String customerId) throws SQLException {
+
+        String[] customerIdList = getCustomerIds().toArray(new String[0]);
+        int customerIdIndex = 0;
+        for (int i = 0; i <= customerIdList.length; i++) {
+            if (customerId.equals(customerIdList[i]))
+            {
+                customerIdIndex = i;
+                break;
+            }
+        }
+        return customerIdIndex;
+    }
+
 }
 
 

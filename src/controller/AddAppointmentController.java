@@ -1,8 +1,6 @@
 package controller;
 
-import dao.AppointmentDAO;
-import dao.ContactDAO;
-import dao.DatabaseAccess;
+import dao.*;
 import helper.CollectionLists;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -59,12 +57,12 @@ public class AddAppointmentController implements Initializable
 
     public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
-        contactComboBox.setItems(DatabaseAccess.getContactNames());
+        contactComboBox.setItems(ContactDAO.getContactNames());
         typeComboBox.setItems(CollectionLists.getTypes());
         startTimeComboBox.setItems(CollectionLists.getTimes());
         endTimeComboBox.setItems(CollectionLists.getTimes());
-        customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
-        userIdComboBox.setItems(DatabaseAccess.getUsers());
+        customerIdComboBox.setItems(CustomerDAO.getCustomerIds());
+        userIdComboBox.setItems(UserDAO.getUsers());
     }
 
     public boolean inputCheck()
@@ -126,14 +124,6 @@ public class AddAppointmentController implements Initializable
             alert.show();
             alert.setHeaderText("Check Time");
             alert.setContentText("Start and end time cannot be the same.");
-            good = false;
-        }
-        else if (ldtStart.isBefore(LocalDateTime.now()) || ldtEnd.isBefore(LocalDateTime.now()))
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Time");
-            alert.setContentText("Appointment cannot be set in the past.");
             good = false;
         }
         else if (!CollectionLists.checkTimeRange(ldtStart, ldtEnd))

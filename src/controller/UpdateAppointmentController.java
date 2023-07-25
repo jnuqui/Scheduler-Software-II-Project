@@ -1,8 +1,6 @@
 package controller;
 
-import dao.AppointmentDAO;
-import dao.ContactDAO;
-import dao.DatabaseAccess;
+import dao.*;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -110,7 +108,7 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     public void populateContacts() throws SQLException {
-        contactComboBox.setItems(DatabaseAccess.getContactNames());
+        contactComboBox.setItems(ContactDAO.getContactNames());
     }
 
     public void populateTypes()
@@ -124,11 +122,11 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     public void populateCustomerIds() throws SQLException {
-        customerIdComboBox.setItems(DatabaseAccess.getCustomerIds());
+        customerIdComboBox.setItems(CustomerDAO.getCustomerIds());
     }
 
     public void populateUsers() throws SQLException {
-        userIdComboBox.setItems(DatabaseAccess.getUsers());
+        userIdComboBox.setItems(UserDAO.getUsers());
     }
 
     public void setAppointmentId(String appointmentId) {
@@ -174,11 +172,11 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     public void setCustomerId(String customerId) throws SQLException {
-        customerIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingCustomerId(customerId));
+        customerIdComboBox.getSelectionModel().select(CustomerDAO.getMatchingCustomerId(customerId));
     }
 
     public void setUserId(String userId) throws SQLException {
-        userIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingUserId(userId));
+        userIdComboBox.getSelectionModel().select(UserDAO.getMatchingUserId(userId));
     }
 
     public boolean inputCheck()
@@ -240,14 +238,6 @@ public class UpdateAppointmentController implements Initializable {
             alert.show();
             alert.setHeaderText("Check Time");
             alert.setContentText("Start and end time cannot be the same.");
-            good = false;
-        }
-        else if (ldtStart.isBefore(LocalDateTime.now()) || ldtEnd.isBefore(LocalDateTime.now()))
-        {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Time");
-            alert.setContentText("Appointment cannot be set in the past.");
             good = false;
         }
         else if (updateTimeSame() == true)

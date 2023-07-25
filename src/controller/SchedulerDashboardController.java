@@ -1,6 +1,7 @@
 package controller;
 
 import dao.AppointmentDAO;
+import dao.ContactDAO;
 import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
@@ -129,7 +130,7 @@ public class SchedulerDashboardController implements Initializable
         typeComboBox.setItems(CollectionLists.getTypes());
         monthComboBox.setItems(CollectionLists.getMonths());
         try {
-            contactComboBox.setItems(DatabaseAccess.getContactNames());
+            contactComboBox.setItems(ContactDAO.getContactNames());
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
