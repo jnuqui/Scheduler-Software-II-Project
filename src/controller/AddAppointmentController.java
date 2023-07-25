@@ -22,6 +22,8 @@ import java.sql.Timestamp;
 import java.time.*;
 import java.util.ResourceBundle;
 
+
+/** This is the controller class for the "AddAppointment" view.*/
 public class AddAppointmentController implements Initializable
 {
     @FXML
@@ -44,7 +46,8 @@ public class AddAppointmentController implements Initializable
     @FXML
     public ComboBox userIdComboBox;
 
-
+    /** The initialize method for the Add Appointment view. This method is called when the view is launched
+     *  and contains methods for populating the combo boxes for the form. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -55,6 +58,8 @@ public class AddAppointmentController implements Initializable
         }
     }
 
+    /** This method populates the combo boxes for the form. Each combo box uses a method to get an ObservableList for
+     *  each respective combo box.*/
     public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
         contactComboBox.setItems(ContactDAO.getContactNames());
@@ -65,6 +70,8 @@ public class AddAppointmentController implements Initializable
         userIdComboBox.setItems(UserDAO.getUsers());
     }
 
+    /** @return - This method checks if each field in the form is filled, and returns true or false. If any one of the fields is empty when user tries to
+     *  add an appointment, an alert window launches. */
     public boolean inputCheck()
     {
         boolean good = true;
@@ -89,6 +96,12 @@ public class AddAppointmentController implements Initializable
         return good;
     }
 
+    /** @return - This method checks if the user's Start and End Times are appropriate and returns true or false.
+     *  It checks the following time possibilities:
+     *  - End time is before Start time
+     *  - Start and End Time is the same
+     *  - Compares against open office hours (Eastern Time)
+     *  - Overlapping appointments of the same customer. */
     public boolean goodAppointmentTime() throws SQLException {
 
         boolean good = true;
@@ -145,6 +158,9 @@ public class AddAppointmentController implements Initializable
         return good;
     }
 
+    /** This method gets the values from each field of the form and sends it to the AppointmentDAO to an INSERT
+     *  statement to the database. First, two methods (inputCheck and goodAppointmentTime) check if inputs are filled
+     *  and if the Start and End Times are appropriate. */
     public void insertAppointment() throws SQLException {
 
         try{
@@ -187,20 +203,23 @@ public class AddAppointmentController implements Initializable
         }
     }
 
+    /** This method clears all the fields. Setting the form empty gives the option to the user to quickly start over
+     *  the entry. */
     public void resetFields()
     {
         titleTextfield.setText("");
-                descriptionTextfield.setText("");
-                locationComboBox.setValue(null);
-                typeComboBox.setValue(null);
-                startDatePicker.setValue(null);
-                startTimeComboBox.setValue(null);
-                endTimeComboBox.setValue(null);
-                customerIdComboBox.setValue(null);
-                userIdComboBox.setValue(null);
-                contactComboBox.setValue(null);
+        descriptionTextfield.setText("");
+        locationComboBox.setValue(null);
+        typeComboBox.setValue(null);
+        startDatePicker.setValue(null);
+        startTimeComboBox.setValue(null);
+        endTimeComboBox.setValue(null);
+        customerIdComboBox.setValue(null);
+        userIdComboBox.setValue(null);
+        contactComboBox.setValue(null);
     }
 
+    /** This method brings the user back to the main scheduling dashboard. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));

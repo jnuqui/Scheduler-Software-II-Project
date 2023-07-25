@@ -22,9 +22,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the "AddCustomer" view.*/
 public class AddCustomerController implements Initializable
 {
-
     @FXML
     public ComboBox<Country> countryComboBox;
     @FXML
@@ -38,21 +38,27 @@ public class AddCustomerController implements Initializable
     @FXML
     public TextField phoneTextField;
 
+    /** The initialize method for the AddCustomer view. This method is called when the view is launched
+     *  and contains the method for populating the combo box for Countries on the form. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            populateCountriesv2();
+            populateCountries();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
-    public void populateCountriesv2() throws SQLException {
+    /** This method populates the combo box for countries. It calls a method from the CountryDAO to create a Country
+     *  ObservableList for the combo box. */
+    public void populateCountries() throws SQLException {
             CountryDAO.clearCountries();
             countryComboBox.setItems(CountryDAO.getCountries());
     }
 
+    /** This method gets the Country that the user selects from the country combo box. The selected country then
+     *  gets passed to the populateFirstLevelDivisions method. */
     public void passCountry() throws SQLException {
         try {
             firstLevelDivisionComboBox.getItems().removeAll();
@@ -62,13 +68,16 @@ public class AddCustomerController implements Initializable
         }
     }
 
+    /** This method populates the combo box of First Level Divisions. The method is called after a Country is selected
+     *  by the user and a database query is made to find the associated First Level Divisions.
+     *  @param countryId This value is used to generate the appropriate list of First Level Divisions. */
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
-    public void addCustomer() throws SQLException {
 
+    public void addCustomer() throws SQLException {
         try {
             if (inputCheck() == true) {
                 String customerName = customerNameTextField.getText();
