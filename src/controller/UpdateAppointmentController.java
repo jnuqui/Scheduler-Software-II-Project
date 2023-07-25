@@ -352,6 +352,20 @@ public class UpdateAppointmentController implements Initializable {
 
         }
 
+    public void resetFields()
+    {
+        titleTextfield.setText("");
+        descriptionTextfield.setText("");
+        locationComboBox.setValue(null);
+        typeComboBox.setValue(null);
+        startDatePicker.setValue(null);
+        startTimeComboBox.setValue(null);
+        endTimeComboBox.setValue(null);
+        customerIdComboBox.setValue(null);
+        userIdComboBox.setValue(null);
+        contactComboBox.setValue(null);
+    }
+
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));

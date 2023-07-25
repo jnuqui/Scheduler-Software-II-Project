@@ -43,7 +43,6 @@ public class AddAppointmentController implements Initializable
     @FXML
     public TextField titleTextfield;
     public TextField descriptionTextfield;
-    public TextField typeTextfield;
     @FXML
     public ComboBox customerIdComboBox;
     @FXML
@@ -58,7 +57,6 @@ public class AddAppointmentController implements Initializable
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
     }
 
     public void populateComboBoxes() throws SQLException {
@@ -146,7 +144,6 @@ public class AddAppointmentController implements Initializable
             alert.show();
             alert.setHeaderText("Check Time");
             alert.setContentText("Time is not within 8:00AM - 10:00PM ET");
-            //System.out.println(CollectionLists.myFormattedDTF(ldtStart) + " " + CollectionLists.myFormattedDTF(ldtEnd));
             good = false;
         }
         else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId).equals("No"))
@@ -204,6 +201,20 @@ public class AddAppointmentController implements Initializable
         }
     }
 
+    public void resetFields()
+    {
+        titleTextfield.setText("");
+                descriptionTextfield.setText("");
+                locationComboBox.setValue(null);
+                typeComboBox.setValue(null);
+                startDatePicker.setValue(null);
+                startTimeComboBox.setValue(null);
+                endTimeComboBox.setValue(null);
+                customerIdComboBox.setValue(null);
+                userIdComboBox.setValue(null);
+                contactComboBox.setValue(null);
+    }
+
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
@@ -214,36 +225,4 @@ public class AddAppointmentController implements Initializable
         stage.centerOnScreen();
         stage.show();
     }
-
-    //Ready to delete this tester
-/*
-    public void insertAppointmentTestFill()
-    {
-        titleTextfield.setText("Title Test");
-        descriptionTextfield.setText("Description Test");
-        locationComboBox.getSelectionModel().select(1);
-        typeTextfield.setText("Shooting the breeze");
-
-        LocalDate ldStart = LocalDate.now();
-        LocalTime ltStart = LocalTime.now();
-        LocalTime ltEnd = LocalTime.now().plusHours(1);
-        startDatePicker.setValue(ldStart);
-        startTimeComboBox.setValue(CollectionLists.myFormattedTF(ltStart));
-        endTimeComboBox.setValue(CollectionLists.myFormattedTF(ltEnd));
-
-        customerIdComboBox.getSelectionModel().select(1);
-        userIdComboBox.getSelectionModel().select(1);
-        contactComboBox.getSelectionModel().select(1);
-    }/*
-
-    //Ready to delete this when the time comes
-    /*
-    public void testPrint() throws SQLException {
-        try{
-            inputCheck();
-            goodAppointmentTime();
-        }
-        catch (Exception e)
-        { }
-    }*/
 }
