@@ -25,6 +25,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the "Customer" view.*/
 public class CustomerController implements Initializable
 {
     @FXML
@@ -47,6 +48,9 @@ public class CustomerController implements Initializable
     public TableColumn countryColumn;
 
 
+    /** The initialize method for the Customer view. This method is called when the view is launched
+     *  and contains the methods for both creating an ObservableList of Customers and then adding them to
+     *  the Customer TableView. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -58,6 +62,8 @@ public class CustomerController implements Initializable
         populateTable();
     }
 
+    /** This is the method that populates the Customer table. The ObservableList created from the initialization of the
+     *  view is used to populate the table. The Table Columns are also appropriately initialized. */
     public void populateTable(){
         customersTable.setItems(allCustomers);
 
@@ -68,9 +74,11 @@ public class CustomerController implements Initializable
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         divisionIdColumn.setCellValueFactory(new PropertyValueFactory<>("divisionIdFK"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
-
     }
 
+    /** This method deletes the customer that the user selects from the Customer TableView. If a customer is not
+     *  selected, an alert will appear. If a customer is selected but still has appointments, an alert box appears
+     *  that informs the user of that. User is asked for confirmation before a successful delete. */
     public void deleteCustomer() throws SQLException {
         if(customersTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -113,6 +121,7 @@ public class CustomerController implements Initializable
     }
 
 
+    /** This method brings the user to the AddCustomer view. */
     public void toAddCustomer (ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddCustomer.fxml"));
@@ -124,7 +133,8 @@ public class CustomerController implements Initializable
         stage.show();
     }
 
-
+    /** This method brings the user to the UpdateCustomer view. If a customer is not selected by the user, an
+     *  alert appears to inform the user. */
     public void toUpdateCustomer(ActionEvent actionEvent) throws IOException, SQLException {
         if( customersTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -158,7 +168,7 @@ public class CustomerController implements Initializable
         }
     }
 
-
+    /** This method brings the user back to the main appointment view. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));

@@ -26,35 +26,12 @@ public abstract class CountryDAO {
         }
         return allCountries;
     }
-/*
-    public static ObservableList<String> getCountriesStrings() throws SQLException {
-            getCountries();
-            for (int i = 0; i <= (allCountries.size() - 1); i++) {
-                allCountriesStrings.add(allCountries.get(i).getCountryName());
-            }
-            return allCountriesStrings;
-    }*/
 
     public static void clearCountries()
     {
         allCountries.clear();
         allCountriesStrings.clear();
     }
-
-    /*
-    public static int getMatchingCountryId(String country) throws SQLException
-    {
-        int countryId = -1;
-        String sql = "SELECT COUNTRY_ID FROM COUNTRIES WHERE COUNTRY = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ps.setString(1, country);
-        ResultSet rs = ps.executeQuery();
-        while(rs.next())
-        {
-            countryId = rs.getInt("Country_ID");
-        }
-        return countryId;
-    }*/
 
     public static int returnUpdateCountryId(int divisionId) throws SQLException {
         String sql = "SELECT Country_ID FROM first_level_divisions WHERE Division_ID = ?;";

@@ -23,6 +23,7 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**This is the controller for the Login view. */
 public class LoginController implements Initializable {
     @FXML
     private Button buttonLogin;
@@ -45,6 +46,8 @@ public class LoginController implements Initializable {
     String errorDetail = "Wrong username or password.";
 
 
+    /**This is the initialize method for the Login controller. The labels are set according to the Locale of the
+     * machine running the Java program. En and Fr are supported. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelLocation.setText(myZoneId.toString());
@@ -54,6 +57,10 @@ public class LoginController implements Initializable {
         buttonLogin.setText(rb.getString(buttonLogin.getText()));
     }
 
+
+    /**This method handles the user's login activity and entrance into the program. An if-else statement evaluates
+     * the user's input in both textfields and launches the main appointment dashboard. If the username/password
+     * combination does not match, an alert appears to inform the user. */
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
 
             if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test"))) {
@@ -76,6 +83,12 @@ public class LoginController implements Initializable {
         showNextAppointment();
     }
 
+    /** This method records the user's attempts. In both success and failure of login, the
+     *  user's attempts are recorded in the login_activity.txt file with timestamps.
+     *  @param userAttempt If login is successful, this String is passed from the login method. The String is
+     *                     concatenated into a custom message in a popup window.
+     *  @param attempt If login is unsucessful, this String is passed from the login method. The String is
+     *                          concatenated into a custom message in a popup window.*/
     public void recordActivity(String userAttempt, String attempt) throws IOException {
         LocalDateTime myLDT = LocalDateTime.now();
         String loginAttemptTime = CollectionLists.myFormattedDTF(myLDT);
@@ -97,6 +110,10 @@ public class LoginController implements Initializable {
         outputFile.close();
     }
 
+    /** This method determines if there is an upcoming appointment within 15 minutes when login is successful.
+     *  The current time of the user's machine is used in a query to the database to check for appointments. If there
+     *  is an appointment, a custom message in an information popup appears. If not, a popup indicates that there is
+     *  not an appointment. */
     public void showNextAppointment() throws SQLException {
         Appointment nextAppointment = AppointmentDAO.checkAppointment(LocalDateTime.now());
         if (nextAppointment.getStartTime() == null)

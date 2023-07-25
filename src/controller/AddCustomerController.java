@@ -76,7 +76,8 @@ public class AddCustomerController implements Initializable
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
-
+    /** This method gets the values from each field of the form and sends it to the CustomerDAO to an INSERT
+     *  statement to the database. First, inputCheck is called check if inputs are filled. */
     public void addCustomer() throws SQLException {
         try {
             if (inputCheck() == true) {
@@ -100,9 +101,9 @@ public class AddCustomerController implements Initializable
         }
     }
 
+    /** This method brings the user back to the customer dashboard. */
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
-        //firstLevelDivisionComboBox.getItems().removeAll();
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 950, 400);
@@ -112,6 +113,7 @@ public class AddCustomerController implements Initializable
         stage.show();
     }
 
+    /**@return Returns boolean of checking if all the fields were completed on the form. An alert appears if false. */
     public boolean inputCheck()
     {
         boolean good = true;
@@ -131,6 +133,8 @@ public class AddCustomerController implements Initializable
         return good;
     }
 
+    /** This method clears all the fields. Setting the form empty gives the option to the user to quickly start over
+     *  the entry. */
     public void resetFields()
     {
         customerNameTextField.setText("");
