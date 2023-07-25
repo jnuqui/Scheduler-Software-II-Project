@@ -2,8 +2,6 @@ package helper;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import model.Appointment;
-import model.Contact;
 
 import java.time.*;
 import java.time.format.DateTimeFormatter;
@@ -30,8 +28,7 @@ public class CollectionLists {
     public static String [] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     public static boolean monthsLoaded = false;
 
-    //Creating the appointment times for the business
-
+    //Creating the appointment time range for the business
     public static boolean checkTimeRange(LocalDateTime startLDT, LocalDateTime endLDT)
     {
         boolean withinTime = false;
@@ -41,24 +38,18 @@ public class CollectionLists {
         LocalDate appointmentDate = appointmentDateTime.toLocalDate();
 
         //Open hour at ET office, perceived from any timezone
-        //LocalDate today = LocalDate.now();
         LocalTime openHour = LocalTime.of(8, 0);
         LocalDateTime businessOpenDT = LocalDateTime.of(appointmentDate, openHour);
         ZonedDateTime zonedBusinessOpenDT = businessOpenDT.atZone(myBusinessZone);
         ZonedDateTime myZonedOpenDT = zonedBusinessOpenDT.withZoneSameInstant(myZoneId);
         LocalDateTime myOpenLDT = myZonedOpenDT.toLocalDateTime();
-        //The opening hour from Eastern Time, but displayed in the machine's local time
-        //LocalTime myNewOpenLT = myOpenLDT.toLocalTime();
 
         //Closed hour at ET office, perceived from any timezone
-        //LocalDate today = LocalDate.now();
         LocalTime closedHour = LocalTime.of(22, 0);
         LocalDateTime businessClosedDT = LocalDateTime.of(appointmentDate, closedHour);
         ZonedDateTime zonedBusinessClosedDT = businessClosedDT.atZone(myBusinessZone);
         ZonedDateTime myZonedClosedDT = zonedBusinessClosedDT.withZoneSameInstant(myZoneId);
         LocalDateTime myClosedLDT = myZonedClosedDT.toLocalDateTime();
-        //The opening hour from Eastern Time, but displayed in the machine's local time
-        //LocalTime myNewClosedLT = myClosedLDT.toLocalTime();
 
         if (startLDT.isAfter(myOpenLDT) && (endLDT.isBefore(myClosedLDT)))
         {
@@ -69,19 +60,11 @@ public class CollectionLists {
         {
             withinTime = true;
         }
-
-        System.out.println("Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
-                      "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT));
-        System.out.println(withinTime);
         return withinTime;
-
-        //return "Submitted times: \n" + myFormattedDTF(startLDT) + "\n" + myFormattedDTF(endLDT) + "\n" +
-          //      "Open to close hours: \n" + myFormattedDTF(myOpenLDT) + "\n" + myFormattedDTF(myClosedLDT);
     }
 
     public static void loadTimes()
     {
-        //for both boxes
         for (int i = 0; i <= 23; i++) {
             {
                 time[i] = LocalTime.of((i), 0);
@@ -126,13 +109,12 @@ public class CollectionLists {
         return locationIndex;
     }
 
-    //Begin type methods
     public static void loadTypes() {
         for (int i = 0; i <= 3; i++) {
             types.add(typeAppointment[i]);
         }
     }
-//type
+
     public static ObservableList<String> getTypes() {
         if(!typesLoaded) {
             loadTypes();
@@ -140,28 +122,14 @@ public class CollectionLists {
         }
         return types;
     }
-//type
-    public static int returnUpdateType(String type) {
-        int typeIndex = 0;
-        for (int i = 0; i <= 3; i++) {
-            if (type.equals(typeAppointment[i]))
-            {
-                typeIndex = i;
-                break;
-            }
-        }
-        return typeIndex;
-    }
-//End type methods
 
     //begin month methods
-    //Begin type methods
     public static void loadMonths() {
         for (int i = 0; i <= 11; i++) {
             allMonths.add(months[i]);
         }
     }
-    //type
+
     public static ObservableList<String> getMonths() {
         if(!monthsLoaded) {
             loadMonths();
@@ -169,8 +137,6 @@ public class CollectionLists {
         }
         return allMonths;
     }
-
-//end month methods
 
     public static String myFormattedDTF (LocalDateTime myLDT)
     {
@@ -182,20 +148,6 @@ public class CollectionLists {
     public static String myFormattedTF (LocalTime myLT)
     {
         DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
-        String formattedDate = myLT.format(format);
-        return formattedDate;
-    }
-
-    public static String myFormattedHour (LocalTime myLT)
-    {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH");
-        String formattedDate = myLT.format(format);
-        return formattedDate;
-    }
-
-    public static String myFormattedMin (LocalTime myLT)
-    {
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("mm");
         String formattedDate = myLT.format(format);
         return formattedDate;
     }

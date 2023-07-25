@@ -30,15 +30,6 @@ public abstract class FirstLevelDivisionDAO
         return allFLD;
     }
 
-    public static ObservableList<String> getFLDStrings() throws SQLException {
-        for (int i = 0; i <= (allFLD.size() - 1); i++)
-        {
-            allFLDStrings.add(allFLD.get(i).getDivisionName());
-        }
-        //System.out.println(allCountriesStrings);
-        return allFLDStrings;
-    }
-
     public static void clearLists()
     {
         allFLD.clear();

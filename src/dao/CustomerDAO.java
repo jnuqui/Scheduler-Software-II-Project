@@ -107,7 +107,6 @@ public abstract class CustomerDAO {
         }
         return customerIdIndex;
     }
-
 }
 
 
