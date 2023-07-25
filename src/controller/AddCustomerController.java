@@ -1,6 +1,5 @@
 package controller;
 
-import dao.AppointmentDAO;
 import dao.CountryDAO;
 import dao.CustomerDAO;
 import dao.FirstLevelDivisionDAO;
@@ -65,7 +64,6 @@ public class AddCustomerController implements Initializable
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
-        //FirstLevelDivisionDAO.getAllFLD(countryId);
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
@@ -89,14 +87,8 @@ public class AddCustomerController implements Initializable
         }
         catch (Exception e)
         {
-            System.out.println("customer add did not work");
+
         }
-
-    }
-
-    public void testPrint() throws SQLException {
-        //System.out.println(FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString()));
-
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
@@ -130,5 +122,13 @@ public class AddCustomerController implements Initializable
         return good;
     }
 
-
+    public void resetFields()
+    {
+        customerNameTextField.setText("");
+        addressTextField.setText("");
+        postalCodeTextField.setText("");
+        phoneTextField.setText("");
+        countryComboBox.setValue(null);
+        firstLevelDivisionComboBox.setValue(null);
+    }
 }

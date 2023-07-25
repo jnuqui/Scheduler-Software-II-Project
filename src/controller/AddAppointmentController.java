@@ -4,8 +4,6 @@ import dao.AppointmentDAO;
 import dao.ContactDAO;
 import dao.DatabaseAccess;
 import helper.CollectionLists;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
