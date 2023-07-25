@@ -53,9 +53,6 @@ public class UpdateAppointmentController implements Initializable {
     LocalDateTime originalStart;
     LocalDateTime originalEnd;
 
-    private ObservableList<LocalTime> myLT = FXCollections.observableArrayList();
-    LocalTime[] time = new LocalTime[13];
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         populateLocation();
@@ -134,28 +131,6 @@ public class UpdateAppointmentController implements Initializable {
         userIdComboBox.setItems(DatabaseAccess.getUsers());
     }
 
-
-
-
-    public void insertAppointmentTestFill() {
-        titleTextfield.setText("Title Test");
-        descriptionTextfield.setText("Description Test");
-        locationComboBox.getSelectionModel().select(1);
-        typeTextfield.setText("Shooting the breeze");
-
-        LocalDate ldStart = LocalDate.now();
-        LocalTime ltStart = LocalTime.now();
-        LocalTime ltEnd = LocalTime.now().plusHours(1);
-        startDatePicker.setValue(ldStart);
-        startTimeComboBox.setValue(ltStart);
-        endTimeComboBox.setValue(ltEnd);
-
-        customerIdComboBox.getSelectionModel().select(1);
-        userIdComboBox.getSelectionModel().select(1);
-        contactComboBox.getSelectionModel().select(1);
-    }
-
-
     public void setAppointmentId(String appointmentId) {
         appointmentIdTextfield.setText(appointmentId);
     }
@@ -198,8 +173,6 @@ public class UpdateAppointmentController implements Initializable {
         endTimeComboBox.setValue(localTime);
     }
 
-
-
     public void setCustomerId(String customerId) throws SQLException {
         customerIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingCustomerId(customerId));
     }
@@ -207,7 +180,6 @@ public class UpdateAppointmentController implements Initializable {
     public void setUserId(String userId) throws SQLException {
         userIdComboBox.getSelectionModel().select(DatabaseAccess.getMatchingUserId(userId));
     }
-
 
     public boolean inputCheck()
     {
@@ -229,7 +201,6 @@ public class UpdateAppointmentController implements Initializable {
             alert.setContentText("Please complete all fields.");
             good = false;
         }
-        System.out.println("Input check: " + good);
         return good;
     }
 
@@ -289,7 +260,6 @@ public class UpdateAppointmentController implements Initializable {
             alert.show();
             alert.setHeaderText("Check Time");
             alert.setContentText("Time is not within 8:00AM - 10:00PM ET");
-            //System.out.println(CollectionLists.myFormattedDTF(ldtStart) + " " + CollectionLists.myFormattedDTF(ldtEnd));
             good = false;
         }
         else if (!AppointmentDAO.checkUpdateAppointmentOverlap(ldtStart, ldtEnd, customerId, appointmentId).equals("No"))
@@ -300,7 +270,6 @@ public class UpdateAppointmentController implements Initializable {
             alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
             good = false;
         }
-        System.out.println("goodAppointmentTime: " + good);
         return good;
     }
 
@@ -332,8 +301,6 @@ public class UpdateAppointmentController implements Initializable {
                 int userId = Integer.parseInt((String) userIdComboBox.getSelectionModel().getSelectedItem());
                 int contactId = ContactDAO.getContactId(contactComboBox.getValue().toString());
 
-                //(String title, String description, String location, String type,
-                //      Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId)
                 AppointmentDAO.updateAppointment(title, description, location, type, tsStart, tsEnd, customerId, userId, contactId, appointmentId);
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -347,9 +314,7 @@ public class UpdateAppointmentController implements Initializable {
         }
         catch (Exception e)
         {
-             System.out.println("Update didn't work");
         }
-
         }
 
     public void resetFields()
@@ -375,17 +340,5 @@ public class UpdateAppointmentController implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-    }
-
-
-    public void testPrint() throws SQLException {
-        try{
-            inputCheck();
-            goodAppointmentTime();
-           // System.out.println("Is the update time the same as before? - " + updateTimeSame());
-        }
-        catch (Exception e)
-        { }
-
     }
 }

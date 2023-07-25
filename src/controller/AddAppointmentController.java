@@ -152,8 +152,6 @@ public class AddAppointmentController implements Initializable
             alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
             good = false;
         }
-
-        System.out.println("goodAppointmentTime: " + good);
         return good;
     }
 
