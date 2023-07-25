@@ -130,14 +130,4 @@ public class LoginController implements Initializable {
             alert.setContentText("Appointment ID: " + nextAppointment.getAppointmentId() + " on " + CollectionLists.myFormattedDTF(nextAppointment.getStartTime()));
         }
     }
-
-    public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1240, 600);
-        stage.setTitle("Scheduler Dashboard");
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
 }

@@ -24,6 +24,6 @@
       <ComboBox fx:id="countryComboBox" layoutX="201.0" layoutY="332.0" onAction="#passCountry" prefHeight="25.0" prefWidth="185.0" />
       <Button layoutX="255.0" layoutY="414.0" mnemonicParsing="false" onAction="#updateCustomer" text="Update" />
       <Button layoutX="315.0" layoutY="414.0" mnemonicParsing="false" text="Reset" />
-      <Button layoutX="357.0" layoutY="487.0" mnemonicParsing="false" onAction="#toCustomerGUI" text="Cancel" />
+      <Button layoutX="357.0" layoutY="487.0" mnemonicParsing="false" onAction="#toCustomerGUI" text="Close" />
    </children>
 </AnchorPane>

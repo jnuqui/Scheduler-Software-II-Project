@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the "SchedulerDashboard" view.*/
 public class SchedulerDashboardController implements Initializable
 {
     @FXML
@@ -116,6 +117,9 @@ public class SchedulerDashboardController implements Initializable
 
     public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    /** This is the initialize method for this view which gets and sets data in the components. The appointments are
+     *  retrieved, put in an ObservableList and set in the TableView. The combo boxes are also populated
+     *  for the different reports. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -136,6 +140,10 @@ public class SchedulerDashboardController implements Initializable
         locationComboBox.setItems(CollectionLists.getPlaces());
     }
 
+    /** This method sets the ObservableList of appointments in the TableView. The TableColumns are also initialized.
+     *  The visibility of tables are also set because other TableViews are called for the reports, which makes the
+     *  main appointment TableView not visible. This method is called when the All radio button is selected to refresh
+     *  this TableView. */
     public void populateTable()
     {
         appointmentsTable.setItems(allAppointments);
@@ -157,6 +165,10 @@ public class SchedulerDashboardController implements Initializable
         reportCustomTable.visibleProperty().setValue(false);
     }
 
+    /** This method sets the ObservableList of appointments in the TableView for the current month of the user by the
+     *  machine's Time Zone. A query is made to the database to retrieve appointments that match the month that the
+     *  user is in. The TableColumns are also initialized. The visibility of tables are also set because other
+     *  TableViews could be visible instead of this one. */
     public void populateTableMonth()
     {
         try {
@@ -182,6 +194,10 @@ public class SchedulerDashboardController implements Initializable
         reportCustomTable.visibleProperty().setValue(false);
     }
 
+    /** This method sets the ObservableList of appointments in the TableView for the current day plus seven days of the
+     * user's Time Zone. A query is made to the database to retrieve appointments that match appointments within 7 days
+     *  The TableColumns are also initialized. The visibility of tables are also set because other
+     *  TableViews could be visible instead of this one. */
     public void populateTableWeek() {
         {
             try {
@@ -208,6 +224,7 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
+    /** This method brings the user to the customer dashboard. */
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
@@ -219,6 +236,7 @@ public class SchedulerDashboardController implements Initializable
         stage.show();
     }
 
+    /** This method brings the user to the AddAppointment view. */
     public void toAddAppointment(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddAppointment.fxml"));
@@ -237,7 +255,9 @@ public class SchedulerDashboardController implements Initializable
         return appointmentsTable.getSelectionModel().getSelectedItem().getLocation();
     }
 
-
+    /** This method brings the user to the UpdateAppointment view. If an appointment is not selected from the TableView,
+     *  an alert will launch an error. When an appointment is selected, the UpdateAppointment view will be launched and
+     *  the appointment and its data will be passed into the fields of the new view. */
     public void toUpdateAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -277,6 +297,9 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
+    /** This method deletes the appointment that the user selects from the appointment TableView. If an appointment is
+     *  not selected, an alert will appear. User is asked for confirmation before a successful delete. A custom
+     *  message appears if a delete occurs. */
     public void deleteAppointment() throws SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -287,7 +310,6 @@ public class SchedulerDashboardController implements Initializable
             return;
         }
         else {
-
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete appointment (ID:" + appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId() + ") ?");
             alert.showAndWait().ifPresent(response -> {
                 if (response == ButtonType.OK) {
@@ -298,14 +320,12 @@ public class SchedulerDashboardController implements Initializable
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
                     }
-
                     Alert alertDeleted = new Alert(Alert.AlertType.INFORMATION);
                     alertDeleted.show();
                     alertDeleted.setHeaderText("Delete Successful");
                     alertDeleted.setContentText("Appointment (" + "ID:" + appointmentId + ", Type: " + type + ") deleted");
                 }
             });
-
             try {
                 allAppointments = AppointmentDAO.getAppointments();
             } catch (SQLException throwables) {
@@ -315,7 +335,10 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
-
+    /** This method makes the reportTypeTable visible and displays results for the report. A query is made using the
+     *  month and type selected by the user. An alert appears if the user did not select values for both combo boxes.
+     *  The TableColumns are also initialized. The other TableViews are set to not be visible. The View radio buttons
+     *  are also unselected so that they can be chosen to reset the appointment TableView.*/
     public void getTypeMonthReport() throws SQLException {
 
         try{
@@ -325,7 +348,6 @@ public class SchedulerDashboardController implements Initializable
         monthReportColumn.setCellValueFactory(new PropertyValueFactory<>("month"));
         typeReportColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         countColumn.setCellValueFactory(new PropertyValueFactory<>("count"));
-
 
         appointmentsTable.visibleProperty().setValue(false);
         reportTypeTable.visibleProperty().setValue(true);
@@ -344,8 +366,11 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
+    /** This method makes the reportContactTable visible and displays results for the report. A query is made using the
+     *  contact selected by the user. An alert appears if the user did not select a contact from the combo box.
+     *  The TableColumns are also initialized. The other TableViews are set to not be visible. The View radio buttons
+     *      *  are also unselected so that they can be chosen to reset the appointment TableView.*/
     public void getContactReport() throws SQLException {
-
         try {
             reportContactTable.setItems(AppointmentDAO.getContactReport(contactComboBox.getValue().toString()));
 
@@ -378,32 +403,35 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
+    /** This method makes the reportContactTable visible and displays results for the report. A query is made using the
+     *  contact selected by the user. An alert appears if the user did not select a contact from the combo box.
+     *  The TableColumns are also initialized. The other TableViews are set to not be visible. The View radio buttons
+     *      *  are also unselected so that they can be chosen to reset the appointment TableView.*/
     public void getCustomReport() throws SQLException {
 
-try {
-    reportCustomTable.setItems(AppointmentDAO.getLocationReport(locationComboBox.getValue().toString()));
+        try {
+            reportCustomTable.setItems(AppointmentDAO.getLocationReport(locationComboBox.getValue().toString()));
 
-    appointmentIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-    titleCustomColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-    descriptionCustomColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-    locationCustomColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-    contactCustomColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-    typeCustomColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-    startCustomColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-    endCustomColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-    customerIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-    userIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+            appointmentIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
+            titleCustomColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+            descriptionCustomColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+            locationCustomColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+            contactCustomColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+            typeCustomColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+            startCustomColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+            endCustomColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+            customerIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            userIdCustomColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
+            appointmentsTable.visibleProperty().setValue(false);
+            reportTypeTable.visibleProperty().setValue(false);
+            reportContactTable.visibleProperty().setValue(false);
+            reportCustomTable.visibleProperty().setValue(true);
 
-    appointmentsTable.visibleProperty().setValue(false);
-    reportTypeTable.visibleProperty().setValue(false);
-    reportContactTable.visibleProperty().setValue(false);
-    reportCustomTable.visibleProperty().setValue(true);
-
-    allAppointmentsRadio.setSelected(false);
-    monthAppointmentsRadio.setSelected(false);
-    weekAppointmentRadio.setSelected(false);
-}
+            allAppointmentsRadio.setSelected(false);
+            monthAppointmentsRadio.setSelected(false);
+            weekAppointmentRadio.setSelected(false);
+            }
         catch (Exception e)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);

@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the "AddAppointment" view.*/
 public class UpdateCustomerController implements Initializable
 {
     @FXML

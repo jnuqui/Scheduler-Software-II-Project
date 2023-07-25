@@ -78,7 +78,8 @@ public class CustomerController implements Initializable
 
     /** This method deletes the customer that the user selects from the Customer TableView. If a customer is not
      *  selected, an alert will appear. If a customer is selected but still has appointments, an alert box appears
-     *  that informs the user of that. User is asked for confirmation before a successful delete. */
+     *  that informs the user of that. User is asked for confirmation before a successful delete. A custom message
+     *  appears after a successful delete.*/
     public void deleteCustomer() throws SQLException {
         if(customersTable.getSelectionModel().getSelectedItem() == null)
         {

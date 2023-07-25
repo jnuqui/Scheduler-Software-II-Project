@@ -43,12 +43,16 @@ public abstract class AppointmentDAO
 
     public static ObservableList<Appointment> getAppointmentsByMonth() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        LocalDateTime today = LocalDateTime.now();
+        Timestamp todayTS = Timestamp.valueOf(today);
         String sql = "SELECT appointments.*, contacts.Contact_Name\n" +
                 "FROM appointments\n" +
                 "JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID\n" +
-                "WHERE MONTH(`Start`) = MONTH(current_date()) AND YEAR(`Start`) = YEAR(current_date())\n" +
+                "WHERE MONTH(`Start`) = MONTH(?) AND YEAR(`Start`) = YEAR(?)\n" +
                 "ORDER BY Appointment_ID ASC;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, todayTS);
+        ps.setTimestamp(2, todayTS);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int appointmentId = rs.getInt("Appointment_ID");
@@ -70,12 +74,15 @@ public abstract class AppointmentDAO
 
     public static ObservableList<Appointment> getAppointmentsByWeek() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        LocalDateTime today = LocalDateTime.now();
         String sql = "SELECT appointments.*, contacts.Contact_Name" +
         " FROM appointments" +
         " JOIN contacts ON appointments.Contact_ID = contacts.Contact_ID" +
-        " WHERE DATE(`Start`) >= NOW() AND DATE(`End`) <= (NOW() + INTERVAL 7 DAY)" +
+        " WHERE DATE(`Start`) >= ? AND DATE(`End`) <= (?)" +
         " ORDER BY Appointment_ID ASC";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+        ps.setTimestamp(1, Timestamp.valueOf(today));
+        ps.setTimestamp(2, Timestamp.valueOf(today.plusDays(7)));
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
             int appointmentId = rs.getInt("Appointment_ID");
@@ -142,10 +149,10 @@ public abstract class AppointmentDAO
     public static Appointment checkAppointment(LocalDateTime nowLDT) throws SQLException {
         String sql = "SELECT *\n" +
                 "FROM appointments\n" +
-                "WHERE Start >= ? AND Start <= date_add(?, INTERVAL 15 minute);";
+                "WHERE Start >= ? AND Start <= ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, Timestamp.valueOf(nowLDT));
-        ps.setTimestamp(2, Timestamp.valueOf(nowLDT));
+        ps.setTimestamp(2, Timestamp.valueOf(nowLDT.plusMinutes(15)));
         ResultSet rs = ps.executeQuery();
         if (!rs.isBeforeFirst()) {
             Appointment nullAppointment = new Appointment();

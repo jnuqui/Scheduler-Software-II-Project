@@ -23,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
+/** This is the controller class for the "UpdateAppointment" view.*/
 public class UpdateAppointmentController implements Initializable {
     @FXML
     public TextField appointmentIdTextfield;
@@ -42,7 +43,6 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     public TextField titleTextfield;
     public TextField descriptionTextfield;
-    public TextField typeTextfield;
     @FXML
     public ComboBox customerIdComboBox;
     @FXML
@@ -51,39 +51,32 @@ public class UpdateAppointmentController implements Initializable {
     LocalDateTime originalStart;
     LocalDateTime originalEnd;
 
+    /** The initialize method for the Update Appointment view. This method is called when the view is launched
+     *  and contains methods for populating the combo boxes for the form. */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        populateLocation();
 
         try {
-            populateContacts();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        populateTypes();
-
-        populateTimeComboBoxes();
-
-        try {
-            populateCustomerIds();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        try {
-            populateUsers();
+            populateComboBoxes();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
     }
 
+    /**This method sets the class's LocalDateTime objects. This is used to obtain the appointments original start and
+     * end times. By recording these, they can be compared in the goodAppointmentTime method so that the appointment
+     * can be updated with the same time and not be considered a scheduling conflict.
+     * @param start The appointment's start time.
+     * @param end  The appointment's end time.*/
     public void setOriginalApptTime(LocalDateTime start, LocalDateTime end)
     {
         originalStart = start;
         originalEnd = end;
     }
 
+    /**@return boolean if the times that the user selects is the same as the original appointment data.
+     * This method handles the Start and End times comparison from setOriginalApptTime, and is ultimately used
+     * in the logic flow of goodAppointmentTime. */
     public boolean updateTimeSame()
     {
         boolean good = false;
@@ -103,31 +96,18 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
-    public void populateLocation() {
+    /** This method populates the combo boxes for the form. Each combo box uses a method to get an ObservableList for
+     *  each respective combo box.*/
+    public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
-    }
-
-    public void populateContacts() throws SQLException {
         contactComboBox.setItems(ContactDAO.getContactNames());
-    }
-
-    public void populateTypes()
-    {
         typeComboBox.setItems(CollectionLists.getTypes());
-    }
-
-    public void populateTimeComboBoxes() {
         startTimeComboBox.setItems(CollectionLists.getTimes());
         endTimeComboBox.setItems(CollectionLists.getTimes());
-    }
-
-    public void populateCustomerIds() throws SQLException {
         customerIdComboBox.setItems(CustomerDAO.getCustomerIds());
-    }
-
-    public void populateUsers() throws SQLException {
         userIdComboBox.setItems(UserDAO.getUsers());
     }
+
 
     public void setAppointmentId(String appointmentId) {
         appointmentIdTextfield.setText(appointmentId);
@@ -179,6 +159,8 @@ public class UpdateAppointmentController implements Initializable {
         userIdComboBox.getSelectionModel().select(UserDAO.getMatchingUserId(userId));
     }
 
+    /** @return - This method checks if each field in the form is filled, and returns true or false. If any one of the fields is empty when user tries to
+     *  add an appointment, an alert window launches. */
     public boolean inputCheck()
     {
         boolean good = true;
@@ -202,7 +184,13 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
-
+    /** @return - This method checks if the user's Start and End Times are appropriate and returns true or false.
+     *  It checks the following time possibilities:
+     *  - End time is before Start time
+     *  - Start and End Time is the same
+     *  - Time has not changed from the original appointment
+     *  - Compares against open office hours (Eastern Time)
+     *  - Overlapping appointments of the same customer. */
     public boolean goodAppointmentTime() throws SQLException {
 
         boolean good = true;
@@ -263,6 +251,9 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
+    /** This method gets the values from each field of the form and sends it to the AppointmentDAO to an INSERT
+     *  statement to the database. First, two methods (inputCheck and goodAppointmentTime) check if inputs are filled
+     *  and if the Start and End Times are appropriate. */
     public void updateAppointment() throws SQLException {
         try {
             boolean inputWorks = inputCheck();
@@ -307,6 +298,8 @@ public class UpdateAppointmentController implements Initializable {
         }
         }
 
+    /** This method clears all the fields. Setting the form empty gives the option to the user to completely and
+     *  quickly change this update. */
     public void resetFields()
     {
         titleTextfield.setText("");
@@ -321,6 +314,7 @@ public class UpdateAppointmentController implements Initializable {
         contactComboBox.setValue(null);
     }
 
+    /** This method brings the user back to the main scheduling dashboard. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
