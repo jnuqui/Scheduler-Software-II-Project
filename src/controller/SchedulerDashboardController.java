@@ -120,11 +120,11 @@ public class SchedulerDashboardController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
-            allAppointments = AppointmentDAO.getAppointmentsv2();
+            allAppointments = AppointmentDAO.getAppointments();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        populateTablev2();
+        populateTable();
 
 
         typeComboBox.setItems(CollectionLists.getTypes());
@@ -134,45 +134,11 @@ public class SchedulerDashboardController implements Initializable
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-
         locationComboBox.setItems(CollectionLists.getPlaces());
-
     }
 
-    public void checkAppointment()
+    public void populateTable()
     {
-
-    }
-
-    /*public void populateTable()
-    {
-        try {
-            appointmentsTable.setItems(AppointmentDAO.getAppointments());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        //contactColumn.setCellValueFactory(new PropertyValueFactory<>("contact"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-    }*/
-
-    public void populateTablev2()
-    {
-        /*try {
-            appointmentsTable.setItems(AppointmentDAO.getAppointmentsv2());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }*/
-
         appointmentsTable.setItems(allAppointments);
 
         appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
@@ -184,18 +150,12 @@ public class SchedulerDashboardController implements Initializable
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
         appointmentsTable.visibleProperty().setValue(true);
         reportTypeTable.visibleProperty().setValue(false);
         reportContactTable.visibleProperty().setValue(false);
         reportCustomTable.visibleProperty().setValue(false);
-
-        //Use with Callback method below.
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //startColumn.setCellFactory(createCellFactory(formatter));
-        //endColumn.setCellFactory(createCellFactory(formatter));
     }
 
     public void populateTableMonth()
@@ -215,18 +175,12 @@ public class SchedulerDashboardController implements Initializable
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
 
         appointmentsTable.visibleProperty().setValue(true);
         reportTypeTable.visibleProperty().setValue(false);
         reportContactTable.visibleProperty().setValue(false);
         reportCustomTable.visibleProperty().setValue(false);
-        //Use with Callback method below
-        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        //startColumn.setCellFactory(createCellFactory(formatter));
-        //endColumn.setCellFactory(createCellFactory(formatter));
     }
 
     public void populateTableWeek() {
@@ -246,7 +200,6 @@ public class SchedulerDashboardController implements Initializable
             startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
             endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
             customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            //contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
             userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
             appointmentsTable.visibleProperty().setValue(true);
@@ -254,28 +207,8 @@ public class SchedulerDashboardController implements Initializable
             reportContactTable.visibleProperty().setValue(false);
             reportCustomTable.visibleProperty().setValue(false);
 
-            //Use with Callback method below
-            //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            //startColumn.setCellFactory(createCellFactory(formatter));
-            //endColumn.setCellFactory(createCellFactory(formatter));
         }
     }
-
-    /*
-    private <T> Callback<TableColumn<Appointment, T>, javafx.scene.control.TableCell<Appointment, T>> createCellFactory(DateTimeFormatter formatter) {
-        return column -> new javafx.scene.control.TableCell<Appointment, T>() {
-            @Override
-            protected void updateItem(T item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(formatter.format((LocalDateTime) item));
-                }
-            }
-        };
-    }*/
-
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
@@ -299,24 +232,15 @@ public class SchedulerDashboardController implements Initializable
         stage.show();
     }
 
-    public void toUpdateAppointment(ActionEvent actionEvent) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/UpdateAppointment.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 500, 700);
-        stage.setTitle("Update Appointment");
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
 
+//possible lambda?
     public String sendLocation()
     {
         return appointmentsTable.getSelectionModel().getSelectedItem().getLocation();
     }
 
 
-    public void toUpdateAppointmentv2(ActionEvent actionEvent) throws IOException, SQLException {
+    public void toUpdateAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -326,7 +250,6 @@ public class SchedulerDashboardController implements Initializable
             return;
         }
         else {
-            //int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId();
 
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../view/UpdateAppointment.fxml"));
@@ -386,11 +309,11 @@ public class SchedulerDashboardController implements Initializable
             });
 
             try {
-                allAppointments = AppointmentDAO.getAppointmentsv2();
+                allAppointments = AppointmentDAO.getAppointments();
             } catch (SQLException throwables) {
                 throwables.printStackTrace();
             }
-            populateTablev2();
+            populateTable();
         }
     }
 
