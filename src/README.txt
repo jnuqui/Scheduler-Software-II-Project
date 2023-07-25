@@ -6,6 +6,34 @@ E.  Create a README.txt file that includes the following information:
 •  a description of the additional report of your choice you ran in part A3f
 •  the MySQL Connector driver version number, including the update number (e.g., mysql-connector-java-8.1.23)
 
+Title: "Scheduler" - Desktop appointment scheduling application.
+Purpose:
+Author: Jonathan Nuqui
+Contact information: jnuqui@wgu.edu
+Student application version: 1.0.17
+Date: 7/25/23
+
+IDE: IntelliJ IDEA 2021.1.3 (Community Edition)
+Java SDK: 17.0.1
+JavaFX: 17.0.1
+
+Directions: test/test login.
+Customer
+- Add
+- Update
+- Delete
+
+Appointments
+- Add
+- Update
+- Delete
+
+Views
+
+Reports
+
+A3f report: User generates a report of the appointments based on location selection. The report displays
+the appointments that exist at the location.
 
 Links Hat Tip
 For empty sql queries
