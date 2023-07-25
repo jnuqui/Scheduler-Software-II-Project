@@ -35,5 +35,4 @@ public abstract class JDBC {
             System.out.println("Error: " + e.getMessage());
         }
     }
-//last brace for class
 }

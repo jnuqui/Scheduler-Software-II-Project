@@ -226,7 +226,7 @@ public abstract class AppointmentDAO
     public static Appointment checkAppointment(LocalDateTime nowLDT) throws SQLException {
         String sql = "SELECT *\n" +
                 "FROM appointments\n" +
-                "WHERE Start >= ? AND Start <= date_add(?, INTERVAL 1 hour);";
+                "WHERE Start >= ? AND Start <= date_add(?, INTERVAL 15 minute);";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, Timestamp.valueOf(nowLDT));
         ps.setTimestamp(2, Timestamp.valueOf(nowLDT));
@@ -245,8 +245,6 @@ public abstract class AppointmentDAO
     }
 
     public static String checkAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT, int customerId) throws SQLException {
-        //String sql = "SELECT Start, End FROM appointments WHERE (Start BETWEEN ? AND ?) OR (End BETWEEN ? AND ?);";
-        //String sql = "SELECT Start, End FROM appointments WHERE ((? < End) AND (?) > Start);";
         String sql = "SELECT Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, Timestamp.valueOf(endLDT));

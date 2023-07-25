@@ -1,6 +1,5 @@
 package controller;
 
-import dao.AppointmentDAO;
 import dao.CountryDAO;
 import dao.CustomerDAO;
 import dao.FirstLevelDivisionDAO;
@@ -19,7 +18,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Appointment;
 import model.Customer;
 
 import java.io.IOException;
@@ -110,7 +108,6 @@ public class CustomerController implements Initializable
                     }
                 }
             });
-
             populateTable();
         }
     }
@@ -127,18 +124,8 @@ public class CustomerController implements Initializable
         stage.show();
     }
 
-    public void toUpdateCustomer (ActionEvent actionEvent) throws IOException
-    {
-        Parent root = FXMLLoader.load(getClass().getResource("../view/UpdateCustomer.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 500, 550);
-        stage.setTitle("Update Customer");
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
-    }
 
-    public void toUpdateCustomerv2(ActionEvent actionEvent) throws IOException, SQLException {
+    public void toUpdateCustomer(ActionEvent actionEvent) throws IOException, SQLException {
         if( customersTable.getSelectionModel().getSelectedItem() == null)
         {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -148,8 +135,6 @@ public class CustomerController implements Initializable
             return;
         }
         else {
-            //int appointmentId = appointmentsTable.getSelectionModel().getSelectedItem().getAppointmentId();
-
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("../view/UpdateCustomer.fxml"));
             loader.load();
@@ -184,6 +169,4 @@ public class CustomerController implements Initializable
         stage.centerOnScreen();
         stage.show();
     }
-
-
 }

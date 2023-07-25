@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Locale;
@@ -36,17 +35,12 @@ public class LoginController implements Initializable {
     @FXML
     private TextField textfieldPassword;
     @FXML
-    private Button testButton;
-    @FXML
     private Label labelUsername;
     @FXML
     private TextField textfieldUsername;
     ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
     ZoneId myZoneId = ZoneId.systemDefault();
-    ZoneId myUTC = ZoneId.of("UTC");
 
-    String successful = "successful";
-    String unsuccessful = "unsuccessful";
     String error = "Error";
     String errorDetail = "Wrong username or password.";
 
@@ -128,22 +122,5 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-    }
-
-    public static void changeLanguage()
-    {
-        ResourceBundle rb = ResourceBundle.getBundle("Nat", Locale.getDefault());
-        //labelUsername.setText(rb.getString("Username"));
-        //textfieldUsername.setText("hey");
-    }
-
-    public void testAlert()
-    {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Are you sure you want to delete customer?");
-        alert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                System.out.println("Customer dleeted");
-            }
-        });
     }
 }

@@ -1,7 +1,6 @@
 package controller;
 
 import dao.AppointmentDAO;
-import dao.ContactDAO;
 import dao.DatabaseAccess;
 import helper.CollectionLists;
 import javafx.collections.FXCollections;
@@ -16,15 +15,12 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Appointment;
 import model.Contact;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class SchedulerDashboardController implements Initializable
@@ -116,17 +112,13 @@ public class SchedulerDashboardController implements Initializable
     public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");;
     @FXML
     public TableColumn customerIdColumn;
-    //@FXML
-    //public TableColumn contactIdColumn;
     @FXML
     public TableColumn userIdColumn;
 
     public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
-    public ObservableList<Contact>  allContacts = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         try {
             allAppointments = AppointmentDAO.getAppointmentsv2();
         } catch (SQLException throwables) {
