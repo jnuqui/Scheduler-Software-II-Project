@@ -1,6 +1,5 @@
 package dao;
 
-
 import helper.CollectionLists;
 import helper.JDBC;
 import javafx.collections.FXCollections;
@@ -96,19 +95,6 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
-
-
-    public static Timestamp getTimestamp() throws SQLException {
-        String sql = "SELECT Start FROM APPOINTMENTS WHERE Appointment_ID = 1";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-        Timestamp myTS = null;
-        if (rs.next()) {
-            myTS = rs.getTimestamp("Start");
-        }
-        return myTS;
-    }
-
     public static void insertAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -146,20 +132,12 @@ public abstract class AppointmentDAO
         ps.executeUpdate();
     }
 
-    public static void getAppointment(int appointmentId) throws SQLException {
-        String sql = "SELECT Appointment_ID FROM APPOINTMENTS WHERE Appointment_ID = ?";
-        PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-        ResultSet rs = ps.executeQuery();
-    }
-
-
     public static void deleteAppointment(int appointmentId) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setInt(1, appointmentId);
         ps.executeUpdate();
     }
-
 
     public static Appointment checkAppointment(LocalDateTime nowLDT) throws SQLException {
         String sql = "SELECT *\n" +
@@ -199,27 +177,15 @@ public abstract class AppointmentDAO
             LocalTime startConflictTime = startConflictDateTime.toLocalTime();
             LocalTime endConflictTime = endConflictDateTime.toLocalTime();
             String overlapReport = "No";
-            /*if (startConflictDateTime.equals(startLDT) || startConflictDateTime.equals(endLDT)
-            || endConflictDateTime.equals(startLDT) || endConflictDateTime.equals(endLDT))
-            {
-                return overlapReport;
-            }*/
             if(endLDT.equals(startConflictDateTime) || startLDT.equals(endConflictDateTime))
             {
                 return overlapReport;
             }
-
-            /*if((startLDT.equals(startConflictDateTime) && endLDT.equals(endConflictDateTime)) || (startLDT.equals(startConflictDateTime)) || (endLDT.equals(endConflictDateTime)))
-            {
-                return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
-            }*/
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
     }
 
     public static String checkUpdateAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT, int customerId, int appointmentId) throws SQLException {
-        //String sql = "SELECT Start, End FROM appointments WHERE (Start BETWEEN ? AND ?) OR (End BETWEEN ? AND ?);";
-        //String sql = "SELECT Start, End FROM appointments WHERE ((? < End) AND (?) > Start);";
         String sql = "SELECT Appointment_ID, Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ? AND NOT Appointment_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ps.setTimestamp(1, Timestamp.valueOf(endLDT));
@@ -235,24 +201,13 @@ public abstract class AppointmentDAO
             LocalDateTime startConflictDateTime = rs.getTimestamp("Start").toLocalDateTime();
             LocalDateTime endConflictDateTime = rs.getTimestamp("End").toLocalDateTime();
             int customerIdFound = rs.getInt("Customer_ID");
-            //int appointmentIdFound = rs.getInt("Appointment_ID");
             LocalTime startConflictTime = startConflictDateTime.toLocalTime();
             LocalTime endConflictTime = endConflictDateTime.toLocalTime();
             String overlapReport = "No";
-            /*if (startConflictDateTime.equals(startLDT) || startConflictDateTime.equals(endLDT)
-            || endConflictDateTime.equals(startLDT) || endConflictDateTime.equals(endLDT))
-            {
-                return overlapReport;
-            }*/
             if(endLDT.equals(startConflictDateTime) || startLDT.equals(endConflictDateTime))
             {
                 return overlapReport;
             }
-
-            /*if((startLDT.equals(startConflictDateTime) && endLDT.equals(endConflictDateTime)) || (startLDT.equals(startConflictDateTime)) || (endLDT.equals(endConflictDateTime)))
-            {
-                return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ")";
-            }*/
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
     }
@@ -270,7 +225,6 @@ public abstract class AppointmentDAO
         monthTypeAppointments.add(monthTypeAppointment);
         return monthTypeAppointments;
     }
-
 
     public static ObservableList<Appointment> getContactReport(String contactNameBox) throws SQLException {
         ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
@@ -299,6 +253,7 @@ public abstract class AppointmentDAO
         }
         return contactAppointments;
     }
+
     public static ObservableList<Appointment> getLocationReport(String locationFromBox) throws SQLException {
         ObservableList<Appointment> locationAppointments = FXCollections.observableArrayList();
         String sql = "SELECT appointments.*, contacts.Contact_Name\n" +
@@ -325,9 +280,5 @@ public abstract class AppointmentDAO
             locationAppointments.add(appointment);
         }
         return locationAppointments;
-
     }
-
-
-
 }

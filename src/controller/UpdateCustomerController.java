@@ -24,7 +24,6 @@ import java.util.ResourceBundle;
 
 public class UpdateCustomerController implements Initializable
 {
-
     @FXML
     public TextField customerIdTextfield;
     @FXML
@@ -44,20 +43,16 @@ public class UpdateCustomerController implements Initializable
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        //countryComboBox.setPromptText("Select Country");
-        //countryComboBox.setSelectionModel();
         try {
-            populateCountriesv2();
+            populateCountries();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        //countryComboBox.setValue(countryComboBox.getItems().get(0));
     }
 
-    public void populateCountriesv2() throws SQLException {
+    public void populateCountries() throws SQLException {
         CountryDAO.clearCountries();
         countryComboBox.setItems(CountryDAO.getCountries());
-        // countryComboBox.setValue(CountryDAO.getCountries().get(0));
     }
 
     public void setCustomer(int customerId, String customerName, String address, String postalCode, String phone, Country country, FirstLevelDivision division)
@@ -78,43 +73,36 @@ public class UpdateCustomerController implements Initializable
         }
         catch (Exception e)
         {
-
         }
     }
 
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
-        //FirstLevelDivisionDAO.getAllFLD(countryId);
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
     public void updateCustomer() throws SQLException {
 
-try{
-    if (inputCheck() == true) {
-        int customerId = Integer.parseInt(customerIdTextfield.getText());
-        String customerName = customerNameTextField.getText();
-        String address = addressTextField.getText();
-        String postalCode = postalCodeTextField.getText();
-        String phone = phoneTextField.getText();
-        int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
+        try{
+            if (inputCheck() == true) {
+                    int customerId = Integer.parseInt(customerIdTextfield.getText());
+                    String customerName = customerNameTextField.getText();
+                    String address = addressTextField.getText();
+                    String postalCode = postalCodeTextField.getText();
+                    String phone = phoneTextField.getText();
+                    int divisionIdFK = FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString());
 
-        CustomerDAO.updateCustomer(customerName, address, postalCode, phone, divisionIdFK, customerId);
+                    CustomerDAO.updateCustomer(customerName, address, postalCode, phone, divisionIdFK, customerId);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.show();
-        alert.setHeaderText("Success.");
-        alert.setContentText("Customer " + customerId + " successfully updated.");
-    }
-    }
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.show();
+                    alert.setHeaderText("Success.");
+                    alert.setContentText("Customer " + customerId + " successfully updated.");
+                }
+            }
         catch (Exception e)
         {
-
         }
-    }
-
-    public void testPrint() throws SQLException {
-        System.out.println(FirstLevelDivisionDAO.getMatchingDivisionId(firstLevelDivisionComboBox.getSelectionModel().getSelectedItem().toString()));
     }
 
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
@@ -146,5 +134,4 @@ try{
         }
         return good;
     }
-
 }
