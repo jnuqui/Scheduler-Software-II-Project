@@ -16,7 +16,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Contact;
 
 import java.io.IOException;
 import java.net.URL;
@@ -109,7 +108,7 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn<Appointment, String> startColumn = new TableColumn<>("startTime");
     @FXML
-    public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");;
+    public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");
     @FXML
     public TableColumn customerIdColumn;
     @FXML
@@ -206,7 +205,6 @@ public class SchedulerDashboardController implements Initializable
             reportTypeTable.visibleProperty().setValue(false);
             reportContactTable.visibleProperty().setValue(false);
             reportCustomTable.visibleProperty().setValue(false);
-
         }
     }
 
@@ -317,10 +315,6 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
-    public void testPrint()
-    {
-        System.out.println(allAppointments.get(1).getStartTime());
-    }
 
     public void getTypeMonthReport() throws SQLException {
 
@@ -418,5 +412,4 @@ try {
             alert.setContentText("Select Location first");
         }
     }
-
 }
