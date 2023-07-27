@@ -25,7 +25,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/** This is the controller class for the "Customer" view.*/
+/** This is the controller class for the "Customer" view. It displays the TableView for customers and is used to
+ *  navigate to Add/Update customers. It also has a button to delete a customer. */
 public class CustomerController implements Initializable
 {
     @FXML
@@ -43,7 +44,7 @@ public class CustomerController implements Initializable
     @FXML
     public TableColumn phoneColumn;
     @FXML
-    public TableColumn divisionIdColumn;
+    public TableColumn divisionNameColumn;
     @FXML
     public TableColumn countryColumn;
 
@@ -72,14 +73,14 @@ public class CustomerController implements Initializable
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         postalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        divisionIdColumn.setCellValueFactory(new PropertyValueFactory<>("divisionIdFK"));
+        divisionNameColumn.setCellValueFactory(new PropertyValueFactory<>("divisionName"));
         countryColumn.setCellValueFactory(new PropertyValueFactory<>("country"));
     }
 
     /** This method deletes the customer that the user selects from the Customer TableView. If a customer is not
      *  selected, an alert will appear. If a customer is selected but still has appointments, an alert box appears
      *  that informs the user of that. User is asked for confirmation before a successful delete. A custom message
-     *  appears after a successful delete.*/
+     *  appears after a successful delete. */
     public void deleteCustomer() throws SQLException {
         if(customersTable.getSelectionModel().getSelectedItem() == null)
         {

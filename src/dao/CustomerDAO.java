@@ -14,7 +14,7 @@ public abstract class CustomerDAO {
 
     public static ObservableList<Customer> getCustomers() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-        String sql = "SELECT customers.*, countries.Country FROM customers JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID  JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID ORDER BY Customer_ID ASC;";
+        String sql = "SELECT customers.*, first_level_divisions.* , countries.Country FROM customers JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID  JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID ORDER BY Customer_ID ASC;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
         while (rs.next()) {
@@ -23,16 +23,14 @@ public abstract class CustomerDAO {
             String address = rs.getString("Address");
             String postalCode = rs.getString("Postal_Code");
             String phone = rs.getString("Phone");
+            String divisionName = rs.getString("Division");
             int divisionIdFK = rs.getInt("Division_ID");
             String country = rs.getString("Country");
-            Customer customer = new Customer(customerId, name, address, postalCode, phone, divisionIdFK,country);
+            Customer customer = new Customer(customerId, name, address, postalCode, phone, divisionName, divisionIdFK, country);
             allCustomers.add(customer);
         }
         return allCustomers;
     }
-
-    //The code we want for all customers
-    //SELECT customers.*, countries.Country FROM customers JOIN first_level_divisions ON first_level_divisions.Division_ID = customers.Division_ID  JOIN countries ON first_level_divisions.Country_ID = countries.Country_ID ORDER BY Customer_ID ASC;
 
     public static void insertCustomer(String customerName, String address, String postalCode, String phone, int divisionIdFK) throws SQLException {
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(?, ?, ?, ?, ?);";

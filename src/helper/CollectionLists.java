@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 
-public class CollectionLists {
+public abstract class CollectionLists {
 
     //Places for appointments
     private static ObservableList<String> places = FXCollections.observableArrayList();

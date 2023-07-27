@@ -22,7 +22,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/** This is the controller class for the "AddAppointment" view.*/
+/** This is the controller class for the "UpdateCustomer" view. It handles the business logic for updating a customer
+ *  in the database. */
 public class UpdateCustomerController implements Initializable
 {
     @FXML
@@ -79,6 +80,7 @@ public class UpdateCustomerController implements Initializable
         countryComboBox.setValue(country);
         firstLevelDivisionComboBox.setValue(division);
     }
+
     /** This method gets the Country that the user selects from the country combo box. The selected country then
      *  gets passed to the populateFirstLevelDivisions method. */
     public void passCountry() throws SQLException {
@@ -90,19 +92,20 @@ public class UpdateCustomerController implements Initializable
         {
         }
     }
+
     /** This method populates the combo box of First Level Divisions. The method is called after a Country is selected
      *  by the user and a database query is made to find the associated First Level Divisions.
-     *  @param countryId This value is used to generate the appropriate list of First Level Divisions. */
+     *  @param countryId This value is used to generate the appropriate list of First Level Divisions.
+     *   */
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
     }
 
-    /** This method gets the values from each field of the form and sends it to the CustomerDAO to an UPDATE
-     *  statement to the database. First, inputCheck is called to check if inputs are filled. Custom confirmation
+    /** This method gets the values from each field of the form and sends it to an UPDATE statement to the database.
+     *  First, inputCheck is called to check if inputs are filled. Custom confirmation
      *  message launches when successful. */
     public void updateCustomer() throws SQLException {
-
         try{
             if (inputCheck() == true) {
                     int customerId = Integer.parseInt(customerIdTextfield.getText());
@@ -137,6 +140,21 @@ public class UpdateCustomerController implements Initializable
         stage.show();
     }
 
+    /** This method clears all the fields. Setting the form empty gives the option to the user to quickly start over
+     *  the entry. */
+    public void resetFields()
+    {
+        customerNameTextField.setText("");
+        addressTextField.setText("");
+        postalCodeTextField.setText("");
+        phoneTextField.setText("");
+        countryComboBox.setValue(null);
+        firstLevelDivisionComboBox.setValue(null);
+    }
+
+    /** This method checks if all fields on the form were completed. Launches an error window if form is not complete.
+     * @return Returns boolean of checking if all the fields were completed on the form.
+     *  */
     public boolean inputCheck()
     {
         boolean good = true;

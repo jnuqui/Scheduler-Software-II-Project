@@ -21,7 +21,8 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
 
-/** This is the controller class for the "UpdateAppointment" view.*/
+/** This is the controller class for the "UpdateAppointment" view. It handles the business logic for validating
+ *  values for an appointment before it updated in the database. */
 public class UpdateAppointmentController implements Initializable {
     @FXML
     public TextField appointmentIdTextfield;
@@ -65,16 +66,19 @@ public class UpdateAppointmentController implements Initializable {
      * end times. By recording these, they can be compared in the goodAppointmentTime method so that the appointment
      * can be updated with the same time and not be considered a scheduling conflict.
      * @param start The appointment's start time.
-     * @param end  The appointment's end time.*/
+     * @param end  The appointment's end time.
+     *  */
     public void setOriginalApptTime(LocalDateTime start, LocalDateTime end)
     {
         originalStart = start;
         originalEnd = end;
     }
 
-    /**@return boolean if the times that the user selects is the same as the original appointment data.
+    /** This mean checks if the times that the user selects is the same as the original appointment data.
      * This method handles the Start and End times comparison from setOriginalApptTime, and is ultimately used
-     * in the logic flow of goodAppointmentTime. */
+     * in the logic flow of goodAppointmentTime.
+     * @return Returns a boolean of the method's results.
+     *  */
     public boolean updateTimeSame()
     {
         boolean good = false;
@@ -200,8 +204,10 @@ public class UpdateAppointmentController implements Initializable {
         userIdComboBox.getSelectionModel().select(UserDAO.getMatchingUserId(userId));
     }
 
-    /** @return - This method checks if each field in the form is filled, and returns true or false. If any one of the fields is empty when user tries to
-     *  add an appointment, an alert window launches. */
+    /** This method checks if each field in the form is filled, and returns true or false. If any one of the
+     *  fields is empty when user tries to add an appointment, an alert window launches.
+     *  @return Returns boolean of the logical checks.
+     *  */
     public boolean inputCheck()
     {
         boolean good = true;
@@ -225,13 +231,14 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
-    /** @return - This method checks if the user's Start and End Times are appropriate and returns true or false.
+    /** This method checks if the user's Start and End Times are appropriate.
      *  It checks the following time possibilities:
      *  - End time is before Start time
      *  - Start and End Time is the same
-     *  - Time has not changed from the original appointment
      *  - Compares against open office hours (Eastern Time)
-     *  - Overlapping appointments of the same customer. */
+     *  - Overlapping appointments of the same customer.
+     *
+     *  @return Returns boolean if the times are appropriate. */
     public boolean goodAppointmentTime() throws SQLException {
 
         boolean good = true;
@@ -292,9 +299,9 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
-    /** This method gets the values from each field of the form and sends it to the AppointmentDAO to an INSERT
+    /** This method gets the values from each field of the form and sends it to the AppointmentDAO to an UPDATE
      *  statement to the database. First, two methods (inputCheck and goodAppointmentTime) check if inputs are filled
-     *  and if the Start and End Times are appropriate. */
+     *  and if the Start and End Times are appropriate. A confirmation window is launched if successful. */
     public void updateAppointment() throws SQLException {
         try {
             boolean inputWorks = inputCheck();

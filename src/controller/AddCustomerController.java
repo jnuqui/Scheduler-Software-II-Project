@@ -22,7 +22,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/** This is the controller class for the "AddCustomer" view.*/
+/** This is the controller class for the "AddCustomer" view. It handles the business logic for inserting a
+ *  customer to the database. */
 public class AddCustomerController implements Initializable
 {
     @FXML
@@ -70,7 +71,8 @@ public class AddCustomerController implements Initializable
 
     /** This method populates the combo box of First Level Divisions. The method is called after a Country is selected
      *  by the user and a database query is made to find the associated First Level Divisions.
-     *  @param countryId This value is used to generate the appropriate list of First Level Divisions. */
+     *  @param countryId This value is used to generate the appropriate list of First Level Divisions.
+     *   */
     public void populateFirstLevelDivisions(int countryId) throws SQLException {
         FirstLevelDivisionDAO.clearLists();
         firstLevelDivisionComboBox.setItems(FirstLevelDivisionDAO.getAllFLD(countryId));
@@ -114,7 +116,9 @@ public class AddCustomerController implements Initializable
         stage.show();
     }
 
-    /**@return Returns boolean of checking if all the fields were completed on the form. An alert appears if false. */
+    /** This method checks if all fields on the form were completed. Launches an error window if form is not complete.
+     * @return Returns boolean of checking if all the fields were completed on the form.
+     *  */
     public boolean inputCheck()
     {
         boolean good = true;

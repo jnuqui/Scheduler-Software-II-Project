@@ -23,7 +23,8 @@ import java.time.ZoneId;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-/**This is the controller for the Login view. */
+/**This is the controller for the "Login" view. It handles all methods related to login and checking for an upcoming
+ * appointment. */
 public class LoginController implements Initializable {
     @FXML
     private Button buttonLogin;

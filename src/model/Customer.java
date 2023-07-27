@@ -26,13 +26,14 @@ public class Customer
         this.countryId = countryId;
     }
 
-    public Customer(int customerId, String name, String address, String postalCode, String phone, int divisionIdFK, String country)
+    public Customer(int customerId, String name, String address, String postalCode, String phone, String divisionName, int divisionIdFK, String country)
     {
         this.customerId = customerId;
         this.name = name;
         this.address = address;
         this.postalCode = postalCode;
         this.phone = phone;
+        this.divisionName = divisionName;
         this.divisionIdFK = divisionIdFK;
         this.country = country;
     }

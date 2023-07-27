@@ -23,7 +23,8 @@ import java.time.*;
 import java.util.ResourceBundle;
 
 
-/** This is the controller class for the "AddAppointment" view.*/
+/** This is the controller class for the "AddAppointment" view. It handles the business logic for inserting an
+ *  appointment to the database. */
 public class AddAppointmentController implements Initializable
 {
     @FXML
@@ -59,7 +60,7 @@ public class AddAppointmentController implements Initializable
     }
 
     /** This method populates the combo boxes for the form. Each combo box uses a method to get an ObservableList for
-     *  each respective combo box.*/
+     *  each respective combo box. */
     public void populateComboBoxes() throws SQLException {
         locationComboBox.setItems(CollectionLists.getPlaces());
         contactComboBox.setItems(ContactDAO.getContactNames());
@@ -70,8 +71,10 @@ public class AddAppointmentController implements Initializable
         userIdComboBox.setItems(UserDAO.getUsers());
     }
 
-    /** @return - This method checks if each field in the form is filled, and returns true or false. If any one of the fields is empty when user tries to
-     *  add an appointment, an alert window launches. */
+    /** This method checks if each field in the form is filled, and returns true or false. If any one of the
+     *  fields is empty when user tries to add an appointment, an alert window launches.
+     *  @return Returns boolean of the logical checks.
+     *  */
     public boolean inputCheck()
     {
         boolean good = true;
@@ -92,7 +95,6 @@ public class AddAppointmentController implements Initializable
             alert.setContentText("Please complete all fields.");
             good = false;
         }
-        System.out.println("Input check: " + good);
         return good;
     }
 
@@ -103,7 +105,7 @@ public class AddAppointmentController implements Initializable
      *  - Compares against open office hours (Eastern Time)
      *  - Overlapping appointments of the same customer.
      *
-     *  This method uses the Errors interface to use a lambda code to shorten the code needed to launch custom
+     *  This method uses the Errors interface to use a lambda expression to shorten the code needed to launch custom
      *  error messages.
      *  @return Returns boolean if the times are appropriate. */
     public boolean goodAppointmentTime() throws SQLException {
@@ -160,7 +162,7 @@ public class AddAppointmentController implements Initializable
 
     /** This method gets the values from each field of the form and sends it to the AppointmentDAO to an INSERT
      *  statement to the database. First, two methods (inputCheck and goodAppointmentTime) check if inputs are filled
-     *  and if the Start and End Times are appropriate. */
+     *  and if the Start and End Times are appropriate. A confirmation window is launched if successful. */
     public void insertAppointment() throws SQLException {
 
         try{

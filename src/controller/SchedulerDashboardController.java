@@ -22,7 +22,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-/** This is the controller class for the "SchedulerDashboard" view.*/
+/** This is the controller class for the "SchedulerDashboard" view. It displays all appointments in a TableView,
+ *  including the results for different views and the reports. There are buttons for navigating to the Customer view
+ *  and Add/Update Appointment views. */
 public class SchedulerDashboardController implements Initializable
 {
     @FXML
@@ -156,7 +158,10 @@ public class SchedulerDashboardController implements Initializable
     /** This method sets the ObservableList of appointments in the TableView. The TableColumns are also initialized.
      *  The visibility of tables are also set because other TableViews are called for the reports, which makes the
      *  main appointment TableView not visible. This method is called when the All radio button is selected to refresh
-     *  this TableView. */
+     *  this TableView.
+     *
+     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
+     *  to initialize TableColumns. */
     public void populateTable()
     {
         appointmentsTable.setItems(allAppointments);
@@ -173,7 +178,10 @@ public class SchedulerDashboardController implements Initializable
     /** This method sets the ObservableList of appointments in the TableView for the current month of the user by the
      *  machine's Time Zone. A query is made to the database to retrieve appointments that match the month that the
      *  user is in. The TableColumns are also initialized. The visibility of tables are also set because other
-     *  TableViews could be visible instead of this one. */
+     *  TableViews could be visible instead of this one.
+     *
+     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
+     *  to initialize TableColumns. */
     public void populateTableMonth()
     {
         try {
@@ -194,7 +202,10 @@ public class SchedulerDashboardController implements Initializable
     /** This method sets the ObservableList of appointments in the TableView for the current day plus seven days of the
      * user's Time Zone. A query is made to the database to retrieve appointments that match appointments within 7 days
      *  The TableColumns are also initialized. The visibility of tables are also set because other
-     *  TableViews could be visible instead of this one. */
+     *  TableViews could be visible instead of this one.
+     *
+     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
+     *  to initialize TableColumns. */
     public void populateTableWeek() {
         {
             try {
@@ -235,13 +246,6 @@ public class SchedulerDashboardController implements Initializable
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
-    }
-
-
-//possible lambda?
-    public String sendLocation()
-    {
-        return appointmentsTable.getSelectionModel().getSelectedItem().getLocation();
     }
 
     /** This method brings the user to the UpdateAppointment view. If an appointment is not selected from the TableView,
