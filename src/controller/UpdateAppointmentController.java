@@ -51,7 +51,9 @@ public class UpdateAppointmentController implements Initializable {
     LocalDateTime originalEnd;
 
     /** The initialize method for the Update Appointment view. This method is called when the view is launched
-     *  and contains methods for populating the combo boxes for the form. */
+     *  and contains methods for populating the combo boxes for the form.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -362,7 +364,8 @@ public class UpdateAppointmentController implements Initializable {
         contactComboBox.setValue(null);
     }
 
-    /** This method brings the user back to the main scheduling dashboard. */
+    /** This method brings the user back to the main scheduling dashboard.
+     * @param actionEvent The action when the button is clicked. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));

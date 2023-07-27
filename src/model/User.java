@@ -1,12 +1,14 @@
 package model;
 
-
+/** Class for the User class model. Contains constructors to create User objects and
+ *  methods to set and get their attributes. */
 public class User
 {
     int userID;
     String userName;
     String password;
 
+    /** A constructor for a User object. */
     public User()
     {
 

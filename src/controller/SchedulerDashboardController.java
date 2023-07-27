@@ -135,7 +135,9 @@ public class SchedulerDashboardController implements Initializable
 
     /** This is the initialize method for this view which gets and sets data in the components. The appointments are
      *  retrieved, put in an ObservableList and set in the TableView. The combo boxes are also populated
-     *  for the different reports. */
+     *  for the different reports.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         try {
@@ -160,8 +162,9 @@ public class SchedulerDashboardController implements Initializable
      *  main appointment TableView not visible. This method is called when the All radio button is selected to refresh
      *  this TableView.
      *
-     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
-     *  to initialize TableColumns. */
+     *  This method uses the TableColumns interface to use a lambda expression to cut down the wall of code that is
+     *  typically necessary to initialize TableColumns. It makes the methods that use this lambda much easier to
+     *  scroll through. */
     public void populateTable()
     {
         appointmentsTable.setItems(allAppointments);
@@ -180,8 +183,9 @@ public class SchedulerDashboardController implements Initializable
      *  user is in. The TableColumns are also initialized. The visibility of tables are also set because other
      *  TableViews could be visible instead of this one.
      *
-     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
-     *  to initialize TableColumns. */
+     *  This method uses the TableColumns interface to use a lambda expression to cut down the wall of code that is
+     *  typically necessary to initialize TableColumns. It makes the methods that use this lambda much easier to
+     *  scroll through. */
     public void populateTableMonth()
     {
         try {
@@ -204,8 +208,9 @@ public class SchedulerDashboardController implements Initializable
      *  The TableColumns are also initialized. The visibility of tables are also set because other
      *  TableViews could be visible instead of this one.
      *
-     *  This method uses a lambda expression to cut down the wall of code that is typically necessary
-     *  to initialize TableColumns. */
+     *  This method uses the TableColumns interface to use a lambda expression to cut down the wall of code that is
+     *  typically necessary to initialize TableColumns. It makes the methods that use this lambda much easier to
+     *  scroll through. */
     public void populateTableWeek() {
         {
             try {
@@ -224,7 +229,8 @@ public class SchedulerDashboardController implements Initializable
         }
     }
 
-    /** This method brings the user to the customer dashboard. */
+    /** This method brings the user to the customer dashboard.
+     * @param actionEvent The action when the button is clicked. */
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));
@@ -236,7 +242,8 @@ public class SchedulerDashboardController implements Initializable
         stage.show();
     }
 
-    /** This method brings the user to the AddAppointment view. */
+    /** This method brings the user to the AddAppointment view.
+     * @param actionEvent The action when the button is clicked. */
     public void toAddAppointment(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddAppointment.fxml"));
@@ -250,7 +257,8 @@ public class SchedulerDashboardController implements Initializable
 
     /** This method brings the user to the UpdateAppointment view. If an appointment is not selected from the TableView,
      *  an alert will launch an error. When an appointment is selected, the UpdateAppointment view will be launched and
-     *  the appointment and its data will be passed into the fields of the new view. */
+     *  the appointment and its data will be passed into the fields of the new view.
+     * @param actionEvent The action when the button is clicked. */
     public void toUpdateAppointment(ActionEvent actionEvent) throws IOException, SQLException {
         if( appointmentsTable.getSelectionModel().getSelectedItem() == null)
         {

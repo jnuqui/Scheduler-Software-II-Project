@@ -48,7 +48,9 @@ public class AddAppointmentController implements Initializable
     public ComboBox userIdComboBox;
 
     /** The initialize method for the Add Appointment view. This method is called when the view is launched
-     *  and contains methods for populating the combo boxes for the form. */
+     *  and contains methods for populating the combo boxes for the form.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -106,7 +108,9 @@ public class AddAppointmentController implements Initializable
      *  - Overlapping appointments of the same customer.
      *
      *  This method uses the Errors interface to use a lambda expression to shorten the code needed to launch custom
-     *  error messages.
+     *  error messages. Since launching alert windows take 4 lines, it is efficient to make one block of code to
+     *  replicate and pass the custom messages into the lambda. It also makes the method visually look better and
+     *  easier to scroll through.
      *  @return Returns boolean if the times are appropriate. */
     public boolean goodAppointmentTime() throws SQLException {
 
@@ -221,7 +225,8 @@ public class AddAppointmentController implements Initializable
         contactComboBox.setValue(null);
     }
 
-    /** This method brings the user back to the main scheduling dashboard. */
+    /** This method brings the user back to the main scheduling dashboard.
+     * @param actionEvent The action when the button is clicked. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));

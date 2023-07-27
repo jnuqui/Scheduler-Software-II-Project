@@ -13,12 +13,14 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-/**Class for AppointmentDAO. This handles database queries related to appointments. */
+/** The Abstract Class for AppointmentDAO. This handles database queries related to appointments. */
 public abstract class AppointmentDAO
 {
-    /** @return Returns all appointments for the main appointment view. The method uses a
+    /** Gets all appointments for the main appointment view. The method uses a
      *  database query to get all the columns of the appointments table, but makes a join
-     *  with the contacts table to include Contact's Name. */
+     *  with the contacts table to include Contact's Name.
+     *  @return Returns an ObservableList of Appointments.
+     *  */
     public static ObservableList<Appointment> getAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT appointments.*, contacts.Contact_Name\n" +
@@ -45,9 +47,11 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
-    /** @return Returns appointments for the main appointment view, filtered by the current month.
+    /** Gets appointments for the main appointment view, filtered by the current month.
      *  The method uses a database query to get the same columns as getAppointments, but the current
-     *  date is passed into the query as parameters to retrieve relevant appointments. */
+     *  date is passed into the query as parameters to retrieve relevant appointments.
+     *  @return Returns an ObservableList of Appointments that occur in the current month.
+     *   */
     public static ObservableList<Appointment> getAppointmentsByMonth() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         LocalDateTime today = LocalDateTime.now();
@@ -79,10 +83,12 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
-    /** @return Returns appointments for the main appointment view, filtered by the upcoming week of the current
+    /** Gets appointments for the main appointment view, filtered by the upcoming week of the current
      *  date. The method uses a database query to get the same columns as getAppointments, but both the current
      *  date and current date plus 7 days are passed into the query as parameters to retrieve relevant
-     *  appointments. */
+     *  appointments.
+     *  @return Returns an ObservableList of Appointments that are within the next seven days.
+     *  */
     public static ObservableList<Appointment> getAppointmentsByWeek() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         LocalDateTime today = LocalDateTime.now();
@@ -113,19 +119,28 @@ public abstract class AppointmentDAO
         return allAppointments;
     }
 
-    /** Takes user input to generate an INSERT statement for appointments. Fields from AddAppointment view are passed
-     *  through this method and are used as parameters in the INSERT statement.
-     *  @param title
-     *  @param description
-     *  @param location
-     *  @param type
-     *  @param tsStart
-     *  @param tsEnd
-     *  @param customerId
-     *  @param userId
-     *  @param contactId
+    /** Gathers user input from the AddAppointment view to generate an INSERT statement for appointments. Fields from
+     *  AddAppointment view are passed through this method and are used as parameters in the INSERT statement.
+     *  @param title This is the title that the user enters into titleTextfield. It will be the value inserted as the
+     *               appointment's title.
+     *  @param description This is the description that the user enters into descriptionTextField. It will be the
+     *                     value inserted as the appointment's description.
+     *  @param location This is the location selected in the locationComboBox. It will be inserted as the appointment's
+     *                  location.
+     *  @param type This is the type of appointment selected in the typeComboBox. It will be inserted as the
+     *              appointment's type.
+     *  @param tsStart This is the timestamp of the appointment's start time. It is collected from the DatePicker and
+     *                 combo box as a LocalDateTime object and then converted into a timestamp for the insert statement.
+     *  @param tsEnd This is the timestamp of the appointment's end time. It is collected from the DatePicker and
+     *                  combo box as a LocalDateTime object and then converted into a timestamp for the insert statement.
+     *  @param customerId This is the customerId selected in the customerIdComboBox. It will be inserted as the
+     *                    appointment's customerId.
+     *  @param userId This is the userId selected in the userIdComboBox. It will be inserted as the
+     *                          appointment's userId.
+     *  @param contactId  This is the contactId to insert as the appointment's contactId. This parameter is obtained
+     *                   through the selection of a name in the contactComboBox, which corresponds to the matching
+     *                   contactId of that contact.
      *   */
-
     public static void insertAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -141,6 +156,31 @@ public abstract class AppointmentDAO
         ps.executeUpdate();
     }
 
+    /** Gathers user input from the UpdateAppointment view to generate an UPDATE statement for appointments. Fields from
+     *  UPDATEAppointment view are passed through this method and are used as parameters in the INSERT statement.
+     *  @param title This is the title that the user enters into titleTextfield. It will be the value that updates the
+     *               appointment's title.
+     *  @param description This is the description that the user enters into descriptionTextField. It will be the
+     *                     value that updates the appointment's description.
+     *  @param location This is the location selected in the locationComboBox. It will be updated as the appointment's
+     *                  location.
+     *  @param type This is the type of appointment selected in the typeComboBox. It will be updated as the
+     *              appointment's type.
+     *  @param tsStart This is the timestamp of the appointment's start time. It is collected from the DatePicker and
+     *                 combo box as a LocalDateTime object and then converted into a timestamp for the update statement.
+     *  @param tsEnd This is the timestamp of the appointment's end time. It is collected from the DatePicker and
+     *                  combo box as a LocalDateTime object and then converted into a timestamp for the update statement.
+     *  @param customerId This is the customerId selected in the customerIdComboBox. It will be updated as the
+     *                    appointment's customerId.
+     *  @param userId This is the userId selected in the userIdComboBox. It will be updated as the
+     *                          appointment's userId.
+     *  @param contactId  This is the contactId to update as the appointment's contactId. This parameter is obtained
+     *                   through the selection of a name in the contactComboBox, which corresponds to the matching
+     *                   contactId of that contact.
+     * @param appointmentId This is the appointmentId of the appointment to update. It is first collected when the
+     *                      user selects an appointment from the main view. It populates the appointmentIdTextfield,
+     *                      but cannot be changed by the user.
+     *   */
     public static void updateAppointment(String title, String description, String location, String type, Timestamp tsStart, Timestamp tsEnd, int customerId, int userId, int contactId, int appointmentId) throws SQLException {
         String sql = "UPDATE APPOINTMENTS\n" +
                 "set Title = ?, Description = ?,\n" +
@@ -163,6 +203,11 @@ public abstract class AppointmentDAO
         ps.executeUpdate();
     }
 
+    /** This method deletes the appointment that the user selects. It takes the appointmentId of the selected
+     *  appointment and executes a DELETE statement to remove it from the database.
+     *  @param appointmentId This is the appointmentId from the selected appointment in the appointment TableView.
+     *                       It is used as a parameter to help execute the WHERE condition to delete the matching
+     *                       appointment from the database. */
     public static void deleteAppointment(int appointmentId) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -170,6 +215,11 @@ public abstract class AppointmentDAO
         ps.executeUpdate();
     }
 
+    /** Checks if there is an appointment happening within 15 minutes. This method is called after the user
+     * successfully logs into the application.
+     * @param nowLDT A LocalDateTime object of the date and time of login is used as a parameter of the database
+     *              query. It is also used so that the plusMinutes method can be used on it for the query.
+     * @return Returns an Appointment to use for a custom message if found; returns a null appointment if not. */
     public static Appointment checkAppointment(LocalDateTime nowLDT) throws SQLException {
         String sql = "SELECT *\n" +
                 "FROM appointments\n" +
@@ -191,6 +241,17 @@ public abstract class AppointmentDAO
         }
     }
 
+    /**  This method checks if a customer has overlapping appointment times against the user's input. It checks if a
+     *  customer has an existing appointment that conflicts with a potential INSERT statement. If there are no results,
+     *  "No" is returned. Otherwise, a String is concatenated to describe the details of the appointment overlap.
+     *  @param startLDT A LocalDateTime that comes from the AddAppointment or UpdateAppointment form, used as the
+     *                  starting time range of an overlapping appointment.
+     *  @param endLDT A LocalDateTime that comes from the AddAppointment or UpdateAppointment form, used as the
+     *                    ending time range of an overlapping appointment.
+     *  @param customerId The customerId of the customer to check for. Since the purpose of the method is to check
+     *                    for overlapping appointments for the customer only.
+     *  @return Returns a String of appointment information that is a scheduling overlap; String "No" if none are found.
+     *   */
     public static String checkAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT, int customerId) throws SQLException {
         String sql = "SELECT Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -216,6 +277,22 @@ public abstract class AppointmentDAO
         }
     }
 
+    /** This method checks if a customer has overlapping appointment times against the user's input. It checks if a
+     *  customer has an existing appointment that conflicts with a potential UPDATE statement.
+     *  If there are no results, "No" is returned. Otherwise, a String is concatenated to describe the details of the
+     *   appointment overlap. This query omits the appointment that was selected to update so that appointment
+     *  itself can be updated, but still can be compared to other appointments that the customer may have.
+     *  This allows also allows an appointment update that  doesn't have a changed time, but other fields change.
+     *  @param startLDT A LocalDateTime that comes from the AddAppointment or UpdateAppointment form, used as the
+     *                  starting time range of an overlapping appointment.
+     *  @param endLDT A LocalDateTime that comes from the AddAppointment or UpdateAppointment form, used as the
+     *      *                  ending time range of an overlapping appointment.
+     *  @param customerId The customerId of the customer to check for. Since the purpose of the method is to check
+     *                    for overlapping appointments for the customer only.
+     *  @param appointmentId The appointmentId that is selected to update. The query uses this value to omit
+     *                      in the query results so that the original update times are not considered overlaps.
+     *  @return Returns a String of appointment information that is a scheduling overlap.
+     *   */
     public static String checkUpdateAppointmentOverlap(LocalDateTime startLDT, LocalDateTime endLDT, int customerId, int appointmentId) throws SQLException {
         String sql = "SELECT Appointment_ID, Customer_ID, Start, End FROM appointments WHERE ((Start < ?) AND (End > ?)) AND Customer_ID = ? AND NOT Appointment_ID = ?;";
         PreparedStatement ps = JDBC.connection.prepareStatement(sql);
@@ -242,7 +319,11 @@ public abstract class AppointmentDAO
             return "Overlaps with appointment (" + CollectionLists.myFormattedTF(startConflictTime) + " - " + CollectionLists.myFormattedTF(endConflictTime) + ") for Customer_ID: " + customerIdFound + ".";
         }
     }
-
+    /** This method queries the database to return a count column of appointments that match a month and type,
+     *  which is used to help create appointment objects for the report TableView.
+     *  @param month String that is obtained from user selection from the month combo box. Used for the database query.
+     *  @param type String that is obtained from user selection from the type combo box. Used for the database query.
+     *  @return Returns an ObservableList of Appointments for the month and type report. */
     public static ObservableList<Appointment> getMonthTypeReport(String month, String type) throws SQLException {
         ObservableList<Appointment> monthTypeAppointments = FXCollections.observableArrayList();
         String sql = "SELECT Count(*) FROM APPOINTMENTS WHERE monthname(Start)=? AND Type=?;";
@@ -257,6 +338,11 @@ public abstract class AppointmentDAO
         return monthTypeAppointments;
     }
 
+    /** This method queries the database to return appointments that match the given contact.
+     *  @param contactNameBox String that is obtained from user selection from the contact combo box. This is used to
+     *                        query the database to retrieve appointments that only match this name.
+     *  @return Returns an ObservableList of Appointments for the contact report.
+     *   */
     public static ObservableList<Appointment> getContactReport(String contactNameBox) throws SQLException {
         ObservableList<Appointment> contactAppointments = FXCollections.observableArrayList();
         String sql =     "SELECT appointments.*, contacts.Contact_Name\n" +
@@ -285,6 +371,11 @@ public abstract class AppointmentDAO
         return contactAppointments;
     }
 
+    /** This method queries the database to return appointments that match the given location.
+     *  @param locationFromBox String that is obtained from user selection from the location combo box. This is used to
+     *                        query the database to retrieve appointments that only match this location.
+     *  @return Returns an ObservableList of Appointments for the location report.
+     *   */
     public static ObservableList<Appointment> getLocationReport(String locationFromBox) throws SQLException {
         ObservableList<Appointment> locationAppointments = FXCollections.observableArrayList();
         String sql = "SELECT appointments.*, contacts.Contact_Name\n" +

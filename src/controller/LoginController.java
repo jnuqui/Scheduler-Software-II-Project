@@ -48,7 +48,9 @@ public class LoginController implements Initializable {
 
 
     /**This is the initialize method for the Login controller. The labels are set according to the Locale of the
-     * machine running the Java program. En and Fr are supported. */
+     * machine running the Java program. En and Fr are supported.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         labelLocation.setText(myZoneId.toString());
@@ -61,7 +63,8 @@ public class LoginController implements Initializable {
 
     /**This method handles the user's login activity and entrance into the program. An if-else statement evaluates
      * the user's input in both textfields and launches the main appointment dashboard. If the username/password
-     * combination does not match, an alert appears to inform the user. */
+     * combination does not match, an alert appears to inform the user.
+     * @param actionEvent The action when the button is clicked. */
     public void login(ActionEvent actionEvent) throws IOException, SQLException {
 
             if ((textfieldUsername.getText().equals("test") && textfieldPassword.getText().equals("test"))) {

@@ -6,7 +6,7 @@ Purpose: A desktop application that handles the scheduling of appointments for a
 Author: Jonathan Nuqui
 Contact information: jnuqui@wgu.edu
 Student application version: 1.0.17
-Date: 7/25/23
+Date: 7/26/23
 
 IDE: IntelliJ IDEA 2021.1.3 (Community Edition)
 Java SDK: 17.0.1

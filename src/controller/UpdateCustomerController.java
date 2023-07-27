@@ -42,7 +42,9 @@ public class UpdateCustomerController implements Initializable
     public TextField phoneTextField;
 
     /** The initialize method for the UpdateCustomer view. This method is called when the view is launched
-     *  and contains the method for populating the combo box for Countries on the form. */
+     *  and contains the method for populating the combo box for Countries on the form.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -128,7 +130,8 @@ public class UpdateCustomerController implements Initializable
         }
     }
 
-    /** This method brings the user back to the customer dashboard. */
+    /** This method brings the user back to the customer dashboard.
+     * @param actionEvent The action when the button is clicked. */
     public void toCustomerGUI(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/CustomerGUI.fxml"));

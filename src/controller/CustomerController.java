@@ -51,7 +51,9 @@ public class CustomerController implements Initializable
 
     /** The initialize method for the Customer view. This method is called when the view is launched
      *  and contains the methods for both creating an ObservableList of Customers and then adding them to
-     *  the Customer TableView. */
+     *  the Customer TableView.
+     *  @param resourceBundle The resourceBundle for initialize
+     *  @param url The url for initialize */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -122,7 +124,8 @@ public class CustomerController implements Initializable
         }
     }
 
-    /** This method brings the user to the AddCustomer view. */
+    /** This method brings the user to the AddCustomer view.
+     * @param actionEvent The action when the button is clicked. */
     public void toAddCustomer (ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/AddCustomer.fxml"));
@@ -135,7 +138,8 @@ public class CustomerController implements Initializable
     }
 
     /** This method brings the user to the UpdateCustomer view. If a customer is not selected by the user, an
-     *  alert appears to inform the user. */
+     *  alert appears to inform the user.
+     * @param actionEvent The action when the button is clicked. */
     public void toUpdateCustomer(ActionEvent actionEvent) throws IOException, SQLException {
         if( customersTable.getSelectionModel().getSelectedItem() == null)
         {
@@ -169,7 +173,8 @@ public class CustomerController implements Initializable
         }
     }
 
-    /** This method brings the user back to the main appointment view. */
+    /** This method brings the user back to the main appointment view.
+     * @param actionEvent The action when the button is clicked. */
     public void toSchedulerDashboard(ActionEvent actionEvent) throws IOException
     {
         Parent root = FXMLLoader.load(getClass().getResource("../view/SchedulerDashboard.fxml"));
