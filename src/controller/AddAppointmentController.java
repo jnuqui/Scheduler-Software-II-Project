@@ -96,12 +96,16 @@ public class AddAppointmentController implements Initializable
         return good;
     }
 
-    /** @return - This method checks if the user's Start and End Times are appropriate and returns true or false.
+    /** This method checks if the user's Start and End Times are appropriate.
      *  It checks the following time possibilities:
      *  - End time is before Start time
      *  - Start and End Time is the same
      *  - Compares against open office hours (Eastern Time)
-     *  - Overlapping appointments of the same customer. */
+     *  - Overlapping appointments of the same customer.
+     *
+     *  This method uses the Errors interface to use a lambda code to shorten the code needed to launch custom
+     *  error messages.
+     *  @return Returns boolean if the times are appropriate. */
     public boolean goodAppointmentTime() throws SQLException {
 
         boolean good = true;
@@ -117,6 +121,14 @@ public class AddAppointmentController implements Initializable
 
         int customerId = Integer.parseInt((String) customerIdComboBox.getSelectionModel().getSelectedItem());
 
+        Errors error = (d, m) ->
+        {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.show();
+            alert.setHeaderText(d);
+            alert.setContentText(m);
+        };
+
         if(startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
                 endTimeComboBox.getValue() == null )
@@ -125,34 +137,22 @@ public class AddAppointmentController implements Initializable
         }
         else if(ldtEnd.isBefore(ldtStart))
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Time");
-            alert.setContentText("End time must be after Start Time");
+            error.makeAlert("Check Time", "End time must be after Start Time");
             good = false;
         }
         else if (ldtStart.isEqual(ldtEnd))
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Time");
-            alert.setContentText("Start and end time cannot be the same.");
+            error.makeAlert("Check Time", "Start and end time cannot be the same.");
             good = false;
         }
         else if (!CollectionLists.checkTimeRange(ldtStart, ldtEnd))
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Check Time");
-            alert.setContentText("Time is not within 8:00AM - 10:00PM ET");
+            error.makeAlert("Check Time", "Time is not within 8:00AM - 10:00PM ET");
             good = false;
         }
         else if (!AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId).equals("No"))
         {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.show();
-            alert.setHeaderText("Conflicting Time");
-            alert.setContentText(AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
+            error.makeAlert("Conflicting Time", AppointmentDAO.checkAppointmentOverlap(ldtStart, ldtEnd, customerId));
             good = false;
         }
         return good;

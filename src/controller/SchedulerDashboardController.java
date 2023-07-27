@@ -117,6 +117,20 @@ public class SchedulerDashboardController implements Initializable
 
     public ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
 
+    TableColumns columnSetter = (a, t, d, l, c, t2, st, et, cId, uId) ->
+    {
+        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>(a));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>(t));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>(d));
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>(l));
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>(c));
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>(t2));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>(st));
+        endColumn.setCellValueFactory(new PropertyValueFactory<>(et));
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>(cId));
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>(uId));
+    };
+
     /** This is the initialize method for this view which gets and sets data in the components. The appointments are
      *  retrieved, put in an ObservableList and set in the TableView. The combo boxes are also populated
      *  for the different reports. */
@@ -128,7 +142,6 @@ public class SchedulerDashboardController implements Initializable
             throwables.printStackTrace();
         }
         populateTable();
-
 
         typeComboBox.setItems(CollectionLists.getTypes());
         monthComboBox.setItems(CollectionLists.getMonths());
@@ -148,16 +161,8 @@ public class SchedulerDashboardController implements Initializable
     {
         appointmentsTable.setItems(allAppointments);
 
-        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        columnSetter.setColumns("appointmentId", "title", "description", "location", "contactName",
+                "type", "startTime", "endTime", "customerId", "userId");
 
         appointmentsTable.visibleProperty().setValue(true);
         reportTypeTable.visibleProperty().setValue(false);
@@ -177,16 +182,8 @@ public class SchedulerDashboardController implements Initializable
             throwables.printStackTrace();
         }
 
-        appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        columnSetter.setColumns("appointmentId", "title", "description", "location", "contactName",
+                "type", "startTime", "endTime", "customerId", "userId");
 
         appointmentsTable.visibleProperty().setValue(true);
         reportTypeTable.visibleProperty().setValue(false);
@@ -206,16 +203,8 @@ public class SchedulerDashboardController implements Initializable
                 throwables.printStackTrace();
             }
 
-            appointmentIdColumn.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
-            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-            locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-            contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
-            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-            endColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-            customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+            columnSetter.setColumns("appointmentId", "title", "description", "location", "contactName",
+                    "type", "startTime", "endTime", "customerId", "userId");
 
             appointmentsTable.visibleProperty().setValue(true);
             reportTypeTable.visibleProperty().setValue(false);
