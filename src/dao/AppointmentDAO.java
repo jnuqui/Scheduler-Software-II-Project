@@ -302,7 +302,6 @@ public abstract class AppointmentDAO
         ps.setInt(4, appointmentId);
         ResultSet rs = ps.executeQuery();
         if (!rs.isBeforeFirst()) {
-            System.out.println("No results");
             return "No";
         } else {
             rs.next();

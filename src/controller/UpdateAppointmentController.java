@@ -30,6 +30,8 @@ public class UpdateAppointmentController implements Initializable {
     @FXML
     public ComboBox typeComboBox;
     @FXML
+    public DatePicker endDatePicker;
+    @FXML
     private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
@@ -90,7 +92,7 @@ public class UpdateAppointmentController implements Initializable {
         LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
 
         //End
-        LocalDate ldEnd = startDatePicker.getValue();
+        LocalDate ldEnd = endDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
         if(ldtStart.isEqual(originalStart) && ldtEnd.isEqual(originalEnd))
@@ -164,12 +166,21 @@ public class UpdateAppointmentController implements Initializable {
     }
 
     /** This method sets the value for startDatePicker. The LocalDateTime from the user selected appointment gets
-     *  converted to a LocalDate object to appropriately set the DatePicker.
-     *  @param localDate This is used to set the DatePicker for the date of the appointment
+     *  converted to a LocalDate object to appropriately set the startDatePicker.
+     *  @param startDate This is used to set the startDatePicker for the date of the appointment
      *                      is being updated. */
-    public void setStartDate(LocalDate localDate)
+    public void setStartDate(LocalDate startDate)
     {
-        startDatePicker.setValue(localDate);
+        startDatePicker.setValue(startDate);
+    }
+
+    /** This method sets the value for endDatePicker. The LocalDateTime from the user selected appointment gets
+     *  converted to a LocalDate object to appropriately set the endDatePicker.
+     *  @param endDate This is used to set the endDatePicker for the date of the appointment
+     *                      is being updated. */
+    public void setEndDate(LocalDate endDate)
+    {
+        endDatePicker.setValue(endDate);
     }
 
     /** This method sets the value for startTimeComboBox. The LocalDateTime from the user selected appointment gets
@@ -219,6 +230,7 @@ public class UpdateAppointmentController implements Initializable {
                 typeComboBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
+                endDatePicker.getValue() == null ||
                 endTimeComboBox.getValue() == null ||
                 customerIdComboBox.getValue() == null ||
                 userIdComboBox.getValue() == null ||
@@ -233,7 +245,7 @@ public class UpdateAppointmentController implements Initializable {
         return good;
     }
 
-    /** This method checks if the user's Start and End Times are appropriate.
+    /** This method checks if the user input Start and End Date/Times are appropriate.
      *  It checks the following time possibilities:
      *  - End time is before Start time
      *  - Start and End Time is the same
@@ -250,7 +262,7 @@ public class UpdateAppointmentController implements Initializable {
         LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
 
         //End
-        LocalDate ldEnd = startDatePicker.getValue();
+        LocalDate ldEnd = endDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
 
@@ -258,6 +270,7 @@ public class UpdateAppointmentController implements Initializable {
         int appointmentId = Integer.parseInt(appointmentIdTextfield.getText());
         if(startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
+                endDatePicker.getValue() == null ||
                 endTimeComboBox.getValue() == null )
         {
             good = false;
@@ -323,7 +336,7 @@ public class UpdateAppointmentController implements Initializable {
                 Timestamp tsStart = Timestamp.valueOf(ldtStart);
 
                 //End
-                LocalDate ldEnd = startDatePicker.getValue();
+                LocalDate ldEnd = endDatePicker.getValue();
                 LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
                 LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
                 Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
@@ -358,6 +371,7 @@ public class UpdateAppointmentController implements Initializable {
         typeComboBox.setValue(null);
         startDatePicker.setValue(null);
         startTimeComboBox.setValue(null);
+        endDatePicker.setValue(null);
         endTimeComboBox.setValue(null);
         customerIdComboBox.setValue(null);
         userIdComboBox.setValue(null);
