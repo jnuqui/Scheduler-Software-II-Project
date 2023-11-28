@@ -30,6 +30,8 @@ public class AddAppointmentController implements Initializable
     @FXML
     public ComboBox typeComboBox;
     @FXML
+    public DatePicker endDatePicker;
+    @FXML
     private ComboBox locationComboBox;
     @FXML
     public ComboBox contactComboBox;
@@ -86,6 +88,7 @@ public class AddAppointmentController implements Initializable
                 typeComboBox.getValue() == null ||
                 startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
+                endDatePicker.getValue() == null ||
                 endTimeComboBox.getValue() == null ||
                 customerIdComboBox.getValue() == null ||
                 userIdComboBox.getValue() == null ||
@@ -121,7 +124,7 @@ public class AddAppointmentController implements Initializable
         LocalDateTime ldtStart = LocalDateTime.of(ldStart, ltStart);
 
         //End
-        LocalDate ldEnd = startDatePicker.getValue();
+        LocalDate ldEnd = endDatePicker.getValue();
         LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
         LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
 
@@ -137,6 +140,7 @@ public class AddAppointmentController implements Initializable
 
         if(startDatePicker.getValue() == null ||
                 startTimeComboBox.getValue() == null ||
+                endDatePicker.getValue() == null ||
                 endTimeComboBox.getValue() == null )
         {
             good = false;
@@ -186,7 +190,7 @@ public class AddAppointmentController implements Initializable
                 Timestamp tsStart = Timestamp.valueOf(ldtStart);
 
                 //End
-                LocalDate ldEnd = startDatePicker.getValue();
+                LocalDate ldEnd = endDatePicker.getValue();
                 LocalTime ltEnd = LocalTime.parse(endTimeComboBox.getValue().toString());
                 LocalDateTime ldtEnd = LocalDateTime.of(ldEnd, ltEnd);
                 Timestamp tsEnd = Timestamp.valueOf(ldtEnd);
@@ -219,6 +223,7 @@ public class AddAppointmentController implements Initializable
         typeComboBox.setValue(null);
         startDatePicker.setValue(null);
         startTimeComboBox.setValue(null);
+        endDatePicker.setValue(null);
         endTimeComboBox.setValue(null);
         customerIdComboBox.setValue(null);
         userIdComboBox.setValue(null);

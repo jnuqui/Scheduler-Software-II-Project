@@ -109,9 +109,9 @@ public class SchedulerDashboardController implements Initializable
     @FXML
     public TableColumn typeColumn;
     @FXML
-    public TableColumn<Appointment, String> startColumn = new TableColumn<>("startTime");
+    public TableColumn startColumn;
     @FXML
-    public TableColumn<Appointment, String> endColumn = new TableColumn<>("endTime");
+    public TableColumn endColumn;
     @FXML
     public TableColumn customerIdColumn;
     @FXML
@@ -282,6 +282,7 @@ public class SchedulerDashboardController implements Initializable
             myUpdate.setContact(appointmentsTable.getSelectionModel().getSelectedItem().getContactName());
             myUpdate.setType(appointmentsTable.getSelectionModel().getSelectedItem().getType());
             myUpdate.setStartDate(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime().toLocalDate());
+            myUpdate.setEndDate(appointmentsTable.getSelectionModel().getSelectedItem().getEndTime().toLocalDate());
             myUpdate.setStartTime(appointmentsTable.getSelectionModel().getSelectedItem().getStartTime().toLocalTime());
             myUpdate.setEndTime(appointmentsTable.getSelectionModel().getSelectedItem().getEndTime().toLocalTime());
             myUpdate.setCustomerId(String.valueOf(appointmentsTable.getSelectionModel().getSelectedItem().getCustomerId()));
