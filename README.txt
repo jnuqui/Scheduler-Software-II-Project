@@ -1,3 +1,8 @@
+December 18th, 2023
+__
+This is the project I submitted for "Software II - Advanced Java Concepts" at WGU. It uses Java with a localized MySQL database to operate a GUI-based dashboard to track appointments for a fictional consulting company.
+__
+
 Title: "Scheduler" - Desktop appointment scheduling application.
 Purpose: A desktop application that handles the scheduling of appointments for a global consulting
         organization. The application handles input logic/data flow for customers, appointments and more to
