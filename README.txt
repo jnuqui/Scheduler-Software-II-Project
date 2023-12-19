@@ -2,7 +2,6 @@ Title: "Scheduler" - Desktop appointment scheduling application.
 Purpose: A desktop application that handles the scheduling of appointments for a global consulting
         organization. The application handles input logic/data flow for customers, appointments and more to
         interact with a MySQL database to facilitate CRUD operations.
-        Also I would like to earn credit for QAM2 TASK 1.
 Author: Jonathan Nuqui
 Contact information: jnuqui@wgu.edu
 Student application version: 1.0.18
